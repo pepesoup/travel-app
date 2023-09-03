@@ -42,3 +42,9 @@ STORAGEBUCKET=xyz..
 MESSAGINGSENDERID=xyz..
 APPID=xyz..
 ```
+
+# Security
+
+brew install detect-secrets
+detect-secrets scan
+TODO: add this scan on pre-commit to github
