@@ -5,6 +5,11 @@ export type TextProps = PaperTextProps<any> & {
     children: any
 }
 
+/**
+ TODO: 
+    Add react-native-responsive-fontsize. 
+    Take font-size from theme and adapt with RFValue
+ */
 const TextCmn = (props: TextProps) => {
     const { children, ...restProps } = props
 

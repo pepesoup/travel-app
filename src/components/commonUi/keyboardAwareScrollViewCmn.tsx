@@ -3,8 +3,8 @@ import {
     KeyboardAwareScrollView,
     KeyboardAwareScrollViewProps,
 } from 'react-native-keyboard-aware-scroll-view'
-import _ from 'lodash'
 import { ScrollView } from 'react-native'
+import merge from 'ts-deepmerge'
 
 type Props = KeyboardAwareScrollViewProps & {
     transparent?: boolean
@@ -13,11 +13,11 @@ type Props = KeyboardAwareScrollViewProps & {
 
 export const KeyboardAwareScrollViewCmn = (props: Props) => {
     const { children, contentContainerStyle, ...restProps } = props
-    const ccStyle = _.merge(
+    const ccStyle = merge(
         {
             flexGrow: 1,
         },
-        contentContainerStyle
+        contentContainerStyle || {}
     )
     return (
         <KeyboardAwareScrollView

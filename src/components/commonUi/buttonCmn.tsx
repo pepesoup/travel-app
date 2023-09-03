@@ -1,8 +1,7 @@
 import React from 'react'
 import { View, ViewStyle } from 'react-native'
 import { Text, Button as PaperButton, ButtonProps as PaperButtonProps } from 'react-native-paper'
-import { useNavigation } from '@react-navigation/native'
-import _ from 'lodash'
+import merge from 'ts-deepmerge'
 
 export type ButtonProps = Omit<PaperButtonProps, 'children'> & {
     title: string
@@ -10,20 +9,19 @@ export type ButtonProps = Omit<PaperButtonProps, 'children'> & {
 
 const ButtonCmn = (props: ButtonProps) => {
     const { mode, title, style, labelStyle, ...restProps } = props
-    const mergedStyle = _.merge(
-        {},
+    const mergedStyle = merge(
         {
             minWidth: '50%',
             marginVertical: 15,
         } as ViewStyle,
-        style
+        style || {}
     )
-    const mergedLabelStyle = _.merge(
+    const mergedLabelStyle = merge(
         {},
         {
             fontSize: 18,
         } as ViewStyle,
-        labelStyle
+        labelStyle || {}
     )
     return (
         <PaperButton

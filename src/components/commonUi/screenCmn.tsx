@@ -2,20 +2,26 @@ import React from 'react'
 import { View as NativeView, ViewProps as NativeViewProps } from 'react-native'
 import _ from 'lodash'
 import { useRecoilValue } from 'recoil'
-import { appThemeState } from '@app/app/theme/themeStates'
+//import { appThemeState } from '@app/app/theme/themeStates'
 import { IconButton, PaperProvider } from 'react-native-paper'
 import { useNavigation } from '@react-navigation/native'
 
 export type ViewProps = NativeViewProps & {
+    theme: any
     transparent?: boolean
     navigateBack?: boolean
     centerContent?: boolean
 }
 
+/**  
+TODO: 
+    make theme a dependency
+    Remove theme from props
+*/
 const ScreenCmn = (props: ViewProps) => {
     const navigation = useNavigation<any>()
-    const theme = useRecoilValue(appThemeState)
-    const { children, style, transparent, navigateBack, centerContent, ...restProps } = props
+    const { theme, children, style, transparent, navigateBack, centerContent, ...restProps } = props
+    //const theme = useRecoilValue(appThemeState)
     const backgroundColor = transparent ? 'transparent' : theme.colors.background
     const justifyContent = centerContent ? { justifyContent: 'center' } : null
 
