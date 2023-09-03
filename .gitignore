@@ -1,6 +1,7 @@
 node_modules/
 .expo/
 .history/
+.env
 #.vscode/
 dist/
 npm-debug.*
