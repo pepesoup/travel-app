@@ -2,6 +2,7 @@ node_modules/
 .expo/
 .history/
 .env
+.env.*
 #.vscode/
 dist/
 npm-debug.*

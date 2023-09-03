@@ -26,7 +26,7 @@ module.exports = function (api) {
                     blacklist: null, // DEPRECATED
                     whitelist: null, // DEPRECATED
                     safe: false,
-                    allowUndefined: true,
+                    allowUndefined: false,
                     verbose: false,
                 },
             ],

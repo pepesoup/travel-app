@@ -28,3 +28,17 @@ npm why expo-constants
 ## Check Expo problems
 
 npx expo-doctor
+
+# Firebase
+
+Add to .env file:
+
+```
+APIKEY=xyz..
+AUTHDOMAIN=xyz..
+DATABASEURL=xyz..
+PROJECTID=xyz..
+STORAGEBUCKET=xyz..
+MESSAGINGSENDERID=xyz..
+APPID=xyz..
+```
