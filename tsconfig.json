@@ -1,12 +1,14 @@
 {
     "compilerOptions": {
         "strict": true,
-        /*"jsx": "react", */
+        "jsx": "react",
         "esModuleInterop": true,
         "allowSyntheticDefaultImports": true,
         "paths": {
+            "@root/*": ["./*"],
             "@src/*": ["./src/*"],
-            "@components/*": ["./src/components/*"]
+            "@components/*": ["./src/components/*"],
+            "@rn-components/*": ["./src/rn-components/src/components/*"]
         }
     },
     "extends": "expo/tsconfig.base",

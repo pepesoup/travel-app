@@ -1,5 +1,6 @@
 import { StyleSheet, Text, View } from "react-native";
-import ButtonCmn from "@src/components/commonUi/buttonCmn";
+import { ButtonCmn } from "@rn-components/commonUi";
+import React from "react";
 export default function Page() {
   return (
     <View style={styles.container}>

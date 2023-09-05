@@ -48,3 +48,36 @@ APPID=xyz..
 brew install detect-secrets
 detect-secrets scan
 TODO: add this scan on pre-commit to github
+
+# Yarn workspace dependency that can not be hoisted
+
+### instead of :
+
+```
+"nohoist": [
+"**/react-native",
+"**/react-native/**",
+"**/react-native-scripts",
+"**/react-native-scripts/**",
+"**/expo",
+"**/expo/**",
+"**/jest-expo",
+"**/jest-expo/**"
+]
+```
+
+add configure dep management in metro.config.js
+
+etc ...
+
+### this fixes:
+
+https://www.npmjs.com/package/expo-yarn-workspaces
+
+# install packages
+
+npx expo install --yarn
+
+# fetch new content from git submodules
+
+git submodule update --recursive --remote

@@ -1,0 +1,4 @@
+[submodule "rn-components"]
+	path = src/rn-components
+	url = https://github.com/pepesoup/rn-components
+	branch = main

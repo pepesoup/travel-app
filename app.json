@@ -1,8 +1,8 @@
 {
     "expo": {
         "sdkVersion": "49.0.0",
-        "name": "TEMPLATE1",
-        "slug": "TEMPLATE1",
+        "name": "TEMPLATE",
+        "slug": "TEMPLATE",
         "version": "1.0.0",
         "scheme": "la.scheme",
         "orientation": "portrait",

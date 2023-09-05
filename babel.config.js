@@ -9,7 +9,9 @@ module.exports = function (api) {
                     extensions: ['.ios.js', '.android.js', '.js', '.ts', '.tsx', '.json'],
                     root: ['.'],
                     alias: {
+                        '@root': './',
                         '@src': './src',
+                        '@rn-components': './src/rn-components/src/components',
                     },
                 },
             ],

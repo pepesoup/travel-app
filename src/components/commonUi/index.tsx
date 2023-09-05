@@ -1,6 +1,0 @@
-export { default as ScreenCmn } from './screenCmn'
-export { default as TextCmn } from './textCmn'
-export { default as ButtonCmn } from './buttonCmn'
-export { default as TextInputCmn } from './textInputCmn'
-//export { default as Input } from './input'
-export { default as SwitchCmn } from './switchCmn'
