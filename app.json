@@ -1,8 +1,8 @@
 {
     "expo": {
         "sdkVersion": "49.0.0",
-        "name": "TEMPLATE",
-        "slug": "TEMPLATE",
+        "name": "travel-app",
+        "slug": "travel-app",
         "version": "1.0.0",
         "scheme": "la.scheme",
         "orientation": "portrait",
