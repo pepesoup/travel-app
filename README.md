@@ -49,9 +49,25 @@ brew install detect-secrets
 detect-secrets scan
 TODO: add this scan on pre-commit to github
 
-# Yarn workspace dependency that can not be hoisted
+# Yarn
 
-### instead of :
+## Versions
+
+get list of all installed packages
+
+`npm list --depth=0`
+
+Single package
+
+`yarn list --pattern <package>`
+
+or
+
+`yarn info <package> version`
+
+## Yarn workspace dependency that can not be hoisted
+
+### instead of (package.json) :
 
 ```
 "nohoist": [
@@ -78,6 +94,8 @@ https://www.npmjs.com/package/expo-yarn-workspaces
 
 npx expo install --yarn
 
-# fetch new content from git submodules
+# GIT
+
+## fetch new content from git submodules
 
 git submodule update --recursive --remote
