@@ -8,7 +8,8 @@
         ],
         "nohoist": [
             "recoil",
-            "recoil-nexus"
+            "recoil-nexus",
+            "react-native-paper"
         ]
     },
     "scripts": {
@@ -19,6 +20,7 @@
         "postinstall": "expo-yarn-workspaces postinstall"
     },
     "dependencies": {
+        "@expo-google-fonts/inter": "^0.2.3",
         "@expo/webpack-config": "^19.0.0",
         "@gorhom/bottom-sheet": "^4.4.7",
         "@react-native-async-storage/async-storage": "1.18.2",

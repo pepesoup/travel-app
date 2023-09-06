@@ -3,38 +3,109 @@ import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context'
 import { RecoilRoot, useRecoilValue } from 'recoil'
 import RecoilNexus from 'recoil-nexus'
 import { PaperProvider, Text } from 'react-native-paper'
-import { Slot, Stack } from 'expo-router'
+import LottieOverlay from '../components/overlay/lottieOverlay'
+import { Link, Slot, Stack } from 'expo-router'
+import { themeService } from '../theme/themeService'
+import {
+    darkNavTheme,
+    darkTheme,
+    lightNavTheme,
+    lightTheme,
+    retreafyNavTheme,
+    retreafyTheme,
+} from '../theme/themesDef'
+import { ThemeProvider } from '../theme/themeProvider'
+import { ThemeRetreafy } from '../theme/themes/retreafyTheme'
+var Color = require('color2')
+import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons'
+import { RowCmn, TextCmn } from '../components/common'
+import { StatusBar } from 'expo-status-bar'
+/**
+ *
+ * TODO:
+ *  fix theme provider, pick one solution here
+ */
 
 export default function App() {
-    useEffect(() => { }, [])
+    const theme = retreafyTheme
+    //const theme = darkTheme
+    useEffect(() => {}, [])
+    var color = new Color(theme.colors.primaryContainer)
+
+    const headerRight = () => {
+        return (
+            <RowCmn>
+                <Link href="/notes/notes">
+                    <MaterialCommunityIcons name="bell-badge-outline" size={24} color={'white'} />
+                </Link>
+                <MaterialIcons name="settings" size={24} color={'white'} />
+            </RowCmn>
+        )
+    }
+
+    const modalHeaderLeft = () => {
+        return (
+            <TextCmn style={{ color: 'white', marginBottom: -15 }}>
+                <Link href="../">Stäng</Link>
+            </TextCmn>
+        )
+    }
+
     return (
         <RecoilRoot>
             <RecoilNexus />
-            <SafeAreaProvider>
-                <SafeAreaView
-                    style={{
-                        flex: 1,
-                        backgroundColor: 'black',
-                    }}
-                >
-                    <Suspense>
-                        <PaperProvider>
-                            <Stack
-                                screenOptions={{
-                                    headerStyle: {
-                                        backgroundColor: 'yellow',
-                                    },
-                                    headerTintColor: 'white',
-                                    headerTitleStyle: {
-                                        fontWeight: "bold",
-                                    },
-                                    headerBackTitleVisible: false
-                                }}
-                            />
-                        </PaperProvider>
-                    </Suspense>
-                </SafeAreaView>
-            </SafeAreaProvider>
+            <ThemeProvider theme={theme}>
+                <SafeAreaProvider>
+                    <SafeAreaView
+                        style={{
+                            flex: 1,
+                            backgroundColor: theme.colors.primaryContainer,
+                        }}
+                    >
+                        <Suspense>
+                            <LottieOverlay />
+                            <PaperProvider theme={theme}>
+                                <StatusBar style="light" />
+                                <Stack
+                                    screenOptions={{
+                                        headerStyle: {
+                                            backgroundColor: theme.colors.primaryContainer,
+                                        },
+                                        headerTintColor: 'white',
+                                        headerTitleStyle: {
+                                            fontWeight: 'bold',
+                                        },
+                                        headerBackTitleVisible: false,
+                                        headerRight,
+                                    }}
+                                    initialRouteName="/retreafy/index"
+                                >
+                                    <Stack.Screen
+                                        name="notes/notes"
+                                        options={{
+                                            title: 'Aviseringar',
+                                            // Set the presentation mode to modal for our modal route.
+                                            presentation: 'modal',
+                                            headerRight: () => null,
+                                            headerLeft: modalHeaderLeft,
+                                        }}
+                                    />
+                                    <Stack.Screen
+                                        name="auth/login"
+                                        options={{
+                                            title: 'Login',
+                                            // Set the presentation mode to modal for our modal route.
+                                            //presentation: 'modal',
+                                            headerRight: () => null,
+                                            headerLeft: () => null,
+                                        }}
+                                    />
+                                </Stack>
+                            </PaperProvider>
+                        </Suspense>
+                    </SafeAreaView>
+                </SafeAreaProvider>
+            </ThemeProvider>
         </RecoilRoot>
     )
 }
