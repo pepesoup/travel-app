@@ -6,38 +6,38 @@ import { useRecoilState, useRecoilValue } from 'recoil'
 import { themeService } from './themeService'
 
 export type Props = {
-  children: any,
-  theme?: any,
+    children: any
+    theme?: any
 }
 
 export const ThemeProvider = ({ children, theme }: any) => {
-  //const appTheme = useRecoilValue<any>(appThemeState)
-  //const appTheme = useRecoilValue(themeService.currentThemeState) // TODO: enable this 
-  const appTheme = theme
-  console.log('appTheme:', appTheme.colors.primary)
-  useEffect(() => { }, [])
+    //const appTheme = useRecoilValue<any>(appThemeState)
+    //const appTheme = useRecoilValue(themeService.currentThemeState) // TODO: enable this
+    const appTheme = theme
+    console.log('appTheme:', appTheme.colors.primary)
+    useEffect(() => {}, [])
 
-  return (
-    <PaperProvider theme={appTheme}>
-      <StatusBar
-        translucent={true}
-        //style={appTheme.dark ? 'dark' : 'light'}
-        style={'dark'}
-      //backgroundColor={appTheme.colors.background}
-      //backgroundColor='red'
-      />
-      <View
-        style={{
-          flex: 1,
-          backgroundColor: appTheme.colors.background,
-          //backgroundColor: 'transparent',
-          //backgroundColor: 'red',
-        }}
-      >
-        {children}
-      </View>
-    </PaperProvider>
-  )
+    return (
+        <PaperProvider theme={appTheme}>
+            <StatusBar
+                translucent={true}
+                //style={appTheme.dark ? 'dark' : 'light'}
+                style={'light'}
+                //backgroundColor={appTheme.colors.background}
+                //backgroundColor='red'
+            />
+            <View
+                style={{
+                    flex: 1,
+                    backgroundColor: appTheme.colors.background,
+                    //backgroundColor: 'transparent',
+                    //backgroundColor: 'red',
+                }}
+            >
+                {children}
+            </View>
+        </PaperProvider>
+    )
 }
 /**
  {

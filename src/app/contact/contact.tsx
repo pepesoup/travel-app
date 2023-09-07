@@ -1,14 +1,7 @@
 import { View, ViewStyle } from 'react-native'
 import { Link, Stack, router } from 'expo-router'
 import { StatusBar } from 'expo-status-bar'
-import {
-    ButtonCmn,
-    GapCmn,
-    RowCmn,
-    ScreenCmn,
-    SurfaceCmn,
-    TextCmn,
-} from '@root/src/components/common'
+import { ButtonCmn, GapCmn, RowCmn, ScreenCmn, SurfaceCmn, TextCmn } from '@rn-components/commonUi'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 import { useTheme } from 'react-native-paper'
 import { IconProps } from 'react-native-vector-icons/Icon'

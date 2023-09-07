@@ -1,5 +1,5 @@
 import { appThemeState } from '../../theme/themeStates'
-import { RowCmn, ScreenCmn, SurfaceCmn, TextCmn } from '../../components/common'
+import { RowCmn, ScreenCmn, SurfaceCmn, TextCmn } from '@rn-components/commonUi'
 import { Link, SplashScreen, Stack, router, useRouter } from 'expo-router'
 import { useEffect } from 'react'
 import { Button, ScrollView, StyleSheet, View } from 'react-native'

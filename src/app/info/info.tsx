@@ -1,17 +1,9 @@
-import { appThemeState } from '../../theme/themeStates'
-import { GapCmn, RowCmn, ScreenCmn, SurfaceCmn, TextCmn } from '../../components/common'
-import { Link, SplashScreen, Stack, router, useRouter } from 'expo-router'
-import { useEffect } from 'react'
-import { Button, ScrollView, StyleSheet, View, useWindowDimensions } from 'react-native'
-import { Avatar, Surface, Text } from 'react-native-paper'
-import { useRecoilState, useRecoilValue } from 'recoil'
-import { LinearGradient } from 'expo-linear-gradient'
-import { Image } from 'expo-image'
-import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons'
-import NoteRow from '../notes/components/noteRow'
+import { GapCmn, SurfaceCmn, TextCmn } from '@rn-components/commonUi'
+import { Stack } from 'expo-router'
+import { ScrollView, StyleSheet, useWindowDimensions } from 'react-native'
+import { ScreenCmn } from '@rn-components/commonUi'
 
 export default function Info() {
-    const theme = useRecoilValue(appThemeState)
     const { height, width } = useWindowDimensions()
     const styles = StyleSheet.create({
         surface: {

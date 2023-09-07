@@ -1,34 +1,49 @@
 {
-    "expo": {
-        "sdkVersion": "49.0.0",
-        "name": "travel-app",
-        "slug": "travel-app",
-        "version": "1.0.0",
-        "scheme": "la.scheme",
-        "orientation": "portrait",
-        "icon": "./assets/icon.png",
-        "userInterfaceStyle": "light",
-        "splash": {
-            "image": "./assets/splash.png",
-            "resizeMode": "contain",
-            "backgroundColor": "#000000"
-        },
-        "assetBundlePatterns": ["**/*"],
-        "ios": {
-            "supportsTablet": true
-        },
-        "android": {
-            "adaptiveIcon": {
-                "foregroundImage": "./assets/adaptive-icon.png",
-                "backgroundColor": "#000000"
-            }
-        },
-        "plugins": ["expo-router"],
-        "runtimeVersion": {
-            "policy": "sdkVersion"
-        },
-        "experiments": {
-            "tsconfigPaths": true
-        }
+  "expo": {
+    "sdkVersion": "49.0.0",
+    "name": "travel-app",
+    "slug": "travel-app",
+    "version": "1.0.0",
+    "scheme": "la.scheme",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#000000"
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#000000"
+      }
+    },
+    "plugins": [
+      "expo-router"
+    ],
+    "runtimeVersion": {
+      "policy": "sdkVersion"
+    },
+    "experiments": {
+      "tsconfigPaths": true
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "cb8df172-fdec-41d6-9879-faf54c1bdb2f"
+      }
+    },
+    "updates": {
+      "url": "https://u.expo.dev/cb8df172-fdec-41d6-9879-faf54c1bdb2f"
     }
+  }
 }

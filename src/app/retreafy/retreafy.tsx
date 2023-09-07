@@ -1,5 +1,5 @@
 import { appThemeState } from '../../theme/themeStates'
-import { SurfaceCmn, ScreenCmn, TextCmn } from '@components/common'
+import { SurfaceCmn, ScreenCmn, TextCmn } from '@rn-components/commonUi'
 //import { ScreenCmn, TextCmn } from '@rn-components/commonUi'
 import { Link, Redirect, SplashScreen, Stack, router, usePathname, useRouter } from 'expo-router'
 import { createContext, useEffect } from 'react'

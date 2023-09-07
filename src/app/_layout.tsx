@@ -1,9 +1,9 @@
-import React, { Suspense, useEffect, useState } from 'react'
+import React, { Suspense, useEffect, useRef, useState } from 'react'
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context'
 import { RecoilRoot, useRecoilValue } from 'recoil'
 import RecoilNexus from 'recoil-nexus'
 import { PaperProvider, Text } from 'react-native-paper'
-import LottieOverlay from '../components/overlay/lottieOverlay'
+import LottieOverlay from '@rn-components/overlay/lottieOverlay'
 import { Link, Slot, Stack } from 'expo-router'
 import { themeService } from '../theme/themeService'
 import {
@@ -18,8 +18,9 @@ import { ThemeProvider } from '../theme/themeProvider'
 import { ThemeRetreafy } from '../theme/themes/retreafyTheme'
 var Color = require('color2')
 import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons'
-import { RowCmn, TextCmn } from '../components/common'
+import { RowCmn, TextCmn } from '@rn-components/commonUi'
 import { StatusBar } from 'expo-status-bar'
+
 /**
  *
  * TODO:
@@ -64,6 +65,7 @@ export default function App() {
                     >
                         <Suspense>
                             <LottieOverlay />
+                            <StatusBar style="light" />
                             <PaperProvider theme={theme}>
                                 <StatusBar style="light" />
                                 <Stack

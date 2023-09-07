@@ -1,14 +1,11 @@
-import { appThemeState } from "../../theme/themeStates"
-import { View } from "react-native"
-import { useRecoilValue } from "recoil"
-import { TextCmn } from "../common"
-import _ from "lodash";
-import { useState } from "react";
-import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { Ionicons } from '@expo/vector-icons';
-import { MaterialIcons } from '@expo/vector-icons';
-import { ViewStyle } from "react-native/Libraries/StyleSheet/StyleSheetTypes";
-import merge from "ts-deepmerge";
+import { appThemeState } from '../../../theme/themeStates'
+import { View } from 'react-native'
+import { useRecoilValue } from 'recoil'
+import { TextCmn } from '@rn-components/commonUi'
+import _ from 'lodash'
+import { MaterialCommunityIcons } from '@expo/vector-icons'
+import { Ionicons } from '@expo/vector-icons'
+import merge from 'ts-deepmerge'
 
 export type Props = {
     dayEvent: {
@@ -51,7 +48,6 @@ export const SchemaDetailCard = ({ dayEvent, style }: Props) => {
     )
 
     return (
-
         <View style={_style}>
             <View>
                 <TextCmn variant="titleMedium">{dayEvent.time}</TextCmn>
@@ -73,7 +69,7 @@ export const SchemaDetailCard = ({ dayEvent, style }: Props) => {
                         position: 'absolute',
                         top: -margin,
                         width: 10,
-                        height: height
+                        height: height,
                     }}
                 />
                 {Icon(dayEvent.type, theme.colors.primary)}

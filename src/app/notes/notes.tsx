@@ -1,7 +1,7 @@
 import { ScrollView, View } from 'react-native'
 import { Link, router } from 'expo-router'
 import { StatusBar } from 'expo-status-bar'
-import { GapCmn, RowCmn, ScreenCmn, SurfaceCmn, TextCmn } from '@root/src/components/common'
+import { GapCmn, RowCmn, ScreenCmn, SurfaceCmn, TextCmn } from '@rn-components/commonUi'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 import { Divider, useTheme } from 'react-native-paper'
 import NoteRow from './components/noteRow'
