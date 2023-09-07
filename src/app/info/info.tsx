@@ -7,7 +7,6 @@ export default function Info() {
     const { height, width } = useWindowDimensions()
     const styles = StyleSheet.create({
         surface: {
-            marginHorizontal: 30,
             height: 80,
             width: width - 60,
             //width: 'auto',
@@ -25,7 +24,7 @@ export default function Info() {
                     title: 'Info',
                 }}
             />
-            <ScrollView style={{ width: width }}>
+            <ScrollView style={{ width: width }} contentContainerStyle={{ alignItems: 'center' }}>
                 <GapCmn size={20} direction="vertical" />
                 <SurfaceCmn style={styles.surface} containerStyle={styles.surfaceContainer}>
                     <TextCmn

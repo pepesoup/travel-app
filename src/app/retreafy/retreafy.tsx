@@ -1,14 +1,9 @@
-import { appThemeState } from '../../theme/themeStates'
 import { SurfaceCmn, ScreenCmn, TextCmn } from '@rn-components/commonUi'
-//import { ScreenCmn, TextCmn } from '@rn-components/commonUi'
-import { Link, Redirect, SplashScreen, Stack, router, usePathname, useRouter } from 'expo-router'
-import { createContext, useEffect } from 'react'
-import { useRecoilState, useRecoilValue } from 'recoil'
-import { ThemeRetreafy } from '../../theme/themes/retreafyTheme'
-import { retreafyTheme } from '../../theme/themesDef'
+import { Redirect, SplashScreen, Stack, router, usePathname, useRouter } from 'expo-router'
+import { useEffect } from 'react'
 import { Image } from 'expo-image'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
-import { View, Text } from 'react-native'
+import { View } from 'react-native'
 import { useTheme } from 'react-native-paper'
 
 export default function Retreafy() {
@@ -16,13 +11,6 @@ export default function Retreafy() {
     useEffect(() => {
         SplashScreen.hideAsync()
     }, [])
-
-    const path = usePathname()
-    const navigation = useRouter()
-    console.log(path)
-    if (path === '/') {
-        return <Redirect href="/auth/login" />
-    }
 
     return (
         <ScreenCmn>
@@ -42,7 +30,7 @@ export default function Retreafy() {
                 <TextCmn
                     variant="titleMedium"
                     style={{
-                        color: ThemeRetreafy.colors.primary,
+                        color: theme.colors.primary,
                     }}
                 >
                     10 Dagar kvar till resan!
@@ -70,7 +58,7 @@ export default function Retreafy() {
                         width: '100%',
                     }}
                 >
-                    <SurfaceCmn text="Min resa">
+                    <SurfaceCmn text="Min resa" onPress={() => router.push('/travel/travel')}>
                         <MaterialCommunityIcons
                             name="palm-tree"
                             size={32}

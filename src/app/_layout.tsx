@@ -15,7 +15,6 @@ import {
     retreafyTheme,
 } from '../theme/themesDef'
 import { ThemeProvider } from '../theme/themeProvider'
-import { ThemeRetreafy } from '../theme/themes/retreafyTheme'
 var Color = require('color2')
 import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons'
 import { RowCmn, TextCmn } from '@rn-components/commonUi'
@@ -66,44 +65,42 @@ export default function App() {
                         <Suspense>
                             <LottieOverlay />
                             <StatusBar style="light" />
-                            <PaperProvider theme={theme}>
-                                <StatusBar style="light" />
-                                <Stack
-                                    screenOptions={{
-                                        headerStyle: {
-                                            backgroundColor: theme.colors.primaryContainer,
-                                        },
-                                        headerTintColor: 'white',
-                                        headerTitleStyle: {
-                                            fontWeight: 'bold',
-                                        },
-                                        headerBackTitleVisible: false,
-                                        headerRight,
+                            <StatusBar style="light" />
+                            <Stack
+                                screenOptions={{
+                                    headerStyle: {
+                                        backgroundColor: theme.colors.primaryContainer,
+                                    },
+                                    headerTintColor: 'white',
+                                    headerTitleStyle: {
+                                        fontWeight: 'bold',
+                                    },
+                                    headerBackTitleVisible: false,
+                                    headerRight,
+                                }}
+                                initialRouteName="/retreafy/index"
+                            >
+                                <Stack.Screen
+                                    name="notes/notes"
+                                    options={{
+                                        title: 'Aviseringar',
+                                        // Set the presentation mode to modal for our modal route.
+                                        presentation: 'modal',
+                                        headerRight: () => null,
+                                        headerLeft: modalHeaderLeft,
                                     }}
-                                    initialRouteName="/retreafy/index"
-                                >
-                                    <Stack.Screen
-                                        name="notes/notes"
-                                        options={{
-                                            title: 'Aviseringar',
-                                            // Set the presentation mode to modal for our modal route.
-                                            presentation: 'modal',
-                                            headerRight: () => null,
-                                            headerLeft: modalHeaderLeft,
-                                        }}
-                                    />
-                                    <Stack.Screen
-                                        name="auth/login"
-                                        options={{
-                                            title: 'Login',
-                                            // Set the presentation mode to modal for our modal route.
-                                            //presentation: 'modal',
-                                            headerRight: () => null,
-                                            headerLeft: () => null,
-                                        }}
-                                    />
-                                </Stack>
-                            </PaperProvider>
+                                />
+                                <Stack.Screen
+                                    name="auth/login"
+                                    options={{
+                                        title: 'Login',
+                                        // Set the presentation mode to modal for our modal route.
+                                        //presentation: 'modal',
+                                        headerRight: () => null,
+                                        headerLeft: () => null,
+                                    }}
+                                />
+                            </Stack>
                         </Suspense>
                     </SafeAreaView>
                 </SafeAreaProvider>
