@@ -1,30 +1,77 @@
 import { appThemeState } from '../../../theme/themeStates'
-import { Pressable, View } from 'react-native'
-import { useRecoilValue } from 'recoil'
+import { Pressable, View, StyleSheet, LayoutChangeEvent } from 'react-native'
+import { useRecoilState, useRecoilValue } from 'recoil'
 import { TextCmn } from '@rn-components/commonUi'
 import { intervalToDuration, formatDuration, format, addDays } from 'date-fns'
 import { sv } from 'date-fns/locale'
 import _ from 'lodash'
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { SchemaDetailCard } from './schemaDetailCard'
+import { MotiView, useDynamicAnimation } from 'moti'
+import { Easing } from 'react-native-reanimated'
+import { showDetailsState } from '../state/detailsState'
 
-export const SchemaDayCard = ({ startDate, plusDays }: any) => {
+export const SchemaDayCard = (props: any) => {
+    const { startDate, plusDays, ...restProps } = props
+    //const [showDetails, setShowDetails] = useState<any>(null)
+    const [showDetails, setShowDetails] = useRecoilState(showDetailsState)
     const date = addDays(startDate, plusDays)
     const theme = useRecoilValue(appThemeState)
     const dayName = _.upperFirst(format(date, 'EEEE', { locale: sv }))
     const dayNumber = format(date, 'dd', { locale: sv })
     const monthName = _.upperFirst(format(date, 'LLLL', { locale: sv }))
-    const [showDetails, setShowDetails] = useState(false)
+    const [detailsHeight, setDetailsHeight] = useState<any>()
+    const [animationState, setAnimationState] = useState<any>(() => {})
+
+    const animation = useDynamicAnimation(() => ({
+        height: 0,
+        opacity: 0,
+    }))
+    const duration = 800
+    //const animationType = { easing: Easing.inOut(Easing.quad) }
+    const animationType = {}
+
+    useEffect(() => {
+        if (showDetails === plusDays) {
+            animation.animateTo((current) => ({
+                height: detailsHeight,
+                opacity: 1,
+                transition: { type: 'timing', duration, ...animationType },
+            }))
+        } else {
+            animation.animateTo((current) => ({
+                height: 0,
+                opacity: 0,
+                transition: { type: 'timing', duration, ...animationType },
+            }))
+        }
+    }, [showDetails])
+
+    const onPress = () => {
+        if (showDetails === plusDays) {
+            setShowDetails(null)
+        } else {
+            setShowDetails(plusDays)
+        }
+    }
+    const onDetailsLayout = ({ nativeEvent }: any) => {
+        if (!detailsHeight) {
+            const { height } = nativeEvent.layout
+            setDetailsHeight(height)
+            setAnimationState(animation)
+        }
+    }
 
     const Details = () => {
-        if (!showDetails) {
-            return null
-        }
         return (
-            <View
-                style={{
-                    flex: 1,
-                }}
+            <MotiView
+                state={animationState}
+                style={[
+                    {
+                        overflow: 'hidden',
+                    },
+                ]}
+                onLayout={(e) => onDetailsLayout(e)}
             >
                 <SchemaDetailCard
                     dayEvent={{ type: 'walk', time: '08:00', label: 'Morgonpromenad' }}
@@ -46,7 +93,7 @@ export const SchemaDayCard = ({ startDate, plusDays }: any) => {
                 <SchemaDetailCard
                     dayEvent={{ type: 'meal', time: '19:00', label: 'Gemensam middag' }}
                 />
-            </View>
+            </MotiView>
         )
     }
 
@@ -56,10 +103,11 @@ export const SchemaDayCard = ({ startDate, plusDays }: any) => {
                 width: '80%',
                 marginBottom: 20,
             }}
+            {...restProps}
         >
             <Pressable
                 onPress={() => {
-                    setShowDetails(!showDetails)
+                    onPress()
                 }}
             >
                 <View
@@ -100,7 +148,30 @@ export const SchemaDayCard = ({ startDate, plusDays }: any) => {
                     </View>
                 </View>
             </Pressable>
+
             {Details()}
         </View>
     )
 }
+
+const styles = StyleSheet.create({
+    shape: {
+        justifyContent: 'center',
+        height: 250,
+        width: 250,
+        borderRadius: 25,
+        marginRight: 10,
+        backgroundColor: 'black',
+    },
+    shape2: {
+        backgroundColor: 'hotpink',
+        marginTop: 16,
+    },
+    container: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+        flexDirection: 'row',
+        backgroundColor: '#111',
+    },
+})
