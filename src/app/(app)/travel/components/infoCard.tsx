@@ -1,4 +1,4 @@
-import { LinkCmn, TextCmn } from '@root/src/rn-components/src/components/commonUi'
+import { Links, TextCmn } from '@root/src/rn-components/src/components/commonUi'
 import TextRowCmn from '@root/src/rn-components/src/components/commonUi/text/textRowCmn'
 import { View, StyleSheet } from 'react-native'
 import { useTheme } from 'react-native-paper'
@@ -40,21 +40,23 @@ export const InfoCard = () => {
                     style={styles.linkText}
                     styleContainer={{ paddingTop: 10 }}
                 >
-                    <LinkCmn url="tel:+367658585">+36-7658585</LinkCmn>
+                    <Links.LinkCmn url="tel:+367658585">+36-7658585</Links.LinkCmn>
                 </TextRowCmn>
                 <TextRowCmn
                     label="E-post:"
                     style={styles.linkText}
                     styleContainer={{ paddingTop: 10 }}
                 >
-                    <LinkCmn url="mailto:sunny.inn@mail.com">sunny.inn@mail.com</LinkCmn>
+                    <Links.LinkCmn url="mailto:sunny.inn@mail.com">
+                        sunny.inn@mail.com
+                    </Links.LinkCmn>
                 </TextRowCmn>
                 <TextRowCmn
                     label="Hemsida:"
                     style={styles.linkText}
                     styleContainer={{ paddingTop: 10 }}
                 >
-                    <LinkCmn url={testUrl}>sunnyinn.com</LinkCmn>
+                    <Links.LinkCmn url={testUrl}>sunnyinn.com</Links.LinkCmn>
                 </TextRowCmn>
             </View>
         </View>
