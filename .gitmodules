@@ -2,3 +2,7 @@
 	path = src/rn-components
 	url = https://github.com/pepesoup/rn-components
 	branch = main
+[submodule "src/rne-firebase"]
+	path = src/rne-firebase
+	url = https://github.com/pepesoup/rne-firebase.git
+	branch = main

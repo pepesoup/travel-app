@@ -2,8 +2,6 @@ import { Provider as PaperProvider } from 'react-native-paper'
 import { useEffect } from 'react'
 import { View } from 'react-native'
 import { StatusBar } from 'expo-status-bar'
-import { useRecoilState, useRecoilValue } from 'recoil'
-import { themeService } from './themeService'
 
 export type Props = {
     children: any

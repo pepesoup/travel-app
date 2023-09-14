@@ -1,10 +1,11 @@
 import { ScrollView, View } from 'react-native'
-import { Link, router } from 'expo-router'
+import { Link, Stack, router } from 'expo-router'
 import { StatusBar } from 'expo-status-bar'
 import { GapCmn, RowCmn, ScreenCmn, SurfaceCmn, TextCmn } from '@rn-components/commonUi'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 import { Divider, useTheme } from 'react-native-paper'
 import NoteRow from './components/noteRow'
+import { modalHeaderLeft } from '@src/app/(app)/_layout'
 
 export default function Modal() {
     // If the page was reloaded or navigated to directly, then the modal should be presented as

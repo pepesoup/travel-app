@@ -1,22 +1,19 @@
-import { appThemeState } from '../../../theme/themeStates'
-import { Pressable, View, StyleSheet, LayoutChangeEvent } from 'react-native'
-import { useRecoilState, useRecoilValue } from 'recoil'
+import { Pressable, View, StyleSheet } from 'react-native'
 import { TextCmn } from '@rn-components/commonUi'
-import { intervalToDuration, formatDuration, format, addDays } from 'date-fns'
+import { format, addDays } from 'date-fns'
 import { sv } from 'date-fns/locale'
 import _ from 'lodash'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { SchemaDetailCard } from './schemaDetailCard'
 import { MotiView, useDynamicAnimation } from 'moti'
-import { Easing } from 'react-native-reanimated'
-import { showDetailsState } from '../state/detailsState'
+import { useShowDetailsStoreBase } from '../store'
+import { useTheme } from 'react-native-paper'
 
 export const SchemaDayCard = (props: any) => {
     const { startDate, plusDays, ...restProps } = props
-    //const [showDetails, setShowDetails] = useState<any>(null)
-    const [showDetails, setShowDetails] = useRecoilState(showDetailsState)
+    const showDetails = useShowDetailsStoreBase().selected
     const date = addDays(startDate, plusDays)
-    const theme = useRecoilValue(appThemeState)
+    const theme = useTheme()
     const dayName = _.upperFirst(format(date, 'EEEE', { locale: sv }))
     const dayNumber = format(date, 'dd', { locale: sv })
     const monthName = _.upperFirst(format(date, 'LLLL', { locale: sv }))
@@ -32,6 +29,7 @@ export const SchemaDayCard = (props: any) => {
     const animationType = {}
 
     useEffect(() => {
+        console.log('showDetails:', showDetails)
         if (showDetails === plusDays) {
             animation.animateTo((current) => ({
                 height: detailsHeight,
@@ -49,9 +47,9 @@ export const SchemaDayCard = (props: any) => {
 
     const onPress = () => {
         if (showDetails === plusDays) {
-            setShowDetails(null)
+            useShowDetailsStoreBase.setState({ selected: null })
         } else {
-            setShowDetails(plusDays)
+            useShowDetailsStoreBase.setState({ selected: plusDays })
         }
     }
     const onDetailsLayout = ({ nativeEvent }: any) => {

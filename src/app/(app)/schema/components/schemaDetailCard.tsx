@@ -1,11 +1,11 @@
-import { appThemeState } from '../../../theme/themeStates'
+import { appThemeState } from '../../../../theme/themeStates'
 import { View } from 'react-native'
-import { useRecoilValue } from 'recoil'
 import { TextCmn } from '@rn-components/commonUi'
 import _ from 'lodash'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 import { Ionicons } from '@expo/vector-icons'
 import merge from 'ts-deepmerge'
+import { useTheme } from 'react-native-paper'
 
 export type Props = {
     dayEvent: {
@@ -32,7 +32,7 @@ const Icon = (type: Props['dayEvent']['type'], color: string) => {
 }
 
 export const SchemaDetailCard = ({ dayEvent, style }: Props) => {
-    const theme = useRecoilValue(appThemeState)
+    const theme = useTheme()
     const height = 80
     const margin = 20
 

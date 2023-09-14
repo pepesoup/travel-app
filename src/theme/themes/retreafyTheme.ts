@@ -10,9 +10,8 @@ export const ThemeRetreafy: MD3Theme = merge(
             primary: "rgba(170, 155,159, 1)",
             primaryContainer: "rgba(227, 188, 211, 1)",
             onBackground: "rgba(22, 22, 22, 1)",
-            text: "rgb(22, 22, 22)",
-            /* surface */
-            "onSurface": "rgba(22, 22, 22, 1)",
+            //text: "rgb(22, 22, 22)",
+            onSurface: "rgba(22, 22, 22, 1)",
             elevation: {
                 level0: "transparent",
                 level1: "white",

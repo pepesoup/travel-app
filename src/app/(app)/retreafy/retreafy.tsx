@@ -1,16 +1,12 @@
 import { SurfaceCmn, ScreenCmn, TextCmn } from '@rn-components/commonUi'
-import { Redirect, SplashScreen, Stack, router, usePathname, useRouter } from 'expo-router'
-import { useEffect } from 'react'
+import { Stack, router } from 'expo-router'
 import { Image } from 'expo-image'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 import { View } from 'react-native'
 import { useTheme } from 'react-native-paper'
 
-export default function Retreafy() {
+export default function RetreafyIndex() {
     const theme = useTheme()
-    useEffect(() => {
-        SplashScreen.hideAsync()
-    }, [])
 
     return (
         <ScreenCmn>
@@ -38,7 +34,7 @@ export default function Retreafy() {
             </View>
             <View style={{ flex: 1, padding: 20, alignItems: 'center' }}>
                 <Image
-                    source={require('../../assets/dev/avatar1.png')}
+                    source={require('@src/assets/dev/avatar1.png')}
                     style={{
                         //flex: 1,
                         width: '40%',

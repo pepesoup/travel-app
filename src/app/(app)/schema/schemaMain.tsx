@@ -1,25 +1,24 @@
 import { ScreenCmn } from '@rn-components/commonUi'
-import { SplashScreen, Stack } from 'expo-router'
+import { Stack } from 'expo-router'
 import { useEffect, useRef } from 'react'
-import { ScrollView, View } from 'react-native'
+import { View } from 'react-native'
 import { SchemaDayCard } from './components/schemaDayCard'
 import { MotiScrollView } from 'moti'
-import { useRecoilState } from 'recoil'
-import { showDetailsState } from './state/detailsState'
+import { useShowDetailsStoreBase } from './store'
 
 export default function SchemaMain() {
-    const [showDetails, setShowDetails] = useRecoilState(showDetailsState)
+    //const [showDetails, setShowDetails] = useRecoilState(showDetailsState)
+    const showDetails = useShowDetailsStoreBase().selected
     const scrollViewRef = useRef<any>(null)
 
     useEffect(() => {
+        console.log('SchemaMain - showDetails:', showDetails)
         if (showDetails !== null) {
-            setTimeout(() => {
-                scrollViewRef.current.scrollTo({
-                    x: 0,
-                    y: (showDetails + 0) * 112 + 30,
-                    animated: 1000,
-                })
-            }, 0)
+            scrollViewRef.current.scrollTo({
+                x: 0,
+                y: (showDetails + 0) * 112 + 30,
+                animated: 0,
+            })
         }
     }, [showDetails])
 
@@ -33,9 +32,6 @@ export default function SchemaMain() {
                 }}
             />
             <MotiScrollView
-                onLayout={(e) => {
-                    console.log('sv layout:', e.nativeEvent.layout)
-                }}
                 onContentSizeChange={(w, h) => {
                     console.log(h)
                     if (showDetails !== null) {

@@ -1,11 +1,7 @@
-import { View, ViewStyle } from 'react-native'
-import { Link, Stack, router } from 'expo-router'
-import { StatusBar } from 'expo-status-bar'
-import { ButtonCmn, GapCmn, RowCmn, ScreenCmn, SurfaceCmn, TextCmn } from '@rn-components/commonUi'
-import { MaterialCommunityIcons } from '@expo/vector-icons'
+import { View } from 'react-native'
+import { Stack } from 'expo-router'
+import { ButtonCmn, GapCmn, RowCmn, ScreenCmn, TextCmn } from '@rn-components/commonUi'
 import { useTheme } from 'react-native-paper'
-import { IconProps } from 'react-native-vector-icons/Icon'
-import merge from 'ts-deepmerge'
 import { Image } from 'expo-image'
 import * as Linking from 'expo-linking'
 
@@ -27,7 +23,7 @@ export default function Contact() {
                 }}
             >
                 <Image
-                    source={require('../../assets/dev/mårten1.png')}
+                    source={require('@src/assets/dev/mårten1.png')}
                     style={{
                         flex: 1,
                         width: '100%',

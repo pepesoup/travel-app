@@ -8,11 +8,12 @@
             "@root/*": ["./*"],
             "@src/*": ["./src/*"],
             "@components/*": ["./src/components/*"],
-            "@rn-components/*": ["./src/rn-components/src/components/*"]
+            "@rn-components/*": ["./src/rn-components/src/components/*"],
+            "@rne-firebase/*": ["./src/rne-firebase/src/*"]
         }
     },
     "extends": "expo/tsconfig.base",
     "typeRoots": ["./types"],
-    "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "**/**/*.ts", "**/**/*.tsx"],
+    "include": ["env.d.ts", "**/*.ts", "**/*.tsx", "**/**/*.ts", "**/**/*.tsx"],
     "exclude": ["node_modules"]
 }

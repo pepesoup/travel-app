@@ -1,16 +1,13 @@
-import { appThemeState } from '../../theme/themeStates'
-import { RowCmn, ScreenCmn, SurfaceCmn, TextCmn } from '@rn-components/commonUi'
-import { Link, SplashScreen, Stack, router, useRouter } from 'expo-router'
-import { useEffect } from 'react'
-import { Button, ScrollView, StyleSheet, View } from 'react-native'
-import { Avatar, Surface, Text } from 'react-native-paper'
-import { useRecoilState, useRecoilValue } from 'recoil'
+import { RowCmn, ScreenCmn, TextCmn } from '@rn-components/commonUi'
+import { Stack } from 'expo-router'
+import { View } from 'react-native'
+import { useTheme } from 'react-native-paper'
 import { LinearGradient } from 'expo-linear-gradient'
 import { Image } from 'expo-image'
 import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons'
 
 export default function Profile() {
-    const theme = useRecoilValue(appThemeState)
+    const theme = useTheme()
 
     return (
         <ScreenCmn>
@@ -29,7 +26,7 @@ export default function Profile() {
             >
                 <View style={{ height: '40%', alignItems: 'center', justifyContent: 'center' }}>
                     <Image
-                        source={require('../../assets/dev/avatar1.png')}
+                        source={require('@src/assets/dev/avatar1.png')}
                         style={{
                             //flex: 1,
                             width: '33%',
@@ -45,7 +42,7 @@ export default function Profile() {
                         <MaterialCommunityIcons
                             name="email-outline"
                             size={24}
-                            color={theme.colors.text}
+                            color={theme.colors.onSurface}
                         />
                         <TextCmn>MarieNilsson@gmail.com</TextCmn>
                     </RowCmn>
@@ -53,7 +50,7 @@ export default function Profile() {
                         <MaterialCommunityIcons
                             name="phone-outline"
                             size={24}
-                            color={theme.colors.text}
+                            color={theme.colors.onSurface}
                         />
                         <TextCmn>‭070-244 55 40‬</TextCmn>
                     </RowCmn>
@@ -61,19 +58,19 @@ export default function Profile() {
                         <MaterialCommunityIcons
                             name="account-circle-outline"
                             size={24}
-                            color={theme.colors.text}
+                            color={theme.colors.onSurface}
                         />
                         <TextCmn>Redigera profil</TextCmn>
                     </RowCmn>
                     <RowCmn>
-                        <MaterialIcons name="settings" size={24} color={theme.colors.text} />
+                        <MaterialIcons name="settings" size={24} color={theme.colors.onSurface} />
                         <TextCmn>Inställningar</TextCmn>
                     </RowCmn>
                     <RowCmn>
                         <MaterialIcons
                             name="power-settings-new"
                             size={24}
-                            color={theme.colors.text}
+                            color={theme.colors.onSurface}
                         />
                         <TextCmn>Logga ut</TextCmn>
                     </RowCmn>

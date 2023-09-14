@@ -35,7 +35,13 @@ export const InfoCard = () => {
             </View>
             <View style={{ backgroundColor: theme.colors.background, padding: 10 }}>
                 <TextRowCmn label="Adress:">Street name 36 23455, Chania Grekland</TextRowCmn>
-                <TextRowCmn label="Telefon:">+36-7658585</TextRowCmn>
+                <TextRowCmn
+                    label="Telefon:"
+                    style={styles.linkText}
+                    styleContainer={{ paddingTop: 10 }}
+                >
+                    <LinkCmn url="tel:+367658585">+36-7658585</LinkCmn>
+                </TextRowCmn>
                 <TextRowCmn
                     label="E-post:"
                     style={styles.linkText}
