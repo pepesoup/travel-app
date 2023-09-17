@@ -9,11 +9,12 @@
             "@src/*": ["./src/*"],
             "@components/*": ["./src/components/*"],
             "@rn-components/*": ["./src/rn-components/src/components/*"],
-            "@rne-firebase/*": ["./src/rne-firebase/src/*"]
+            "@rne-firebase/*": ["./src/rne-firebase/src/*"],
+            "@data/*": ["./data/*"]
         }
     },
     "extends": "expo/tsconfig.base",
     "typeRoots": ["./types"],
-    "include": ["env.d.ts", "**/*.ts", "**/*.tsx", "**/**/*.ts", "**/**/*.tsx"],
+    "include": ["**/*.d.ts", "**/*.ts", "**/*.tsx", "**/**/*.ts", "**/**/*.tsx"],
     "exclude": ["node_modules"]
 }

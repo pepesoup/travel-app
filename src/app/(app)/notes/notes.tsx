@@ -5,7 +5,7 @@ import { GapCmn, RowCmn, ScreenCmn, SurfaceCmn, TextCmn } from '@rn-components/c
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 import { Divider, useTheme } from 'react-native-paper'
 import NoteRow from './components/noteRow'
-import { modalHeaderLeft } from '@src/app/(app)/_layout'
+import { ModalHeaderLeft } from '@src/app/(app)/_layout'
 
 export default function Modal() {
     // If the page was reloaded or navigated to directly, then the modal should be presented as

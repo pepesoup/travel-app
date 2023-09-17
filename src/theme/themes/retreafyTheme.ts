@@ -1,27 +1,26 @@
 import { MD3Theme, MD3LightTheme } from 'react-native-paper'
-import _ from "lodash";
-import merge from "ts-deepmerge";
+import _ from 'lodash'
+import merge from 'ts-deepmerge'
 
-export const ThemeRetreafy: MD3Theme = merge(
-    MD3LightTheme,
-    {
-        colors: {
-            background: "rgb(246, 242, 240)",
-            primary: "rgba(170, 155,159, 1)",
-            primaryContainer: "rgba(227, 188, 211, 1)",
-            onBackground: "rgba(22, 22, 22, 1)",
-            //text: "rgb(22, 22, 22)",
-            onSurface: "rgba(22, 22, 22, 1)",
-            elevation: {
-                level0: "transparent",
-                level1: "white",
-                level2: "white",
-                level3: "white",
-                level4: "white",
-                level5: "white"
-            },
-        }
-    })
+export const ThemeRetreafy: MD3Theme = merge(MD3LightTheme, {
+    colors: {
+        background: 'rgb(246, 242, 240)',
+        primary: 'rgba(170, 155,159, 1)',
+        primaryContainer: 'rgba(227, 188, 211, 1)',
+        onBackground: 'rgba(22, 22, 22, 1)',
+        onSurface: 'rgba(22, 22, 22, 1)',
+        tertiaryContainer: 'rgba(55, 135, 255, 1)',
+        onTertiaryContainer: 'rgba(255, 255, 255, 1)',
+        elevation: {
+            level0: 'transparent',
+            level1: 'white',
+            level2: 'white',
+            level3: 'white',
+            level4: 'white',
+            level5: 'white',
+        },
+    },
+})
 
 /*
 export const _ThemeRetreafy: MD3Theme = {

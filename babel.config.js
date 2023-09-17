@@ -14,6 +14,7 @@ module.exports = function (api) {
                         '@components': './src/components',
                         '@rn-components': './src/rn-components/src/components',
                         '@rne-firebase': ['./src/rne-firebase/src'],
+                        '@data': ['./data'],
                     },
                 },
             ],

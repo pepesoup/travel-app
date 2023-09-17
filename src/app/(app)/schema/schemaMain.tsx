@@ -1,26 +1,42 @@
 import { ScreenCmn } from '@rn-components/commonUi'
-import { Stack } from 'expo-router'
-import { useEffect, useRef } from 'react'
-import { View } from 'react-native'
+import { Stack, usePathname, useRouter } from 'expo-router'
+import { useEffect, useRef, useState } from 'react'
+import { Pressable, View, Modal } from 'react-native'
 import { SchemaDayCard } from './components/schemaDayCard'
 import { MotiScrollView } from 'moti'
-import { useShowDetailsStoreBase } from './store'
+import { useSchemaUiStoreBase } from './schemaUiStore'
+import { useTravelStoreBase } from '@root/src/stores/travels/travelStore'
+import { DataProvider } from '@root/src/rne-firebase/src/components/data/dataProvider/dataProvider'
+import { HeaderRight } from '../_layout'
+import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons'
+import { FAB, Portal, useTheme } from 'react-native-paper'
+import { colors } from './components/colors'
+import { EditModal } from './components/editModal'
+import { EditDay } from './components/editDay'
+import { DayFab } from './edit/components/dayFab'
 
 export default function SchemaMain() {
-    //const [showDetails, setShowDetails] = useRecoilState(showDetailsState)
-    const showDetails = useShowDetailsStoreBase().selected
+    const uiStore = useSchemaUiStoreBase()
     const scrollViewRef = useRef<any>(null)
+    const travel = useTravelStoreBase()
+    const theme = useTheme()
+    const [date, setDate] = useState(new Date())
+    const router = useRouter()
+    const path = usePathname()
 
     useEffect(() => {
-        console.log('SchemaMain - showDetails:', showDetails)
-        if (showDetails !== null) {
-            scrollViewRef.current.scrollTo({
+        useSchemaUiStoreBase.setState({ enableFabs: path === '/schema/schemaMain' })
+    }, [path])
+
+    useEffect(() => {
+        if (uiStore.selectedDay !== null) {
+            scrollViewRef.current?.scrollTo({
                 x: 0,
-                y: (showDetails + 0) * 112 + 30,
+                y: (uiStore.selectedDay + 0) * 112 + 30 || 0,
                 animated: 0,
             })
         }
-    }, [showDetails])
+    }, [uiStore.selectedDay])
 
     useEffect(() => {}, [])
 
@@ -29,41 +45,69 @@ export default function SchemaMain() {
             <Stack.Screen
                 options={{
                     title: 'Schema',
+                    headerRight: () => (
+                        <>
+                            <HeaderRight />
+                            <Pressable
+                                onPress={() => {
+                                    uiStore.toggleAdminMode()
+                                }}
+                            >
+                                <MaterialCommunityIcons
+                                    name="pencil"
+                                    size={24}
+                                    color={
+                                        uiStore.isAdminMode
+                                            ? theme.colors.tertiaryContainer
+                                            : theme.colors.primary
+                                    }
+                                />
+                            </Pressable>
+                        </>
+                    ),
                 }}
             />
-            <MotiScrollView
-                onContentSizeChange={(w, h) => {
-                    console.log(h)
-                    if (showDetails !== null) {
-                        const target = (showDetails + 0) * 112 + 30
-                        setTimeout(() => {
-                            scrollViewRef.current.scrollTo({
-                                x: 0,
-                                y: Math.min(target, h - 30),
-                                //animated: 1000,
-                            })
-                        }, 0)
-                    }
-                }}
-                style={{
-                    width: '100%',
-                    //marginTop: 30,
-                    paddingTop: 30,
-                }}
-                contentContainerStyle={{
-                    alignItems: 'center',
-                }}
-                ref={scrollViewRef}
-            >
-                <SchemaDayCard startDate={new Date()} plusDays={0} />
-                <SchemaDayCard startDate={new Date()} plusDays={1} />
-                <SchemaDayCard startDate={new Date()} plusDays={2} />
-                <SchemaDayCard startDate={new Date()} plusDays={3} />
-                <SchemaDayCard startDate={new Date()} plusDays={4} />
-                <SchemaDayCard startDate={new Date()} plusDays={5} />
-                <SchemaDayCard startDate={new Date()} plusDays={6} />
-                <View style={{ height: 40 }} />
-            </MotiScrollView>
+            <DataProvider storeStates={[useTravelStoreBase()]} fallbackOnNullValue>
+                <DayFab />
+
+                <MotiScrollView
+                    onContentSizeChange={(w, h) => {
+                        if (uiStore.selectedDay !== null) {
+                            const target = (uiStore.selectedDay + 0) * 112 + 30
+                            setTimeout(() => {
+                                scrollViewRef.current.scrollTo({
+                                    x: 0,
+                                    y: Math.min(target, h - 30),
+                                    //animated: 1000,
+                                })
+                            }, 0)
+                        }
+                    }}
+                    style={{
+                        width: '100%',
+                        //marginTop: 30,
+                        paddingTop: 30,
+                    }}
+                    contentContainerStyle={{
+                        alignItems: 'center',
+                    }}
+                    ref={scrollViewRef}
+                >
+                    {Object.entries(travel.content?.schema || {}).map(
+                        ([day, events]: [string, any]) => {
+                            return (
+                                <SchemaDayCard
+                                    startDate={travel?.content.startDate}
+                                    day={Number(day)}
+                                    events={events}
+                                    key={`dayCard-${day}`}
+                                />
+                            )
+                        }
+                    )}
+                    <View style={{ height: 40 }} />
+                </MotiScrollView>
+            </DataProvider>
         </ScreenCmn>
     )
 }

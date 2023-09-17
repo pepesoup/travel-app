@@ -6,13 +6,22 @@ import _ from 'lodash'
 import { useEffect, useState } from 'react'
 import { SchemaDetailCard } from './schemaDetailCard'
 import { MotiView, useDynamicAnimation } from 'moti'
-import { useShowDetailsStoreBase } from '../store'
+import { useSchemaUiStoreBase } from '../schemaUiStore'
 import { useTheme } from 'react-native-paper'
+import { Event } from '@src/stores/types'
+import { colors } from './colors'
 
-export const SchemaDayCard = (props: any) => {
-    const { startDate, plusDays, ...restProps } = props
-    const showDetails = useShowDetailsStoreBase().selected
-    const date = addDays(startDate, plusDays)
+export type Props = {
+    startDate: Date
+    day: number
+    events: { [time: string]: Event }
+}
+
+export const SchemaDayCard = (props: Props) => {
+    const { startDate, day, events, ...restProps } = props
+    //const showDetails = useSchemaUiStoreBase().selectedDay
+    const uiStore = useSchemaUiStoreBase()
+    const date = addDays(startDate, day)
     const theme = useTheme()
     const dayName = _.upperFirst(format(date, 'EEEE', { locale: sv }))
     const dayNumber = format(date, 'dd', { locale: sv })
@@ -29,8 +38,7 @@ export const SchemaDayCard = (props: any) => {
     const animationType = {}
 
     useEffect(() => {
-        console.log('showDetails:', showDetails)
-        if (showDetails === plusDays) {
+        if (uiStore.selectedDay === day) {
             animation.animateTo((current) => ({
                 height: detailsHeight,
                 opacity: 1,
@@ -43,13 +51,13 @@ export const SchemaDayCard = (props: any) => {
                 transition: { type: 'timing', duration, ...animationType },
             }))
         }
-    }, [showDetails])
+    }, [uiStore.selectedDay])
 
     const onPress = () => {
-        if (showDetails === plusDays) {
-            useShowDetailsStoreBase.setState({ selected: null })
+        if (uiStore.selectedDay === day) {
+            useSchemaUiStoreBase.setState({ selectedDay: null })
         } else {
-            useShowDetailsStoreBase.setState({ selected: plusDays })
+            useSchemaUiStoreBase.setState({ selectedDay: day })
         }
     }
     const onDetailsLayout = ({ nativeEvent }: any) => {
@@ -67,30 +75,21 @@ export const SchemaDayCard = (props: any) => {
                 style={[
                     {
                         overflow: 'hidden',
+                        paddingTop: 10,
                     },
                 ]}
                 onLayout={(e) => onDetailsLayout(e)}
             >
-                <SchemaDetailCard
-                    dayEvent={{ type: 'walk', time: '08:00', label: 'Morgonpromenad' }}
-                    style={{ marginTop: 10 }}
-                />
-                <SchemaDetailCard dayEvent={{ type: 'meal', time: '08:30', label: 'Frukost' }} />
-                <SchemaDetailCard dayEvent={{ type: 'yoga', time: '10:30', label: 'Yoga' }} />
-                <SchemaDetailCard dayEvent={{ type: 'meal', time: '12:30', label: 'Lunch' }} />
-                <SchemaDetailCard
-                    dayEvent={{
-                        type: 'exercise',
-                        time: '15:30',
-                        label: 'Smart träning med Mårten',
-                    }}
-                />
-                <SchemaDetailCard
-                    dayEvent={{ type: 'lecture', time: '17:30', label: 'Föreläsning med Mårten' }}
-                />
-                <SchemaDetailCard
-                    dayEvent={{ type: 'meal', time: '19:00', label: 'Gemensam middag' }}
-                />
+                {Object.entries(events).map(([time, event]: [string, any], i: number) => {
+                    return (
+                        <SchemaDetailCard
+                            time={time}
+                            event={event}
+                            style={{ marginTop: 0 }}
+                            key={`detailsCard-${i}`}
+                        />
+                    )
+                })}
             </MotiView>
         )
     }
@@ -113,6 +112,8 @@ export const SchemaDayCard = (props: any) => {
                         flexDirection: 'row',
                         borderRadius: 5,
                         overflow: 'hidden',
+                        borderWidth: uiStore.isAdminMode && day === uiStore.selectedDay ? 2 : 0,
+                        borderColor: theme.colors.tertiaryContainer,
                     }}
                 >
                     <View
@@ -142,7 +143,7 @@ export const SchemaDayCard = (props: any) => {
                         }}
                     >
                         <TextCmn variant="titleLarge">{dayName}</TextCmn>
-                        <TextCmn variant="titleMedium">Dag {plusDays + 1}</TextCmn>
+                        <TextCmn variant="titleMedium">Dag {day + 1}</TextCmn>
                     </View>
                 </View>
             </Pressable>

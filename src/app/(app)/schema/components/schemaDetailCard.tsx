@@ -2,22 +2,19 @@ import { appThemeState } from '../../../../theme/themeStates'
 import { View } from 'react-native'
 import { TextCmn } from '@rn-components/commonUi'
 import _ from 'lodash'
-import { MaterialCommunityIcons } from '@expo/vector-icons'
-import { Ionicons } from '@expo/vector-icons'
+import { MaterialCommunityIcons, Ionicons } from '@expo/vector-icons'
 import merge from 'ts-deepmerge'
 import { useTheme } from 'react-native-paper'
+import { Event, EventType } from '@src/stores/types'
 
 export type Props = {
-    dayEvent: {
-        time: string
-        type: 'walk' | 'meal' | 'yoga' | 'exercise' | 'lecture'
-        label: string
-    }
+    time: string
+    event: Event
     style?: any
 }
 
-const Icon = (type: Props['dayEvent']['type'], color: string) => {
-    switch (type) {
+const Icon = (type: EventType, color: string) => {
+    switch (type.name) {
         case 'walk':
             return <MaterialCommunityIcons name="walk" size={32} color={color} />
         case 'meal':
@@ -31,7 +28,7 @@ const Icon = (type: Props['dayEvent']['type'], color: string) => {
     }
 }
 
-export const SchemaDetailCard = ({ dayEvent, style }: Props) => {
+export const SchemaDetailCard = ({ time, event, style }: Props) => {
     const theme = useTheme()
     const height = 80
     const margin = 20
@@ -50,7 +47,7 @@ export const SchemaDetailCard = ({ dayEvent, style }: Props) => {
     return (
         <View style={_style}>
             <View>
-                <TextCmn variant="titleMedium">{dayEvent.time}</TextCmn>
+                <TextCmn variant="titleMedium">{time}</TextCmn>
             </View>
             <View
                 style={{
@@ -72,10 +69,10 @@ export const SchemaDetailCard = ({ dayEvent, style }: Props) => {
                         height: height,
                     }}
                 />
-                {Icon(dayEvent.type, theme.colors.primary)}
+                {Icon(event.type, theme.colors.primary)}
             </View>
             <View style={{ flex: 1 }}>
-                <TextCmn>{dayEvent.label}</TextCmn>
+                <TextCmn>{event.description}</TextCmn>
             </View>
         </View>
     )

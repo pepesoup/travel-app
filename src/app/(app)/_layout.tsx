@@ -1,4 +1,4 @@
-import { Text, useTheme } from 'react-native-paper'
+import { Portal, Text, useTheme } from 'react-native-paper'
 import {
     Link,
     Redirect,
@@ -13,7 +13,7 @@ import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons'
 import { RowCmn, TextCmn } from '@rn-components/commonUi'
 import { useEffect } from 'react'
 
-export const modalHeaderLeft = () => {
+export const ModalHeaderLeft = () => {
     return (
         <TextCmn style={{ color: 'white', marginBottom: -15 }}>
             <Link href="../">Stäng</Link>
@@ -21,7 +21,7 @@ export const modalHeaderLeft = () => {
     )
 }
 
-export const headerRight = () => {
+export const HeaderRight = () => {
     return (
         <RowCmn>
             <Link href="/notes/notes">
@@ -69,7 +69,7 @@ export default function Layout_AppApp() {
                     fontWeight: 'bold',
                 },
                 headerBackTitleVisible: false,
-                headerRight,
+                headerRight: HeaderRight,
             }}
         >
             <Stack.Screen
@@ -79,7 +79,7 @@ export default function Layout_AppApp() {
                     // Set the presentation mode to modal for our modal route.
                     presentation: 'modal',
                     headerRight: () => null,
-                    headerLeft: modalHeaderLeft,
+                    headerLeft: ModalHeaderLeft,
                 }}
             />
             <Stack.Screen
@@ -89,7 +89,7 @@ export default function Layout_AppApp() {
                     // Set the presentation mode to modal for our modal route.
                     presentation: 'modal',
                     headerRight: () => null,
-                    headerLeft: modalHeaderLeft,
+                    headerLeft: ModalHeaderLeft,
                 }}
             />
         </Stack>
