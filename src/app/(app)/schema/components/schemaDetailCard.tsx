@@ -44,10 +44,14 @@ export const SchemaDetailCard = ({ time, event, style }: Props) => {
         style || {}
     )
 
+    const fixTimeString = (time: string) => {
+        const [hour, minute] = time.split(':')
+        return `${hour.padStart(2, '0')}:${minute.padStart(2, '0')}`
+    }
     return (
         <View style={_style}>
-            <View>
-                <TextCmn variant="titleMedium">{time}</TextCmn>
+            <View style={{ width: 50 }}>
+                <TextCmn variant="titleMedium">{fixTimeString(time)}</TextCmn>
             </View>
             <View
                 style={{
@@ -57,7 +61,7 @@ export const SchemaDetailCard = ({ time, event, style }: Props) => {
                     borderRadius: height / 2,
                     justifyContent: 'center',
                     alignItems: 'center',
-                    marginHorizontal: 15,
+                    marginHorizontal: 10,
                 }}
             >
                 <View

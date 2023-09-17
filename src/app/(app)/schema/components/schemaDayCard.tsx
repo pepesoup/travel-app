@@ -71,7 +71,7 @@ export const SchemaDayCard = (props: Props) => {
                 transition: { type: 'timing', duration, ...animationType },
             }))
         }
-    }, [travelStore])
+    }, [travelStore, uiStore.selectedDay])
 
     const onPress = () => {
         if (uiStore.selectedDay === day) {
@@ -109,7 +109,7 @@ export const SchemaDayCard = (props: Props) => {
                         const bb = Number(b[0].replace(':', ''))
                         return aa - bb
                     })
-                    .map(([time, event]: [string, any], i: number) => {
+                    .map(([time, event]: [string, Event], i: number) => {
                         return (
                             <SchemaDetailCard
                                 time={time}
