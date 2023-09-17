@@ -27,7 +27,7 @@ export const DayFab = () => {
                 actions={[
                     {
                         icon: 'plus',
-                        label: 'Event',
+                        label: '+ Event',
                         onPress: () => {
                             router.push('/schema/edit/addEvent')
                         },
@@ -35,7 +35,7 @@ export const DayFab = () => {
 
                     {
                         icon: 'bell',
-                        label: 'Notering',
+                        label: '+ Notering (todo)',
                         onPress: () => console.log('Pressed notifications'),
                     },
                 ]}

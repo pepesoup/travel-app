@@ -10,6 +10,7 @@ import { useSchemaUiStoreBase } from '../schemaUiStore'
 import { useTheme } from 'react-native-paper'
 import { Event } from '@src/stores/types'
 import { colors } from './colors'
+import { useTravelStoreBase } from '@root/src/stores/travels/travelStore'
 
 export type Props = {
     startDate: Date
@@ -21,6 +22,7 @@ export const SchemaDayCard = (props: Props) => {
     const { startDate, day, events, ...restProps } = props
     //const showDetails = useSchemaUiStoreBase().selectedDay
     const uiStore = useSchemaUiStoreBase()
+    const travelStore = useTravelStoreBase.getState().content.schema[day]
     const date = addDays(startDate, day)
     const theme = useTheme()
     const dayName = _.upperFirst(format(date, 'EEEE', { locale: sv }))
@@ -53,6 +55,24 @@ export const SchemaDayCard = (props: Props) => {
         }
     }, [uiStore.selectedDay])
 
+    useEffect(() => {
+        console.log(
+            '----------- useEffect - useTravelStoreBase().content.schema[day] ---------------',
+            travelStore
+        )
+        const height = (Object.keys(travelStore).length + 0) * 80 + 10
+        setDetailsHeight(height)
+        if (uiStore.selectedDay !== day) {
+            setAnimationState(animation)
+        } else {
+            animation.animateTo((current) => ({
+                height: height,
+                opacity: 1,
+                transition: { type: 'timing', duration, ...animationType },
+            }))
+        }
+    }, [travelStore])
+
     const onPress = () => {
         if (uiStore.selectedDay === day) {
             useSchemaUiStoreBase.setState({ selectedDay: null })
@@ -61,8 +81,11 @@ export const SchemaDayCard = (props: Props) => {
         }
     }
     const onDetailsLayout = ({ nativeEvent }: any) => {
+        return
         if (!detailsHeight) {
+            //if (true) {
             const { height } = nativeEvent.layout
+            console.log('------------ RESETTING onDetailsLayout ------------ height:', height)
             setDetailsHeight(height)
             setAnimationState(animation)
         }
@@ -80,16 +103,22 @@ export const SchemaDayCard = (props: Props) => {
                 ]}
                 onLayout={(e) => onDetailsLayout(e)}
             >
-                {Object.entries(events).map(([time, event]: [string, any], i: number) => {
-                    return (
-                        <SchemaDetailCard
-                            time={time}
-                            event={event}
-                            style={{ marginTop: 0 }}
-                            key={`detailsCard-${i}`}
-                        />
-                    )
-                })}
+                {Object.entries(events)
+                    .sort((a, b) => {
+                        const aa = Number(a[0].replace(':', ''))
+                        const bb = Number(b[0].replace(':', ''))
+                        return aa - bb
+                    })
+                    .map(([time, event]: [string, any], i: number) => {
+                        return (
+                            <SchemaDetailCard
+                                time={time}
+                                event={event}
+                                style={{ marginTop: 0 }}
+                                key={`detailsCard-${i}`}
+                            />
+                        )
+                    })}
             </MotiView>
         )
     }
@@ -148,29 +177,7 @@ export const SchemaDayCard = (props: Props) => {
                 </View>
             </Pressable>
 
-            {Details()}
+            <Details />
         </View>
     )
 }
-
-const styles = StyleSheet.create({
-    shape: {
-        justifyContent: 'center',
-        height: 250,
-        width: 250,
-        borderRadius: 25,
-        marginRight: 10,
-        backgroundColor: 'black',
-    },
-    shape2: {
-        backgroundColor: 'hotpink',
-        marginTop: 16,
-    },
-    container: {
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center',
-        flexDirection: 'row',
-        backgroundColor: '#111',
-    },
-})

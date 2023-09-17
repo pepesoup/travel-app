@@ -10,9 +10,6 @@ import { DataProvider } from '@root/src/rne-firebase/src/components/data/dataPro
 import { HeaderRight } from '../_layout'
 import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons'
 import { FAB, Portal, useTheme } from 'react-native-paper'
-import { colors } from './components/colors'
-import { EditModal } from './components/editModal'
-import { EditDay } from './components/editDay'
 import { DayFab } from './edit/components/dayFab'
 
 export default function SchemaMain() {
@@ -20,8 +17,6 @@ export default function SchemaMain() {
     const scrollViewRef = useRef<any>(null)
     const travel = useTravelStoreBase()
     const theme = useTheme()
-    const [date, setDate] = useState(new Date())
-    const router = useRouter()
     const path = usePathname()
 
     useEffect(() => {
@@ -93,18 +88,17 @@ export default function SchemaMain() {
                     }}
                     ref={scrollViewRef}
                 >
-                    {Object.entries(travel.content?.schema || {}).map(
-                        ([day, events]: [string, any]) => {
-                            return (
-                                <SchemaDayCard
-                                    startDate={travel?.content.startDate}
-                                    day={Number(day)}
-                                    events={events}
-                                    key={`dayCard-${day}`}
-                                />
-                            )
-                        }
-                    )}
+                    {Object.entries(travel.content?.schema || {})
+                    .map(([day, events]: [string, any]) => {
+                        return (
+                            <SchemaDayCard
+                                startDate={travel?.content.startDate}
+                                day={Number(day)}
+                                events={events}
+                                key={`dayCard-${day}`}
+                            />
+                        )
+                    })}
                     <View style={{ height: 40 }} />
                 </MotiScrollView>
             </DataProvider>

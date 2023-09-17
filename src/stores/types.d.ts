@@ -1,6 +1,6 @@
 export type EventType = {
     name: 'walk' | 'meal' | 'yoga' | 'exercise' | 'lecture'
-    icon: string
+    icon?: string
 }
 
 export type Event = {
