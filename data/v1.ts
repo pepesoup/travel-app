@@ -9,7 +9,7 @@ Hotell Levante – powered by Playitas, Afandou & Kolymbia | apollo.se
 */
 
 import { eventTypes } from '@root/src/stores/events/event.constants'
-import { schemaActions } from '@root/src/services/schema/schemaActions'
+import { schemaActions } from '@root/src/stores/travels/schema/schemaActions'
 
 /*************************** TEST ********************************/
 

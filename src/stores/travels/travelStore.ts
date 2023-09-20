@@ -53,6 +53,7 @@ const listenOnSchemaState = () => {
                 fromDb.endDate = createDate(fromDb.endDate)
                 draft.content = fromDb
                 draft.state = 'hasValue'
+                throw new Error('some error!!!')
             } catch (e: any) {
                 draft.content = e.message
                 draft.state = 'hasError'
@@ -60,6 +61,6 @@ const listenOnSchemaState = () => {
         })
 
         useTravelStoreBase.setState(update)
-    }, 1000)
+    }, 3000)
 }
 listenOnSchemaState()

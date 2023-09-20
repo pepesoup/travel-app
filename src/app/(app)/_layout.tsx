@@ -25,7 +25,7 @@ type HeaderRightProps = {
     addIcon?: ReactNode
 }
 export const iconSizeAtHeader = 30
-export const HeaderRight = ({ addIcon }: any) => {
+export const HeaderRight = ({ addIcon }: HeaderRightProps) => {
     return (
         <RowCmn style={{ gap: 10 }}>
             <Link href="/notes/notes">
@@ -50,14 +50,16 @@ export default function Layout_AppApp() {
     const router = useRouter()
 
     useEffect(() => {
-        console.log('useEffect 0')
-        if (rootNavigation?.isReady() && authData.state === 'hasValue' && !authData.isSignedIn) {
-            router.replace('/(auth)/login')
+        if (rootNavigation?.isReady()) {
+            if (authData.state === 'hasValue' && !authData.isSignedIn) {
+                router.replace('/(auth)/login')
+            }
         }
     }, [rootNavigation?.isReady(), authData])
 
+    /* hm I don't think this is needed here */
     if (authData.state === 'loading') {
-        console.log('loading')
+        console.log('Auth is loading')
         return (
             <>
                 <Text style={{ color: 'purple' }} variant="titleLarge">
@@ -78,7 +80,7 @@ export default function Layout_AppApp() {
                     fontWeight: 'bold',
                 },
                 headerBackTitleVisible: false,
-                headerRight: HeaderRight,
+                headerRight: () => <HeaderRight />,
             }}
         >
             <Stack.Screen

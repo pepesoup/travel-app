@@ -5,7 +5,7 @@ import { WheelPicker } from '../components/wheelPicker'
 import { useState } from 'react'
 import { useTheme } from 'react-native-paper'
 import { useEditData } from '../hooks/useEditData'
-import { schemaActions } from '@root/src/services/schema/schemaActions'
+import { schemaActions } from '@root/src/stores/travels/schema/schemaActions'
 
 type Props = {
     action: 'add' | 'update'

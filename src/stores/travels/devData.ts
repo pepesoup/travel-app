@@ -1,5 +1,5 @@
 import { Schema, Travel, EventType, Event, TravelFromDb } from '../types'
-import { eventTypes } from '../../services/schema/event.constants'
+import { eventTypes } from './schema/event.constants'
 
 /******************** Travels *********************/
 
@@ -71,6 +71,36 @@ export const travels: { [travelId: string]: TravelFromDb } = {
             4: {},
             5: {},
             6: {},
+        },
+        notes: {
+            id4: {
+                subject: 'Nytt inlägg i bloggen',
+                message: 'Liten beskrivning vad det handlar om',
+                timestamp: '1695239895',
+                type: 'schema',
+                icon: 'calendar-month-outline',
+            },
+            id3: {
+                subject: 'Nytt uppdatering i schemat',
+                message: 'Liten beskrivning vad det handlar om',
+                timestamp: '1695237895',
+                type: 'travel',
+                icon: 'airplane',
+            },
+            id2: {
+                subject: 'Nytt inlägg i info',
+                message: 'Liten beskrivning vad det handlar om',
+                timestamp: '1695236895',
+                type: 'schema',
+                icon: 'calendar-month-outline',
+            },
+            id1: {
+                subject: 'Träningspass inställt',
+                message: 'Liten beskrivning vad det handlar om',
+                timestamp: '1695235895',
+                type: 'schema',
+                icon: 'calendar-month-outline',
+            },
         },
     },
 }

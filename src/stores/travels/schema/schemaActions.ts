@@ -1,5 +1,5 @@
 import { produce } from 'immer'
-import { EventType, Schema, Event } from '../../stores/types'
+import { EventType, Schema, Event } from '../../types'
 import uuid from 'react-native-uuid'
 
 /**
@@ -15,20 +15,17 @@ export const schemaActions = {
         return {
             eventAction: (eventId: string) => {
                 return {
-                    add: (time: string, type: EventType, description: string): Event => {
+                    add: (time: string, type: EventType, description: string) => {
                         return produce(schema, (draft) => {
-                            //draft[day][time] = { type, description }
                             draft[day][eventId] = { uuid: eventId, day, time, type, description }
-                        }) as Event
+                        })
                     },
                     delete: () => {
-                        // Note: Event is canceled
                         return produce(schema, (draft) => {
                             delete draft[day][eventId]
                         })
                     },
                     update: (newTime?: string, newType?: EventType, newDescription?: string) => {
-                        // Note: Event is changed
                         const existingEvent = schema[day][eventId]
                         if (!existingEvent) {
                             throw new Error('Update call for non existing event')
@@ -44,21 +41,11 @@ export const schemaActions = {
                 }
             },
             dayAction: {
-                new: (time: string, type: EventType) => {
-                    // Note: new Event added
-                },
-                delete: {
-                    // Note: Event is canceled
-                },
-                change: () => {
-                    // Note: Event is changed
-                },
-                replaced: {
-                    // Note: Event is replaced with another Event
-                },
-                moved: {
-                    // Note: Event is moved to another date-time
-                },
+                new: (time: string, type: EventType) => {},
+                delete: {},
+                change: () => {},
+                replaced: {},
+                moved: {},
             },
         }
     },

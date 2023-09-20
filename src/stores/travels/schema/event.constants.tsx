@@ -1,4 +1,4 @@
-import { EventType } from '../../stores/types'
+import { EventType } from '../../types'
 
 export const eventTypes: { [key: string]: EventType } = {
     walk: {

@@ -8,7 +8,7 @@ import { Event, Schema } from '@src/stores/types'
 import uuid from 'react-native-uuid'
 import { createTimeString } from '../../utils'
 import merge from 'ts-deepmerge'
-import { schemaActions } from '@root/src/services/schema/schemaActions'
+import { schemaActions } from '@root/src/stores/travels/schema/schemaActions'
 
 export const useEditData = () => {
     const theme = useTheme()
@@ -41,7 +41,7 @@ export const useEditData = () => {
      */
     const logData = () => {
         console.log('--------- useEditData - logData() START --------------')
-        console.log('ALL:', JSON.stringify(uiStore, null, 4))
+        console.log('ALL in uiStore:', JSON.stringify(uiStore, null, 4))
         console.log('--------- useEditData - logData() END --------------')
     }
     const setDevData = () => {

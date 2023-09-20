@@ -1,12 +1,9 @@
 import { View, ViewStyle } from 'react-native'
-import { Link, router } from 'expo-router'
 import { StatusBar } from 'expo-status-bar'
 import { GapCmn, RowCmn, ScreenCmn, SurfaceCmn, TextCmn } from '@rn-components/commonUi'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 import { useTheme } from 'react-native-paper'
-import { IconProps } from 'react-native-vector-icons/Icon'
 import merge from 'ts-deepmerge'
-//import Icon from 'react-native-paper/lib/typescript/src/components/Icon'
 
 export type Props = {
     title: string

@@ -5,18 +5,11 @@ import { GapCmn, RowCmn, ScreenCmn, SurfaceCmn, TextCmn } from '@rn-components/c
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 import { Divider, useTheme } from 'react-native-paper'
 import NoteRow from './components/noteRow'
-import { ModalHeaderLeft } from '@src/app/(app)/_layout'
 
 export default function Modal() {
-    // If the page was reloaded or navigated to directly, then the modal should be presented as
-    // a full screen page. You may need to change the UI to account for this.
-    const isPresented = router.canGoBack()
     const theme = useTheme()
     return (
         <ScreenCmn style={{ gap: 0, flexDirection: 'column' }}>
-            {/* Use `../` as a simple way to navigate to the root. This is not analogous to "goBack". */}
-            {!isPresented && <Link href="../">Dismiss</Link>}
-            {/* Native modals have dark backgrounds on iOS, set the status bar to light content. */}
             <StatusBar style="light" />
             <ScrollView style={{ width: '100%' }}>
                 <GapCmn size={20} direction="vertical" />
