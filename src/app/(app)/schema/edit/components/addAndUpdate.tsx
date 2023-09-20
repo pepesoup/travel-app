@@ -5,6 +5,7 @@ import { WheelPicker } from '../components/wheelPicker'
 import { useState } from 'react'
 import { useTheme } from 'react-native-paper'
 import { useEditData } from '../hooks/useEditData'
+import { schemaActions } from '@root/src/services/schema/schemaActions'
 
 type Props = {
     action: 'add' | 'update'
@@ -16,7 +17,7 @@ export default function AddAndUpdate({ action }: Props) {
 
     return (
         <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', width: '100%' }}>
-            <WheelPicker action={action} />
+            <WheelPicker />
             <View
                 style={{
                     borderBottomColor: theme.colors.primaryContainer,
@@ -27,6 +28,8 @@ export default function AddAndUpdate({ action }: Props) {
             <KeyboardAwareScrollViewCmn contentContainerStyle={{ padding: 20 }}>
                 <TextInputCmn
                     label="Beskrivning"
+                    numberOfLines={2}
+                    multiline
                     value={editData.getEventData()?.description}
                     onChangeText={(text) => editData.updateEventData({ description: text })}
                     style={{ backgroundColor: 'white' }}

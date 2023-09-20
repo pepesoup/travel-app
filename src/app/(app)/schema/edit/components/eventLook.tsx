@@ -8,15 +8,12 @@ type Props = {
 }
 
 export const EventLook = ({ eventToShow }: Props) => {
-    console.log('eventToShow:', JSON.stringify(eventToShow, null, 4))
     const theme = useTheme()
     return (
         <View
             style={{
                 width: '100%',
-                //
                 marginBottom: 10,
-                //backgroundColor: 'yellow',
             }}
         >
             <View
@@ -24,7 +21,6 @@ export const EventLook = ({ eventToShow }: Props) => {
                     marginTop: 20,
                     marginBottom: 0,
                     height: 0,
-                    //backgroundColor: theme.colors.primary,
                     backgroundColor: 'yellow',
                 }}
             />

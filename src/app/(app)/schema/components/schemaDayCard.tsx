@@ -70,6 +70,7 @@ export const SchemaDayCard = (props: Props) => {
     }, [schemeDay, uiStore.selectedDay])
 
     const onPress = () => {
+        useSchemaUiStoreBase.setState({ selectedEvent: null })
         if (uiStore.selectedDay === day) {
             useSchemaUiStoreBase.setState({ selectedDay: null })
         } else {

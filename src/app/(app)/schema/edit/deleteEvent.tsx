@@ -1,25 +1,15 @@
 import { ButtonCmn, ScreenCmn } from '@rn-components/commonUi'
-import { KeyboardAwareScrollViewCmn } from '@rn-components/commonUi/keyboardAwareScrollViewCmn'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { useTheme } from 'react-native-paper'
-import { SchemaUiState, useSchemaUiStoreBase } from '../schemaUiStore'
+import { useSchemaUiStoreBase } from '../schemaUiStore'
 import { Stack, useRouter } from 'expo-router'
-import { useTravelStoreBase } from '@root/src/stores/travels/travelStore'
-import { schemaActions } from '@root/src/services/schema/schemaActions'
-import { produce } from 'immer'
-import NoteComposer from './components/noteComposer'
-import { Schema, Event, Note } from '@root/src/stores/types'
-import uuid from 'react-native-uuid'
-import { fixTimeString } from '../utils'
 import { View } from 'react-native'
 import { EventLook } from './components/eventLook'
 import { LinearGradient } from 'expo-linear-gradient'
 import { useEditData } from './hooks/useEditData'
 
 export default function DeleteEvent() {
-    const uiStore = useSchemaUiStoreBase.getState()
     const eventToShow = useSchemaUiStoreBase.getState().selectedEvent
-    const travelStore = useTravelStoreBase.getState()
     const selectedDay = useSchemaUiStoreBase.getState().selectedDay
     const theme = useTheme()
     const router = useRouter()

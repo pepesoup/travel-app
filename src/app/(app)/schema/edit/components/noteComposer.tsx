@@ -29,6 +29,7 @@ export default function NoteComposer({ onChange }: Props) {
     return (
         <View
             style={{
+                backgroundColor: theme.colors.background,
                 borderColor: theme.colors.primary,
                 borderWidth: 1,
                 borderRadius: 10,
@@ -38,11 +39,11 @@ export default function NoteComposer({ onChange }: Props) {
             }}
         >
             <Checkbox.Item
-                color={checked ? theme.colors.tertiaryContainer : 'gray'}
-                mode="ios"
-                label="Skicka en notis"
-                labelStyle={{ color: 'white' }}
-                labelVariant="titleLarge"
+                color={checked ? 'rgba(0, 200, 0, 1)' : 'rgba(111,111,111,0.5)'}
+                mode="android"
+                label="Skicka en notis för händelsen"
+                //labelStyle={{ color: 'white' }}
+                labelVariant="titleMedium"
                 status={checked ? 'checked' : 'indeterminate'}
                 onPress={() => {
                     setChecked(!checked)

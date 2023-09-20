@@ -4,10 +4,11 @@ import { useEffect, useState } from 'react'
 import { SchemaUiState, useSchemaUiStoreBase } from '../../schemaUiStore'
 import { useTravelStore, useTravelStoreBase } from '@root/src/stores/travels/travelStore'
 import { produce } from 'immer'
-import { Event } from '@src/stores/types'
+import { Event, Schema } from '@src/stores/types'
 import uuid from 'react-native-uuid'
 import { createTimeString } from '../../utils'
 import merge from 'ts-deepmerge'
+import { schemaActions } from '@root/src/services/schema/schemaActions'
 
 export const useEditData = () => {
     const theme = useTheme()
@@ -172,6 +173,75 @@ export const useEditData = () => {
         )
     }
 
+    const save = () => {
+        const editEventAction = uiStore.editEventAction
+        if (editEventAction === null) {
+            console.warn('Something whent wrong...')
+            return
+        }
+        const { action, newEvent, oldEvent, schema } = editEventAction
+        if (action === 'add' && newEvent === null) {
+            console.warn('Something whent wrong...')
+            return
+        }
+        if (action === 'update' && newEvent === null) {
+            console.warn('Something whent wrong...')
+            return
+        }
+        if (action === 'delete' && oldEvent === null) {
+            console.warn('Something whent wrong...')
+            return
+        }
+
+        /*** data OK ***/
+        let updatedSchema: Schema | null = null
+
+        if (action === 'add') {
+            updatedSchema = schemaActions
+                .day(schema, newEvent?.day as any)
+                .eventAction(newEvent?.uuid as any)
+                .add(newEvent?.time as any, newEvent?.type as any, newEvent?.description as any)
+
+            useSchemaUiStoreBase.setState(
+                produce(uiStore, (draft) => {
+                    draft.selectedEvent = null
+                    draft.editEventAction = null
+                })
+            )
+        } else if (action === 'update') {
+            updatedSchema = schemaActions
+                .day(schema, newEvent?.day as any)
+                .eventAction(newEvent?.uuid as any)
+                .update(newEvent?.time as any, newEvent?.type as any, newEvent?.description as any)
+
+            useSchemaUiStoreBase.setState(
+                produce(uiStore, (draft) => {
+                    draft.selectedEvent = null
+                    draft.editEventAction = null
+                })
+            )
+        } else if (action === 'delete') {
+            updatedSchema = schemaActions
+                .day(schema, oldEvent?.day as any)
+                .eventAction(oldEvent?.uuid as any)
+                .delete()
+
+            useSchemaUiStoreBase.setState(
+                produce(uiStore, (draft) => {
+                    draft.selectedEvent = null
+                    draft.editEventAction = null
+                })
+            )
+        }
+
+        useTravelStoreBase.setState(
+            produce(travelStore, (draft) => {
+                draft.content.schema = updatedSchema
+                draft.state = 'hasValue'
+            })
+        )
+    }
+
     return {
         initAddEvent,
         initDeleteEvent,
@@ -181,6 +251,7 @@ export const useEditData = () => {
         getAvailableData,
         isTimeAlreadyTaken,
         setConfirming,
+        save,
         setDevData,
     }
 }
