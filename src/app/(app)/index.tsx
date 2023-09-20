@@ -1,9 +1,10 @@
 import { Redirect, useRootNavigation, usePathname, useRouter, Stack } from 'expo-router'
 import { useEffect, useState } from 'react'
 import { useAuthStoreBase } from '@rne-firebase/stores/authStore'
-import { TextCmn, Links } from '@rn-components/commonUi'
+import { TextCmn, Links, ButtonCmn } from '@rn-components/commonUi'
 import { useTravelStoreBase } from '@root/src/stores/travels/travelStore'
 import { View } from 'react-native'
+import * as Updates from 'expo-updates'
 
 export default function Index_1() {
     const path = usePathname()
@@ -20,7 +21,7 @@ export default function Index_1() {
         if (travelData.state === 'loading') {
             setInfoText('Loading Travel...')
         } else if (travelData.state === 'hasError') {
-            setInfoText('Got an error fetching Travel:')
+            setInfoText('Prova att starta om Appen. Error:')
             setErrorText(travelData.content)
         }
         if (rootNavigation?.isReady()) {
