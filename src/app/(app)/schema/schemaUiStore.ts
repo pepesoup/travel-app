@@ -1,25 +1,39 @@
 import { create } from 'zustand'
 import { createSelectorFunctions } from 'auto-zustand-selectors-hook'
-import { usePathname } from 'expo-router'
+import { Event, Schema } from '@src/stores/types'
+import { produce } from 'immer'
 
 export type SchemaUiState = {
     selectedDay: number | null
-    selectedTime: string | null
+    selectedEvent: Event | null
     isAdminMode: boolean
     enableFabs: boolean
+    editEventAction: null | {
+        confirming: boolean
+        schema: Schema
+        newEvent: Event | null
+        oldEvent: Event | null
+        action: 'add' | 'delete' | 'update'
+    }
+    setEditedEventAction: (props: SchemaUiState['editEventAction']) => void
     dayFabVisible: () => boolean
     toggleAdminMode: () => void
 }
 export const useSchemaUiStoreBase = create<SchemaUiState>((set, get) => ({
     selectedDay: null,
-    selectedTime: null,
+    selectedEvent: null,
     isAdminMode: false,
     enableFabs: false,
-    dayFabVisible: () =>
-        get().isAdminMode &&
-        get().selectedDay !== null &&
-        get().selectedTime === null &&
-        get().enableFabs,
+    editEventAction: null,
+    setEditedEventAction: (editEventAction) =>
+        set(
+            //() => ({ editEventAction })
+            produce((draft: SchemaUiState) => {
+                draft.editEventAction = editEventAction
+            })
+        ),
+
+    dayFabVisible: () => get().isAdminMode && get().selectedDay !== null && get().enableFabs,
     toggleAdminMode: () => {
         set((state) => ({ isAdminMode: !state.isAdminMode }))
     },

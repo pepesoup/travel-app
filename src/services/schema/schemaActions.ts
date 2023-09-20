@@ -1,5 +1,6 @@
 import { produce } from 'immer'
-import { EventType, Schema } from '../../stores/types'
+import { EventType, Schema, Event } from '../../stores/types'
+import uuid from 'react-native-uuid'
 
 /**
  * Todo:
@@ -12,31 +13,32 @@ import { EventType, Schema } from '../../stores/types'
 export const schemaActions = {
     day: (schema: Schema, day: number) => {
         return {
-            eventAction: (time: string) => {
+            eventAction: (eventId: string) => {
                 return {
-                    add: (type: EventType, description: string): any => {
-                        // Note: new Event added
+                    add: (time: string, type: EventType, description: string): Event => {
                         return produce(schema, (draft) => {
-                            draft[day][time] = { type, description }
-                        })
+                            //draft[day][time] = { type, description }
+                            draft[day][eventId] = { uuid: eventId, day, time, type, description }
+                        }) as Event
                     },
                     delete: () => {
                         // Note: Event is canceled
                         return produce(schema, (draft) => {
-                            delete draft[day][time]
+                            delete draft[day][eventId]
                         })
                     },
                     update: (newTime?: string, newType?: EventType, newDescription?: string) => {
                         // Note: Event is changed
-                        const existingEvent = schema[day][time]
+                        const existingEvent = schema[day][eventId]
                         if (!existingEvent) {
                             throw new Error('Update call for non existing event')
                         }
                         const type = newType || existingEvent.type
                         const description = newDescription || existingEvent.description
+                        const time = newTime || existingEvent.time
                         return produce(schema, (draft) => {
                             delete draft[day][time]
-                            draft[day][newTime || time] = { type, description }
+                            draft[day][eventId] = { uuid: eventId, day, time, type, description }
                         })
                     },
                 }

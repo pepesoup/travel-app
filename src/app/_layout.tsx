@@ -14,12 +14,7 @@ var Color = require('color2')
 
 export default function App() {
     const theme = retreafyTheme
-    //const theme = darkTheme
-    var color = new Color(theme.colors.primaryContainer)
 
-    /**
-     * TODO: fix peerDependencies for r-n-paper to fix theme distribution
-     */
     return (
         <PaperProvider theme={theme}>
             <Portal>

@@ -4,17 +4,20 @@ export type EventType = {
 }
 
 export type Event = {
+    uuid: string
+    day: number
+    time: string
     type: EventType
     description: string
 }
 
-export type Events = { [time: string]: Event }
+export type Events = { [eventId: string]: Event }
 
 export type Schema = { [day: number]: Events }
 
 export type Travel = {
-    startDate: Date //string
-    endDate: Date //string
+    startDate: Date
+    endDate: Date
     residence: {
         name: string
         place: string
@@ -25,7 +28,7 @@ export type Travel = {
         pictureUrl: string
     }
     acuteContact: [{ name: string; tel: string[]; email: string }]
-    schema: { [day: number]: { [time: string]: Event } }
+    schema: { [day: number]: { [eventId: string]: Event } }
 }
 export type TravelFromDb =
     | Travel
@@ -33,3 +36,10 @@ export type TravelFromDb =
           startDate: any
           endDate: any
       }
+
+export type Note = {
+    subject: string
+    message: string
+    timestamp: number
+    type: 'schema' | 'travel'
+}

@@ -1,36 +1,62 @@
 import { useState, useRef, useEffect } from 'react'
 import { StyleSheet, View, Text, useWindowDimensions } from 'react-native'
 import WheelPickerExpo from 'react-native-wheel-picker-expo'
-import { eventTypes } from '@src/services/schema/event.constants'
-import { Events } from '../../components/events'
-import { TextInput, useTheme } from 'react-native-paper'
-import { RowCmn, TextCmn, TextRowCmn } from '@root/src/rn-components/src/components/commonUi'
-import { produce } from 'immer'
+import { useTheme } from 'react-native-paper'
+import { TextCmn } from '@root/src/rn-components/src/components/commonUi'
 import { EventType } from '@root/src/stores/types'
+import { useEditData } from '../hooks/useEditData'
+import { createTimeString } from '../../utils'
+import { useSchemaUiStoreBase } from '../../schemaUiStore'
 
-const HOUR = '07,08,09,10,11,12,13,14,15,16,17,18,19,20'.split(',')
-const MINUTE = '00,15,30,45'.split(',')
-
-export const WheelPicker = ({ setState }: any) => {
-    const theme = useTheme()
-    const EVENTS = Events({ size: 32, color: theme.colors.primary, withLabel: true })
-    const [city, setCity] = useState('')
+export const WheelPicker = () => {
     const wheelRef = useRef<WheelPickerExpo>(null)
-    const { width: ww, height: wh } = useWindowDimensions()
     const height = 200
     const backgroundColor = '#FFFFFF'
     const borderColor = '#888'
     const timeWidth = 50
     const iconWidth = 140
-    const [timeAndEvent, setTimeAndEvent] = useState({
-        hour: Number(HOUR[0]),
-        minute: Number(MINUTE[0]),
-        eventType: { name: 'walk' },
-    } as { hour: number; minute: number; eventType: EventType })
+    const editData = useEditData()
+    const uiStore = useSchemaUiStoreBase()
 
-    useEffect(() => {
-        setState(timeAndEvent)
-    }, [timeAndEvent])
+    if (uiStore.editEventAction === null || uiStore.editEventAction?.confirming) {
+        return null
+    }
+
+    const updateTime = (hour: string | null, minute: string | null) => {
+        const [h, m] = editData.getEventData()?.time.split(':') as any[]
+        const newTime = createTimeString(hour || h, minute || m)
+        editData.updateEventData({ time: newTime })
+    }
+
+    const checkIfTimeIsTaken = (hour: string | null, minute: string | null) => {
+        const [h, m] = editData.getEventData()?.time.split(':') as any[]
+        const newTime = createTimeString(hour || h, minute || m)
+        return editData.isTimeAlreadyTaken(newTime)
+    }
+
+    const getInitialHourIndex = () => {
+        if (uiStore.editEventAction?.action === 'add') {
+            return 0
+        }
+        const [h, m] = editData.getEventData()?.time.split(':') as any[]
+        return editData.getAvailableData('hours').findIndex((hour: string) => hour === h)
+    }
+    const getInitialMinuteIndex = () => {
+        if (uiStore.editEventAction?.action === 'add') {
+            return 0
+        }
+        const [h, m] = editData.getEventData()?.time.split(':') as any[]
+        return editData.getAvailableData('minutes').findIndex((minute: string) => minute === m)
+    }
+    const getInitialEventTypeIndex = () => {
+        if (uiStore.editEventAction?.action === 'add') {
+            return 0
+        }
+        const typeName = editData.getEventData()?.type.name
+        return editData
+            .getAvailableData('eventTypes')
+            .findIndex((et: EventType) => et.name === typeName)
+    }
 
     return (
         <>
@@ -50,28 +76,24 @@ export const WheelPicker = ({ setState }: any) => {
                     backgroundColor={backgroundColor}
                     selectedStyle={{ borderColor: borderColor, borderWidth: 2 }}
                     height={height}
-                    initialSelectedIndex={0}
-                    items={HOUR.map((name) => ({ label: name, value: Number(name) }))}
-                    onChange={({ item }) =>
-                        setTimeAndEvent(
-                            produce(timeAndEvent, (draft) => {
-                                draft.hour = item.value
-                            })
-                        )
-                    }
+                    initialSelectedIndex={getInitialHourIndex()}
+                    items={editData
+                        .getAvailableData('hours')
+                        .map((name: string) => ({ label: name, value: name }))}
+                    onChange={({ item }) => updateTime(item.value, null)}
+                    haptics={true}
                     renderItem={(props) => {
+                        //console.log('props:', props)
                         return (
                             <Text
-                                style={[
-                                    styles.text,
-                                    {
-                                        //fontSize: props.fontSize - 4,
-                                        fontSize: 18,
-                                        //color: props.fontColor,'
-                                        //color: 'green',
-                                        textAlign: props.textAlign,
-                                    },
-                                ]}
+                                style={{
+                                    fontSize: props.fontSize,
+                                    fontWeight: 'bold',
+                                    color: checkIfTimeIsTaken(props.label, null)
+                                        ? 'red'
+                                        : props.fontColor,
+                                    textAlign: props.textAlign,
+                                }}
                             >
                                 {props.label}
                             </Text>
@@ -84,16 +106,28 @@ export const WheelPicker = ({ setState }: any) => {
                     selectedStyle={{ borderColor: borderColor, borderWidth: 2 }}
                     height={height}
                     width={timeWidth}
-                    initialSelectedIndex={0}
-                    items={MINUTE.map((name) => ({ label: name, value: Number(name) }))}
-                    onChange={({ item }) =>
-                        setTimeAndEvent(
-                            produce(timeAndEvent, (draft) => {
-                                draft.minute = item.value
-                            })
+                    initialSelectedIndex={getInitialMinuteIndex()}
+                    items={editData
+                        .getAvailableData('minutes')
+                        .map((name: string) => ({ label: name, value: name }))}
+                    onChange={({ item }) => updateTime(null, item.value)}
+                    renderItem={(props) => {
+                        //console.log('props:', props)
+                        return (
+                            <Text
+                                style={{
+                                    fontSize: props.fontSize,
+                                    fontWeight: 'bold',
+                                    color: checkIfTimeIsTaken(null, props.label)
+                                        ? 'red'
+                                        : props.fontColor,
+                                    textAlign: props.textAlign,
+                                }}
+                            >
+                                {props.label}
+                            </Text>
                         )
-                    }
-                    haptics={true}
+                    }}
                 />
                 <TextCmn variant="titleLarge"> </TextCmn>
                 <WheelPickerExpo
@@ -101,20 +135,17 @@ export const WheelPicker = ({ setState }: any) => {
                     selectedStyle={{ borderColor: borderColor, borderWidth: 2 }}
                     height={height}
                     width={iconWidth}
-                    initialSelectedIndex={0}
-                    items={EVENTS.map((event) => {
+                    initialSelectedIndex={getInitialEventTypeIndex()}
+                    items={editData.getAvailableData('eventTypes').map((event: EventType) => {
                         return {
                             label: event.icon,
                             value: { name: event.name },
                         } as any
                     })}
-                    onChange={({ item }) =>
-                        setTimeAndEvent(
-                            produce(timeAndEvent, (draft) => {
-                                draft.eventType = item.value
-                            })
-                        )
-                    }
+                    onChange={({ item }) => {
+                        // TODO: on confirm remove
+                        editData.updateEventData({ type: item.value })
+                    }}
                     haptics={true}
                     renderItem={(props) => {
                         return <View>{props.label}</View>
@@ -124,24 +155,3 @@ export const WheelPicker = ({ setState }: any) => {
         </>
     )
 }
-
-const styles = StyleSheet.create({
-    container: {
-        //flex: 1,
-        flexDirection: 'row',
-        backgroundColor: '#fff',
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    container2: {
-        flex: 1,
-        flexDirection: 'column',
-        backgroundColor: '#fff',
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    text: {
-        fontSize: 20,
-        fontWeight: 'bold',
-    },
-})

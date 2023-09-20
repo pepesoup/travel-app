@@ -6,7 +6,9 @@ export const ThemeRetreafy: MD3Theme = merge(MD3LightTheme, {
     colors: {
         background: 'rgb(246, 242, 240)',
         primary: 'rgba(170, 155,159, 1)',
-        primaryContainer: 'rgba(227, 188, 211, 1)',
+        //primaryContainer: 'rgba(227, 188, 211, 1)',
+        primaryContainer: '#C32386',
+        onPrimaryContainer: 'rgba(234, 221, 255, 1)',
         onBackground: 'rgba(22, 22, 22, 1)',
         onSurface: 'rgba(22, 22, 22, 1)',
         tertiaryContainer: 'rgba(55, 135, 255, 1)',

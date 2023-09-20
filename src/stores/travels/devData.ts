@@ -21,22 +21,56 @@ export const travels: { [travelId: string]: TravelFromDb } = {
         acuteContact: [
             {
                 name: 'Acute Charles',
-                tel: ['+33 33 33'],
+                tel: ['+33 33 33', '+33 44 44'],
                 email: 'hotel@email.com',
             },
         ],
         schema: {
             0: {
-                '19:00': { type: eventTypes.meal, description: 'Gemensam middag' },
+                guid1: {
+                    uuid: 'guid1',
+                    day: 0,
+                    time: '19:00',
+                    type: eventTypes.meal,
+                    description: 'Gemensam middag',
+                },
             },
             1: {
-                '8:00': { type: eventTypes.walk, description: 'Morgonpromenad' },
+                guid2: {
+                    uuid: 'guid2',
+                    day: 1,
+                    time: '08:00',
+                    type: eventTypes.walk,
+                    description: 'Morgonpromenad',
+                },
             },
             2: {
-                '8:30': { type: eventTypes.meal, description: 'Frukost' },
-                '12:30': { type: eventTypes.meal, description: 'Lunch' },
-                '19:00': { type: eventTypes.meal, description: 'Gemensam middag' },
+                guid3: {
+                    uuid: 'guid3',
+                    day: 2,
+                    time: '08:00',
+                    type: eventTypes.meal,
+                    description: 'Frukost',
+                },
+                guid5: {
+                    uuid: 'guid5',
+                    day: 2,
+                    time: '19:00',
+                    type: eventTypes.meal,
+                    description: 'Gemensam middag',
+                },
+                guid4: {
+                    uuid: 'guid4',
+                    day: 2,
+                    time: '12:30',
+                    type: eventTypes.meal,
+                    description: 'Lunch',
+                },
             },
+            3: {},
+            4: {},
+            5: {},
+            6: {},
         },
     },
 }

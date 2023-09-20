@@ -7,7 +7,7 @@ import { MotiScrollView } from 'moti'
 import { useSchemaUiStoreBase } from './schemaUiStore'
 import { useTravelStoreBase } from '@root/src/stores/travels/travelStore'
 import { DataProvider } from '@root/src/rne-firebase/src/components/data/dataProvider/dataProvider'
-import { HeaderRight } from '../_layout'
+import { HeaderRight, iconSizeAtHeader } from '../_layout'
 import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons'
 import { FAB, Portal, useTheme } from 'react-native-paper'
 import { DayFab } from './edit/components/dayFab'
@@ -35,31 +35,26 @@ export default function SchemaMain() {
 
     useEffect(() => {}, [])
 
+    const AdminIcon = () => (
+        <Pressable
+            onPress={() => {
+                uiStore.toggleAdminMode()
+            }}
+        >
+            <MaterialCommunityIcons
+                name="pencil"
+                size={iconSizeAtHeader}
+                color={uiStore.isAdminMode ? theme.colors.tertiaryContainer : theme.colors.primary}
+            />
+        </Pressable>
+    )
+
     return (
         <ScreenCmn>
             <Stack.Screen
                 options={{
                     title: 'Schema',
-                    headerRight: () => (
-                        <>
-                            <HeaderRight />
-                            <Pressable
-                                onPress={() => {
-                                    uiStore.toggleAdminMode()
-                                }}
-                            >
-                                <MaterialCommunityIcons
-                                    name="pencil"
-                                    size={24}
-                                    color={
-                                        uiStore.isAdminMode
-                                            ? theme.colors.tertiaryContainer
-                                            : theme.colors.primary
-                                    }
-                                />
-                            </Pressable>
-                        </>
-                    ),
+                    headerRight: () => <HeaderRight addIcon={<AdminIcon />} />,
                 }}
             />
             <DataProvider storeStates={[useTravelStoreBase()]} fallbackOnNullValue>
@@ -88,17 +83,18 @@ export default function SchemaMain() {
                     }}
                     ref={scrollViewRef}
                 >
-                    {Object.entries(travel.content?.schema || {})
-                    .map(([day, events]: [string, any]) => {
-                        return (
-                            <SchemaDayCard
-                                startDate={travel?.content.startDate}
-                                day={Number(day)}
-                                events={events}
-                                key={`dayCard-${day}`}
-                            />
-                        )
-                    })}
+                    {Object.entries(travel.content?.schema || {}).map(
+                        ([day, events]: [string, any]) => {
+                            return (
+                                <SchemaDayCard
+                                    startDate={travel?.content.startDate}
+                                    day={Number(day)}
+                                    events={events}
+                                    key={`dayCard-${day}`}
+                                />
+                            )
+                        }
+                    )}
                     <View style={{ height: 40 }} />
                 </MotiScrollView>
             </DataProvider>

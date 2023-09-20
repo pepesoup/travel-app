@@ -8,11 +8,22 @@ import { produce } from 'immer'
 
 export type TravelStore = Store & {
     content: Travel | null | string
+    activeTravel: string
+    getActiveSchema: () => Schema
 }
 
-export const useTravelStoreBase = create<TravelStore>((se, get) => ({
+export const useTravelStoreBase = create<TravelStore>((set, get) => ({
     content: null,
     state: 'loading',
+    activeTravel: 'travelId1',
+    getActiveSchema: () => {
+        throw new Error('Not implemented')
+        try {
+            return get().content[get().activeTravel].schema
+        } catch (e: any) {
+            console.log('Unable to fetch current / active schema:', e.message)
+        }
+    },
 }))
 
 export const useTravelStore = createSelectorFunctions(useTravelStoreBase)

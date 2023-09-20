@@ -11,7 +11,7 @@ import {
 import { useAuthStoreBase } from '@rne-firebase/stores/authStore'
 import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons'
 import { RowCmn, TextCmn } from '@rn-components/commonUi'
-import { useEffect } from 'react'
+import { ReactNode, useEffect } from 'react'
 
 export const ModalHeaderLeft = () => {
     return (
@@ -21,15 +21,24 @@ export const ModalHeaderLeft = () => {
     )
 }
 
-export const HeaderRight = () => {
+type HeaderRightProps = {
+    addIcon?: ReactNode
+}
+export const iconSizeAtHeader = 30
+export const HeaderRight = ({ addIcon }: any) => {
     return (
-        <RowCmn>
+        <RowCmn style={{ gap: 10 }}>
             <Link href="/notes/notes">
-                <MaterialCommunityIcons name="bell-badge-outline" size={24} color={'white'} />
+                <MaterialCommunityIcons
+                    name="bell-badge-outline"
+                    size={iconSizeAtHeader}
+                    color={'white'}
+                />
             </Link>
             <Link href="/config/config">
-                <MaterialIcons name="settings" size={24} color={'white'} />
+                <MaterialIcons name="settings" size={iconSizeAtHeader} color={'white'} />
             </Link>
+            {addIcon ? addIcon : null}
         </RowCmn>
     )
 }

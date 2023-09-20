@@ -7,22 +7,22 @@ import { useEffect, useState } from 'react'
 import { SchemaDetailCard } from './schemaDetailCard'
 import { MotiView, useDynamicAnimation } from 'moti'
 import { useSchemaUiStoreBase } from '../schemaUiStore'
-import { useTheme } from 'react-native-paper'
+import { TouchableRipple, useTheme } from 'react-native-paper'
 import { Event } from '@src/stores/types'
-import { colors } from './colors'
+import { colors } from '../edit/components/colors'
 import { useTravelStoreBase } from '@root/src/stores/travels/travelStore'
 
 export type Props = {
     startDate: Date
     day: number
-    events: { [time: string]: Event }
+    events: { [eventId: string]: Event }
 }
 
 export const SchemaDayCard = (props: Props) => {
     const { startDate, day, events, ...restProps } = props
     //const showDetails = useSchemaUiStoreBase().selectedDay
-    const uiStore = useSchemaUiStoreBase()
-    const travelStore = useTravelStoreBase.getState().content.schema[day]
+    const uiStore = useSchemaUiStoreBase.getState()
+    const schemeDay = useTravelStoreBase.getState().content.schema[day]
     const date = addDays(startDate, day)
     const theme = useTheme()
     const dayName = _.upperFirst(format(date, 'EEEE', { locale: sv }))
@@ -56,11 +56,7 @@ export const SchemaDayCard = (props: Props) => {
     }, [uiStore.selectedDay])
 
     useEffect(() => {
-        console.log(
-            '----------- useEffect - useTravelStoreBase().content.schema[day] ---------------',
-            travelStore
-        )
-        const height = (Object.keys(travelStore).length + 0) * 80 + 10
+        const height = (Object.keys(schemeDay).length + 0) * 80 + 10
         setDetailsHeight(height)
         if (uiStore.selectedDay !== day) {
             setAnimationState(animation)
@@ -71,7 +67,7 @@ export const SchemaDayCard = (props: Props) => {
                 transition: { type: 'timing', duration, ...animationType },
             }))
         }
-    }, [travelStore, uiStore.selectedDay])
+    }, [schemeDay, uiStore.selectedDay])
 
     const onPress = () => {
         if (uiStore.selectedDay === day) {
@@ -80,6 +76,8 @@ export const SchemaDayCard = (props: Props) => {
             useSchemaUiStoreBase.setState({ selectedDay: day })
         }
     }
+
+    /* just use this one for dev - to meassure height for animation of details */
     const onDetailsLayout = ({ nativeEvent }: any) => {
         return
         if (!detailsHeight) {
@@ -105,14 +103,14 @@ export const SchemaDayCard = (props: Props) => {
             >
                 {Object.entries(events)
                     .sort((a, b) => {
-                        const aa = Number(a[0].replace(':', ''))
-                        const bb = Number(b[0].replace(':', ''))
+                        const aa = Number(a[1].time.replace(':', ''))
+                        const bb = Number(b[1].time.replace(':', ''))
                         return aa - bb
                     })
-                    .map(([time, event]: [string, Event], i: number) => {
+                    .map(([eventId, event]: [string, Event], i: number) => {
                         return (
                             <SchemaDetailCard
-                                time={time}
+                                day={day}
                                 event={event}
                                 style={{ marginTop: 0 }}
                                 key={`detailsCard-${i}`}
@@ -131,7 +129,9 @@ export const SchemaDayCard = (props: Props) => {
             }}
             {...restProps}
         >
-            <Pressable
+            <TouchableRipple
+                borderless
+                rippleColor="rgba(0, 0, 0, .1)"
                 onPress={() => {
                     onPress()
                 }}
@@ -175,7 +175,7 @@ export const SchemaDayCard = (props: Props) => {
                         <TextCmn variant="titleMedium">Dag {day + 1}</TextCmn>
                     </View>
                 </View>
-            </Pressable>
+            </TouchableRipple>
 
             <Details />
         </View>
