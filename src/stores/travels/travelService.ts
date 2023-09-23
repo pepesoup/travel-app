@@ -1,2 +1,2 @@
 import { travels } from './devData'
-import { Travel } from '../types'
+import { Travel } from './types'

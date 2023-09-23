@@ -21,7 +21,7 @@ export default function DeleteEvent() {
 
     const submit = () => {
         editData.setConfirming()
-        router.push({ pathname: '/schema/edit/editConfirm', params: { title: 'Radera event' } })
+        router.push({ pathname: '/schema/edit/confirmEdit', params: { title: 'Radera event' } })
     }
 
     return (

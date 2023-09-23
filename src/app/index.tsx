@@ -6,6 +6,7 @@ import { useEditData } from './(app)/schema/edit/hooks/useEditData'
 import { View } from 'react-native'
 
 export default function Index_0() {
+    //return <Test />
     const authData = useAuthStoreBase()
     const path = usePathname()
     const rootNavigation = useRootNavigation()
@@ -13,9 +14,6 @@ export default function Index_0() {
 
     const [infoText, setInfoText] = useState('')
     const [errorText, setErrorText] = useState('')
-
-    /* dev */
-    const editData = useEditData()
 
     useEffect(() => {
         console.log('index_0', authData.state)
@@ -35,12 +33,13 @@ export default function Index_0() {
     const navigateOnAuthIsReady = () => {
         console.log('index_0 - navigateOnAuthIsReady')
         setTimeout(() => {
+            /* test */
             router.replace(
                 /* orig */
-                //authData.isSignedIn ? '/(app)/retreafy/retreafy' : '/(auth)/login'
+                authData.isSignedIn ? '/(app)/retreafy/retreafy' : '/(auth)/login'
 
                 /* experiment */
-                authData.isSignedIn ? '/(app)' : '/(auth)/login'
+                //authData.isSignedIn ? '/(app)/test/test' : '/(auth)/login'
 
                 /* dev */
                 //authData.isSignedIn ? '/(app)/schema/schemaMain' : '/(auth)/login'

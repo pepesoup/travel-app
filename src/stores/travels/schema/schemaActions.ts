@@ -1,5 +1,5 @@
 import { produce } from 'immer'
-import { EventType, Schema, Event } from '../../types'
+import { EventType, Schema, Event } from '../types'
 import uuid from 'react-native-uuid'
 
 /**

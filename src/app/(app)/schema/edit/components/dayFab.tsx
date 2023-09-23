@@ -1,4 +1,3 @@
-import { useTravelStoreBase } from '@root/src/stores/travels/travelStore'
 import { router } from 'expo-router'
 import { useEffect, useState } from 'react'
 import { Portal, FAB, useTheme } from 'react-native-paper'
@@ -10,7 +9,6 @@ import _ from 'lodash'
 
 export const DayFab = () => {
     const theme = useTheme()
-    const travel = useTravelStoreBase()
     const uiStore = useSchemaUiStoreBase.getState()
     const [state, setState] = useState({ open: false })
     const onStateChange = ({ open }: any) => setState({ open })

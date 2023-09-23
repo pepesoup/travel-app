@@ -5,10 +5,10 @@ import { useEffect, useState } from 'react'
 import { Checkbox, TextInput, useTheme } from 'react-native-paper'
 import { Stack, useRouter } from 'expo-router'
 import { useTravelStoreBase } from '@root/src/stores/travels/travelStore'
-import { Note } from '@root/src/stores/types'
+import { Note } from '@root/src/stores/travels/types'
 
 type Props = {
-    onChange: (n: Note) => void
+    onChange: (n: Partial<Note> & { checked?: boolean }) => void
 }
 
 export default function NoteComposer({ onChange }: Props) {
@@ -21,10 +21,9 @@ export default function NoteComposer({ onChange }: Props) {
         onChange({
             subject,
             message,
-            timestamp: Date.now(),
-            type: 'schema',
+            checked,
         })
-    }, [subject, message])
+    }, [subject, message, checked])
 
     return (
         <View

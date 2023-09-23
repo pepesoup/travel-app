@@ -26,6 +26,7 @@
         "@babel/runtime": "^7.22.15",
         "@react-native-async-storage/async-storage": "1.18.2",
         "@react-native-firebase/auth": "^18.3.2",
+        "@udecode/zustood": "^2.0.0",
         "auto-zustand-selectors-hook": "^2.0.0",
         "color2": "^1.0.8",
         "date-fns": "^2.30.0",

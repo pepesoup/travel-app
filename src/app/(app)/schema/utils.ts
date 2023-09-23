@@ -1,4 +1,4 @@
-import { Event } from '@src/stores/types'
+import { Event } from '@root/src/stores/travels/types'
 
 export const fixTimeString = (time: any) => {
     if (time === undefined || time === null) {

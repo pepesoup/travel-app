@@ -1,29 +1,47 @@
 import { View, ViewStyle } from 'react-native'
 import { StatusBar } from 'expo-status-bar'
-import { GapCmn, RowCmn, ScreenCmn, SurfaceCmn, TextCmn } from '@rn-components/commonUi'
+import { GapCmn, RowCmn, ScreenCmn, SurfaceCmn, TextCmn, IconCmn } from '@rn-components/commonUi'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 import { useTheme } from 'react-native-paper'
 import merge from 'ts-deepmerge'
-
+import { Note } from '@root/src/stores/travels/types'
+import { useEffect } from 'react'
+import { getDateFromTimestamp } from '../utils'
 export type Props = {
-    title: string
-    body: string
-    date: string
-    iconName: any
+    note: Note
     containerStyle?: ViewStyle
 }
 
-export default function NoteRow({ title, body, date, iconName, containerStyle }: Props) {
+export default function NoteRow({ note, containerStyle }: Props) {
     const _containerStyle = merge({}, containerStyle || {})
     const theme = useTheme()
+    const cm = 12
+
     return (
         <View style={_containerStyle}>
             <RowCmn style={{ alignItems: 'flex-start', gap: 20 }}>
                 <SurfaceCmn text="">
-                    <MaterialCommunityIcons
-                        name={iconName}
-                        size={32}
+                    <IconCmn
+                        type={note.type.icon.type}
+                        name={note.type.icon.name as any}
+                        style={{ position: 'absolute', top: cm, left: cm }}
+                        size={40}
                         color={theme.colors.primary}
+                    />
+                    <IconCmn
+                        type={note.subIcon.type}
+                        name={note.subIcon.name as any}
+                        style={{
+                            position: 'absolute',
+                            right: cm,
+                            bottom: cm,
+                            backgroundColor: 'rgba(255,255,255, .7)',
+                            borderRadius: 10,
+                            overflow: 'hidden',
+                            padding: 3,
+                        }}
+                        size={30}
+                        color={theme.colors.primaryContainer}
                     />
                 </SurfaceCmn>
                 <View style={{ flex: 1, height: '100%' }}>
@@ -33,13 +51,15 @@ export default function NoteRow({ title, body, date, iconName, containerStyle }:
                         numberOfLines={2}
                         ellipsizeMode="tail"
                     >
-                        {title}
+                        {note.subject}
                     </TextCmn>
                     <TextCmn numberOfLines={2} ellipsizeMode="tail">
-                        {body}
+                        {note.message}
                     </TextCmn>
                     <View style={{ flex: 1, justifyContent: 'flex-end', paddingBottom: 0 }}>
-                        <TextCmn variant="bodySmall">{date}</TextCmn>
+                        <TextCmn variant="bodySmall">
+                            {getDateFromTimestamp(note.timestamp)}
+                        </TextCmn>
                     </View>
                 </View>
             </RowCmn>

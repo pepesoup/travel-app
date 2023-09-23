@@ -4,24 +4,26 @@ import { useEffect, useState } from 'react'
 import { useTheme } from 'react-native-paper'
 import { useSchemaUiStoreBase } from '../schemaUiStore'
 import { Stack, useNavigation } from 'expo-router'
-import NoteComposer from './components/noteComposer'
+import NoteComposer from '../../notes/components/noteComposer'
 import { useLocalSearchParams } from 'expo-router'
 import { View } from 'react-native'
 import { LinearGradient } from 'expo-linear-gradient'
-import { Note, Event } from '@root/src/stores/types'
+import { Note, Event } from '@root/src/stores/travels/types'
 import { EventLook } from './components/eventLook'
 import { StackActions } from '@react-navigation/native'
 import { useEditData } from './hooks/useEditData'
+import { useTravelStore } from '@root/src/stores/travels/travelStore'
+import { noteTypes } from '@root/src/constants/note.constants'
 
-export default function EditConfirm() {
+export default function ConfirmEdit() {
     const editEventAction = useSchemaUiStoreBase().editEventAction
     const theme = useTheme()
-    //const router = useRouter()
-    const [noteData, setNoteDate] = useState<Note | null>(null)
+    const [noteData, setNoteDate] = useState<Note & { checked?: boolean }>()
     const { title } = useLocalSearchParams() as any
     const [eventToShow, setEventToShow] = useState<Event | null>(null)
     const navigation = useNavigation()
     const editData = useEditData()
+    const travelStore = useTravelStore()
 
     useEffect(() => {
         switch (editEventAction?.action) {
@@ -38,7 +40,29 @@ export default function EditConfirm() {
     }, [editEventAction])
 
     const submit = () => {
-        editData.save()
+        if (noteData?.checked) {
+            const ts = Date.now().toString()
+            //const subIcon = { name: 'walk', type: 'MaterialCommunityIcons' }
+            editData.getEventData()?.type.icon
+
+            const newNote: Note = {
+                uuid: ts,
+                subject: noteData?.subject || 'n/a',
+                message: noteData?.message || 'n/a',
+                timestamp: Number(ts),
+                type: noteTypes.schema,
+                subIcon: editData.getEventData()?.type.icon as any,
+            }
+            travelStore.addNote(newNote)
+        }
+
+        /* save the Schema-Event */
+        editData.save() // TODO!!
+
+        /* Problem is that routes for edit are on top -
+            so, back for main screen is going to last edit screen 
+            instead for going to start page (retreafy)
+        */
         //router.replace('/schema/schemaMain')
 
         /** This is removing all history - the screen reached from here have no back button */
@@ -77,7 +101,7 @@ export default function EditConfirm() {
             >
                 <KeyboardAwareScrollViewCmn>
                     <EventLook eventToShow={eventToShow} />
-                    <NoteComposer onChange={(n: Note) => setNoteDate(n)} />
+                    <NoteComposer onChange={(n) => setNoteDate(n as any)} />
                 </KeyboardAwareScrollViewCmn>
                 <View>
                     <ButtonCmn

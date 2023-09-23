@@ -3,10 +3,12 @@ import { StyleSheet, View, Text, useWindowDimensions } from 'react-native'
 import WheelPickerExpo from 'react-native-wheel-picker-expo'
 import { useTheme } from 'react-native-paper'
 import { TextCmn } from '@root/src/rn-components/src/components/commonUi'
-import { EventType } from '@root/src/stores/types'
+import { EventType } from '@root/src/stores/travels/types'
 import { useEditData } from '../hooks/useEditData'
 import { createTimeString } from '../../utils'
 import { useSchemaUiStoreBase } from '../../schemaUiStore'
+import { getCircularReplacer } from '@root/src/utils/json'
+import { eventTypes } from '@root/src/constants/event.constants'
 
 export const WheelPicker = () => {
     const wheelRef = useRef<WheelPickerExpo>(null)
@@ -18,7 +20,8 @@ export const WheelPicker = () => {
     const editData = useEditData()
     const uiStore = useSchemaUiStoreBase()
 
-    if (uiStore.editEventAction === null || uiStore.editEventAction?.confirming) {
+    //if (uiStore.editEventAction === null || uiStore.editEventAction?.confirming) {
+    if (uiStore.editEventAction === null) {
         return null
     }
 
@@ -38,6 +41,7 @@ export const WheelPicker = () => {
         if (uiStore.editEventAction?.action === 'add') {
             return 0
         }
+
         const [h, m] = editData.getEventData()?.time.split(':') as any[]
         return editData.getAvailableData('hours').findIndex((hour: string) => hour === h)
     }
@@ -54,7 +58,7 @@ export const WheelPicker = () => {
         }
         const typeName = editData.getEventData()?.type.name
         return editData
-            .getAvailableData('eventTypes')
+            .getAvailableData('rendableEventTypes')
             .findIndex((et: EventType) => et.name === typeName)
     }
 
@@ -136,12 +140,14 @@ export const WheelPicker = () => {
                     height={height}
                     width={iconWidth}
                     initialSelectedIndex={getInitialEventTypeIndex()}
-                    items={editData.getAvailableData('eventTypes').map((event: EventType) => {
-                        return {
-                            label: event.icon,
-                            value: { name: event.name },
-                        } as any
-                    })}
+                    items={editData
+                        .getAvailableData('rendableEventTypes')
+                        .map((event: EventType) => {
+                            return {
+                                label: event.icon,
+                                value: eventTypes[event.name],
+                            } as any
+                        })}
                     onChange={({ item }) => {
                         // TODO: on confirm remove
                         editData.updateEventData({ type: item.value })

@@ -8,9 +8,9 @@ import { SchemaDetailCard } from './schemaDetailCard'
 import { MotiView, useDynamicAnimation } from 'moti'
 import { useSchemaUiStoreBase } from '../schemaUiStore'
 import { TouchableRipple, useTheme } from 'react-native-paper'
-import { Event } from '@src/stores/types'
+import { Event } from '@root/src/stores/travels/types'
 import { colors } from '../edit/components/colors'
-import { useTravelStoreBase } from '@root/src/stores/travels/travelStore'
+import { useTravelStore } from '@root/src/stores/travels/travelStore'
 
 export type Props = {
     startDate: Date
@@ -21,8 +21,8 @@ export type Props = {
 export const SchemaDayCard = (props: Props) => {
     const { startDate, day, events, ...restProps } = props
     //const showDetails = useSchemaUiStoreBase().selectedDay
-    const uiStore = useSchemaUiStoreBase.getState()
-    const schemeDay = useTravelStoreBase.getState().content.schema[day]
+    const uiStore = useSchemaUiStoreBase()
+    const schemeDay = useTravelStore().getSchemaDay(day)
     const date = addDays(startDate, day)
     const theme = useTheme()
     const dayName = _.upperFirst(format(date, 'EEEE', { locale: sv }))
@@ -56,7 +56,7 @@ export const SchemaDayCard = (props: Props) => {
     }, [uiStore.selectedDay])
 
     useEffect(() => {
-        const height = (Object.keys(schemeDay).length + 0) * 80 + 10
+        const height = (Object.keys(schemeDay || {}).length + 0) * 80 + 10
         setDetailsHeight(height)
         if (uiStore.selectedDay !== day) {
             setAnimationState(animation)

@@ -1,24 +1,25 @@
 import { useTheme } from 'react-native-paper'
-import { Events } from '../../components/events'
+import { eventsList } from '../../components/events'
 import { useEffect, useState } from 'react'
 import { SchemaUiState, useSchemaUiStoreBase } from '../../schemaUiStore'
-import { useTravelStore, useTravelStoreBase } from '@root/src/stores/travels/travelStore'
+import { useTravelStore } from '@root/src/stores/travels/travelStore'
 import { produce } from 'immer'
-import { Event, Schema } from '@src/stores/types'
+import { Event, Schema } from '@root/src/stores/travels/types'
 import uuid from 'react-native-uuid'
 import { createTimeString } from '../../utils'
 import merge from 'ts-deepmerge'
 import { schemaActions } from '@root/src/stores/travels/schema/schemaActions'
+import { eventTypes } from '@root/src/constants/event.constants'
 
 export const useEditData = () => {
     const theme = useTheme()
 
     const HOUR = '07,08,09,10,11,12,13,14,15,16,17,18,19,20'.split(',')
     const MINUTE = '00,15,30,45'.split(',')
-    const EVENTS = Events({ size: 32, color: theme.colors.primary, withLabel: true })
+    const RENDABLE_EVENTS = eventsList({ size: 32, color: theme.colors.primary, withLabel: true })
 
     /* TravelStore */
-    const travelStore = useTravelStoreBase()
+    const travelStore = useTravelStore()
 
     /* UiStore */
     const uiStore = useSchemaUiStoreBase()
@@ -52,10 +53,7 @@ export const useEditData = () => {
                     uuid: 'guid1',
                     day: 0,
                     time: '19:00',
-                    type: {
-                        name: 'meal',
-                        icon: '',
-                    },
+                    type: eventTypes.meal,
                     description: 'Gemensam middag',
                 }
             })
@@ -69,15 +67,12 @@ export const useEditData = () => {
         const editEventAction = {
             confirming: false,
             action: 'add',
-            schema: travelStore.content.schema,
+            schema: travelStore.content?.schema,
             newEvent: {
                 uuid: uuid.v4().toString(),
                 day: uiStore.selectedDay,
                 time: createTimeString(HOUR[0], MINUTE[0]),
-                type: {
-                    name: 'meal',
-                    icon: '',
-                },
+                type: eventTypes.meal,
                 description: '',
             },
             oldEvent: null,
@@ -90,7 +85,7 @@ export const useEditData = () => {
         const editEventAction = {
             confirming: false,
             action: 'delete',
-            schema: travelStore.content.schema,
+            schema: travelStore.content?.schema,
             newEvent: null,
             oldEvent: uiStore.selectedEvent,
         } as SchemaUiState['editEventAction']
@@ -100,7 +95,7 @@ export const useEditData = () => {
     const initUpdateEvent = () => {
         const editEventAction = {
             action: 'update',
-            schema: travelStore.content.schema,
+            schema: travelStore.content?.schema,
             newEvent: uiStore.selectedEvent,
             oldEvent: uiStore.selectedEvent,
         } as SchemaUiState['editEventAction']
@@ -134,19 +129,21 @@ export const useEditData = () => {
                 return uiStore.editEventAction?.newEvent
             case 'update':
                 return uiStore.editEventAction?.newEvent
+            case 'delete':
+                return uiStore.editEventAction?.oldEvent
             default:
                 return null
         }
     }
 
-    const getAvailableData: any = (key: 'hours' | 'minutes' | 'eventTypes') => {
+    const getAvailableData: any = (key: 'hours' | 'minutes' | 'rendableEventTypes') => {
         switch (key) {
             case 'hours':
                 return HOUR
             case 'minutes':
                 return MINUTE
-            case 'eventTypes':
-                return EVENTS
+            case 'rendableEventTypes':
+                return RENDABLE_EVENTS
         }
     }
 
@@ -174,7 +171,8 @@ export const useEditData = () => {
     }
 
     const save = () => {
-        const editEventAction = uiStore.editEventAction
+        //const editEventAction = uiStore.editEventAction
+        const editEventAction = useSchemaUiStoreBase.getState().editEventAction
         if (editEventAction === null) {
             console.warn('Something whent wrong...')
             return
@@ -192,6 +190,7 @@ export const useEditData = () => {
             console.warn('Something whent wrong...')
             return
         }
+        /*** TODO - replace this "save" with an -event-action in store */
 
         /*** data OK ***/
         let updatedSchema: Schema | null = null
@@ -203,7 +202,7 @@ export const useEditData = () => {
                 .add(newEvent?.time as any, newEvent?.type as any, newEvent?.description as any)
 
             useSchemaUiStoreBase.setState(
-                produce(uiStore, (draft) => {
+                produce(useSchemaUiStoreBase.getState(), (draft) => {
                     draft.selectedEvent = null
                     draft.editEventAction = null
                 })
@@ -234,10 +233,15 @@ export const useEditData = () => {
             )
         }
 
-        useTravelStoreBase.setState(
-            produce(travelStore, (draft) => {
-                draft.content.schema = updatedSchema
-                draft.state = 'hasValue'
+        useTravelStore.setState(
+            produce(useTravelStore.getState(), (draft) => {
+                if (
+                    draft.content !== null &&
+                    draft.content.schema !== null &&
+                    updatedSchema !== null
+                ) {
+                    draft.content.schema = updatedSchema
+                }
             })
         )
     }

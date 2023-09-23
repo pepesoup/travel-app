@@ -1,11 +1,11 @@
 import { appThemeState } from '../../../../theme/themeStates'
 import { View, StyleSheet, ViewProps, ViewStyle, TextStyle, Pressable } from 'react-native'
-import { TextCmn } from '@rn-components/commonUi'
+import { IconCmn, TextCmn } from '@rn-components/commonUi'
 import _ from 'lodash'
 import { MaterialCommunityIcons, Ionicons } from '@expo/vector-icons'
 import merge from 'ts-deepmerge'
 import { useTheme } from 'react-native-paper'
-import { Event, EventType } from '@src/stores/types'
+import { Event, EventType } from '@root/src/stores/travels/types'
 import { colors } from '../edit/components/colors'
 import { useSchemaUiStoreBase } from '../schemaUiStore'
 import { fixTimeString } from '../utils'
@@ -16,21 +16,6 @@ export type Props = {
     event?: Event | null
     style?: any
     freeStanding?: boolean
-}
-
-const Icon = (type: EventType, color: string) => {
-    switch (type.name) {
-        case 'walk':
-            return <MaterialCommunityIcons name="walk" size={32} color={color} />
-        case 'meal':
-            return <MaterialCommunityIcons name="silverware-fork-knife" size={32} color={color} />
-        case 'yoga':
-            return <MaterialCommunityIcons name="meditation" size={32} color={color} />
-        case 'exercise':
-            return <Ionicons name="barbell-outline" size={32} color={color} />
-        case 'lecture':
-            return <MaterialCommunityIcons name="human-male-board-poll" size={32} color={color} />
-    }
 }
 
 export const SchemaDetailCard = ({ day, event, style, freeStanding }: Props) => {
@@ -116,7 +101,12 @@ export const SchemaDetailCard = ({ day, event, style, freeStanding }: Props) => 
                         }}
                     />
                 )}
-                {Icon(event.type, theme.colors.primary)}
+                <IconCmn
+                    name={event.type.icon.name as any}
+                    type={event.type.icon.type}
+                    color={theme.colors.primary}
+                    size={28}
+                />
             </View>
             <View style={{ flex: 1 }}>
                 <TextCmn>{event.description}</TextCmn>
