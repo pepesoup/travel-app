@@ -28,22 +28,19 @@ export const useTravelStore = create(
         content: {} as Travel,
         state: {
             value: 'loading',
-            info: '',
+            info: 'initial',
         },
         actions: {
             addNote: (note: Note) => {
                 setDbValue(`notes/${note.uuid}`, note)
+
                 /* // Firebase trigger RT update - even if offline -> so set state this way is not needed
                 set((state: TravelStore) => {
                     state.content.notes[note.uuid] = note
                 })// */
             },
             setSchema: (schema: Schema) => {
-                if (schema !== null && schema !== undefined) {
-                    setDbValue(`schema`, schema)
-                } else {
-                    throw Error('Schema is not valid')
-                }
+                setDbValue(`schema`, schema)
 
                 /* // Firebase trigger RT update - even if offline -> so set state this way is not needed
                 set((state: TravelStore) => {
