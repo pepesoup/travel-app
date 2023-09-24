@@ -1,35 +1,33 @@
-import { appThemeState } from '../../../../theme/themeStates'
-import { View, StyleSheet, ViewProps, ViewStyle, TextStyle, Pressable } from 'react-native'
+import { View, ViewStyle, Pressable } from 'react-native'
 import { IconCmn, TextCmn } from '@rn-components/commonUi'
 import _ from 'lodash'
-import { MaterialCommunityIcons, Ionicons } from '@expo/vector-icons'
 import merge from 'ts-deepmerge'
 import { useTheme } from 'react-native-paper'
-import { Event, EventType } from '@root/src/stores/travels/types'
+import { Event } from '@root/src/stores/travels/types'
 import { colors } from '../edit/components/colors'
 import { useSchemaUiStoreBase } from '../schemaUiStore'
-import { fixTimeString } from '../utils'
 import { useEffect, useState } from 'react'
+import { useDisplayData } from '../edit/hooks/useDisplayData'
 
 export type Props = {
-    day: number
+    dayId: string
     event?: Event | null
     style?: any
     freeStanding?: boolean
 }
 
-export const SchemaDetailCard = ({ day, event, style, freeStanding }: Props) => {
-    const time = fixTimeString(event?.time)
+export const SchemaDetailCard = ({ dayId, event, style, freeStanding }: Props) => {
     const eventId = event?.uuid
-    const uiStore = useSchemaUiStoreBase.getState()
+    const uiStore = useSchemaUiStoreBase()
     const theme = useTheme()
     const height = 80
     const margin = 20
     const [isSelected, setIsSelected] = useState(false)
+    const display = useDisplayData()
 
     useEffect(() => {
-        setIsSelected(day === uiStore.selectedDay && eventId === uiStore.selectedEvent?.uuid)
-    }, [uiStore.selectedDay, uiStore.selectedEvent])
+        setIsSelected(dayId === uiStore.selectedDayId && eventId === uiStore.selectedEvent?.uuid)
+    }, [uiStore.selectedDayId, uiStore.selectedEvent])
 
     const _style = merge(
         {
@@ -71,7 +69,7 @@ export const SchemaDetailCard = ({ day, event, style, freeStanding }: Props) => 
     return (
         <View style={_style}>
             <View style={{ width: 60 }}>
-                <TextCmn variant="titleMedium">{fixTimeString(time)}</TextCmn>
+                <TextCmn variant="titleMedium">{display.fixTimeString(event?.time)}</TextCmn>
             </View>
             <View style={styleIconContainer}>
                 <Pressable

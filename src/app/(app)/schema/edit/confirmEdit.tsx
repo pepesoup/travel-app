@@ -11,8 +11,8 @@ import { LinearGradient } from 'expo-linear-gradient'
 import { Note, Event } from '@root/src/stores/travels/types'
 import { EventLook } from './components/eventLook'
 import { StackActions } from '@react-navigation/native'
-import { useEditData } from './hooks/useEditData'
-import { useTravelStore } from '@root/src/stores/travels/travelStore'
+import { useEditActions } from './hooks/useEditActions'
+import { useTravelActions, useTravelStore } from '@root/src/stores/travels/travelStore'
 import { noteTypes } from '@root/src/constants/note.constants'
 
 export default function ConfirmEdit() {
@@ -22,8 +22,8 @@ export default function ConfirmEdit() {
     const { title } = useLocalSearchParams() as any
     const [eventToShow, setEventToShow] = useState<Event | null>(null)
     const navigation = useNavigation()
-    const editData = useEditData()
-    const travelStore = useTravelStore()
+    const editData = useEditActions()
+    const travelActions = useTravelActions()
 
     useEffect(() => {
         switch (editEventAction?.action) {
@@ -53,11 +53,11 @@ export default function ConfirmEdit() {
                 type: noteTypes.schema,
                 subIcon: editData.getEventData()?.type.icon as any,
             }
-            travelStore.addNote(newNote)
+            travelActions.addNote(newNote)
         }
 
         /* save the Schema-Event */
-        editData.save() // TODO!!
+        editData.save()
 
         /* Problem is that routes for edit are on top -
             so, back for main screen is going to last edit screen 

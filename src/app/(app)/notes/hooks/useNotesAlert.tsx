@@ -1,9 +1,8 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useTravelStore } from '@root/src/stores/travels/travelStore'
 import _ from 'lodash'
-import { useState, useEffect, useRef } from 'react'
+import { useEffect, useRef } from 'react'
 import { useAppStore } from '@src/stores/app/appStore'
-import { useFocusEffect } from 'expo-router'
 
 export const useNotesAlert = () => {
     const notes = useTravelStore((state) => state.content.notes)
@@ -11,10 +10,6 @@ export const useNotesAlert = () => {
     const currentNotesTs = useRef<number[]>([])
     const appStore = useAppStore()
     const nrOfUnreadNotes = useAppStore((state) => state.nrOfUnreadNotes)
-
-    useFocusEffect(() => {
-        console.log('+++ useNotesAlert - useFocusEffect:')
-    })
 
     useEffect(() => {
         currentNotesTs.current = Object.entries(notes || {}).map(([id, note]) => note?.timestamp)

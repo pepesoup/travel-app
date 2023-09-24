@@ -11,22 +11,31 @@ import uuid from 'react-native-uuid'
  *          return a note on performed action, so user have prefilled data
  */
 export const schemaActions = {
-    day: (schema: Schema, day: number) => {
+    day: (schema: Schema, dayId: string) => {
         return {
             eventAction: (eventId: string) => {
                 return {
                     add: (time: string, type: EventType, description: string) => {
+                        const day = schema[dayId].info.day
                         return produce(schema, (draft) => {
-                            draft[day][eventId] = { uuid: eventId, day, time, type, description }
+                            draft[dayId].events[eventId] = {
+                                uuid: eventId,
+                                day,
+                                time,
+                                type,
+                                description,
+                            }
                         })
                     },
                     delete: () => {
                         return produce(schema, (draft) => {
-                            delete draft[day][eventId]
+                            delete draft[dayId].events[eventId]
                         })
                     },
                     update: (newTime?: string, newType?: EventType, newDescription?: string) => {
-                        const existingEvent = schema[day][eventId]
+                        // TODO: maybe add prossible to change day for event?
+                        const day = schema[dayId].info.day
+                        const existingEvent = schema[dayId].events[eventId]
                         if (!existingEvent) {
                             throw new Error('Update call for non existing event')
                         }
@@ -34,14 +43,20 @@ export const schemaActions = {
                         const description = newDescription || existingEvent.description
                         const time = newTime || existingEvent.time
                         return produce(schema, (draft) => {
-                            delete draft[day][time]
-                            draft[day][eventId] = { uuid: eventId, day, time, type, description }
+                            delete draft[dayId].events[time]
+                            draft[dayId].events[eventId] = {
+                                uuid: eventId,
+                                day,
+                                time,
+                                type,
+                                description,
+                            }
                         })
                     },
                 }
             },
             dayAction: {
-                new: (time: string, type: EventType) => {},
+                new: () => {},
                 delete: {},
                 change: () => {},
                 replaced: {},

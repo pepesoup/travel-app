@@ -2,32 +2,38 @@ import { ButtonCmn, ScreenCmn, TextCmn } from '@rn-components/commonUi'
 import { useEffect } from 'react'
 import { useSchemaUiStoreBase } from '../schemaUiStore'
 import { Stack, useRouter } from 'expo-router'
-import { useTravelStore } from '@root/src/stores/travels/travelStore'
-import { displaySelectedDay } from '../utils'
+import { useTravelState, useTravelStore } from '@root/src/stores/travels/travelStore'
 import AddAndUpdate from './components/addAndUpdate'
-import { useEditData } from './hooks/useEditData'
+import { useEditActions } from './hooks/useEditActions'
+import { useDisplayData } from './hooks/useDisplayData'
 
 export default function AddEvent() {
     const uiStore = useSchemaUiStoreBase()
-    const travelStore = useTravelStore()
-    const editData = useEditData()
+    const travelState = useTravelState()
+    const editData = useEditActions()
     const router = useRouter()
+    const display = useDisplayData()
+
+    const title = () => {
+        return uiStore.selectedDayId !== null
+            ? `Lägg till event - Dag ${display.displaySelectedDay(uiStore.selectedDayId)}`
+            : 'Error'
+    }
 
     useEffect(() => {
-        if (travelStore.state.value === 'hasValue') {
+        if (travelState.value === 'hasValue') {
             editData.initAddEvent()
         }
-    }, [travelStore])
+    }, [travelState])
 
     const submit = () => {
-        editData.setConfirming()
         router.push({
             pathname: '/schema/edit/confirmEdit',
-            params: { title: `Lägg till event - Dag ${displaySelectedDay(uiStore.selectedDay)}` },
+            params: { title: title() },
         })
     }
 
-    if (travelStore.state.value === 'loading') {
+    if (travelState.value === 'loading') {
         return <TextCmn>Travelstore is loading</TextCmn>
     }
 
@@ -36,7 +42,7 @@ export default function AddEvent() {
             <Stack.Screen
                 getId={({ params }) => String(Date.now())} /* clears screen on push nav */
                 options={{
-                    title: `Lägg till event - Dag ${displaySelectedDay(uiStore.selectedDay)}`,
+                    title: title(),
                     headerRight: () => null,
                 }}
             />

@@ -31,51 +31,60 @@ export const travels: { [travelId: string]: Travel } = {
             ],
         },
         schema: {
-            0: {
-                guid1: {
-                    uuid: 'guid1',
-                    day: 0,
-                    time: '19:00',
-                    type: eventTypes.meal,
-                    description: 'Gemensam middag',
+            day_0: {
+                info: { day: 0 },
+                events: {
+                    guid1: {
+                        uuid: 'guid1',
+                        day: 0,
+                        time: '19:00',
+                        type: eventTypes.meal,
+                        description: 'Gemensam middag',
+                    },
                 },
             },
-            1: {
-                guid2: {
-                    uuid: 'guid2',
-                    day: 1,
-                    time: '08:00',
-                    type: eventTypes.walk,
-                    description: 'Morgonpromenad',
+            day_1: {
+                info: { day: 1 },
+                events: {
+                    guid2: {
+                        uuid: 'guid2',
+                        day: 1,
+                        time: '08:00',
+                        type: eventTypes.walk,
+                        description: 'Morgonpromenad',
+                    },
                 },
             },
-            2: {
-                guid3: {
-                    uuid: 'guid3',
-                    day: 2,
-                    time: '08:00',
-                    type: eventTypes.meal,
-                    description: 'Frukost',
-                },
-                guid5: {
-                    uuid: 'guid5',
-                    day: 2,
-                    time: '19:00',
-                    type: eventTypes.meal,
-                    description: 'Gemensam middag',
-                },
-                guid4: {
-                    uuid: 'guid4',
-                    day: 2,
-                    time: '12:30',
-                    type: eventTypes.meal,
-                    description: 'Lunch',
+            day_2: {
+                info: { day: 2 },
+                events: {
+                    guid3: {
+                        uuid: 'guid3',
+                        day: 2,
+                        time: '08:00',
+                        type: eventTypes.meal,
+                        description: 'Frukost',
+                    },
+                    guid5: {
+                        uuid: 'guid5',
+                        day: 2,
+                        time: '19:00',
+                        type: eventTypes.meal,
+                        description: 'Gemensam middag',
+                    },
+                    guid4: {
+                        uuid: 'guid4',
+                        day: 2,
+                        time: '12:30',
+                        type: eventTypes.meal,
+                        description: 'Lunch',
+                    },
                 },
             },
-            3: {},
-            4: {},
-            5: {},
-            6: {},
+            day_3: { info: { day: 3 }, events: {} },
+            day_4: { info: { day: 4 }, events: {} },
+            day_5: { info: { day: 5 }, events: {} },
+            day_6: { info: { day: 6 }, events: {} },
         },
         notes: {
             '1695239895': {
@@ -113,35 +122,3 @@ export const travels: { [travelId: string]: Travel } = {
         },
     },
 }
-
-/******************** Schemas *********************/
-/*
-export const schemas: { [travelId: string]: Schema } = {
-    travelId1: {
-        1: {
-            '8:00': { type: eventTypes.walk, description: 'Morgonpromenad' },
-            '8:30': { type: eventTypes.meal, description: 'Frukost' },
-            '10:30': { type: eventTypes.yoga, description: 'Yoga' },
-            '12:30': { type: eventTypes.meal, description: 'Lunch' },
-            '15:30': { type: eventTypes.exercise, description: 'Smart träning med Mårten' },
-            '17:30': { type: eventTypes.lecture, description: 'Föreläsning med Mårten' },
-            '19:00': { type: eventTypes.meal, description: 'Gemensam middag' },
-        },
-        2: {
-            '8:30': { type: eventTypes.meal, description: 'Frukost' },
-            '12:30': { type: eventTypes.meal, description: 'Lunch' },
-            '19:00': { type: eventTypes.meal, description: 'Gemensam middag' },
-        },
-    },
-    travelId2: {
-        1: {
-            '8:00': { type: eventTypes.walk, description: 'Morgonpromenad' },
-        },
-        2: {
-            '8:30': { type: eventTypes.meal, description: 'Frukost' },
-            '12:30': { type: eventTypes.meal, description: 'Lunch' },
-            '19:00': { type: eventTypes.meal, description: 'Gemensam middag' },
-        },
-    },
-}
-*/

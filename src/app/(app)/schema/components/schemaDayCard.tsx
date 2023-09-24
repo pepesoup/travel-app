@@ -1,4 +1,4 @@
-import { Pressable, View, StyleSheet } from 'react-native'
+import { View } from 'react-native'
 import { TextCmn } from '@rn-components/commonUi'
 import { format, addDays } from 'date-fns'
 import { sv } from 'date-fns/locale'
@@ -9,20 +9,19 @@ import { MotiView, useDynamicAnimation } from 'moti'
 import { useSchemaUiStoreBase } from '../schemaUiStore'
 import { TouchableRipple, useTheme } from 'react-native-paper'
 import { Event } from '@root/src/stores/travels/types'
-import { colors } from '../edit/components/colors'
-import { useTravelStore } from '@root/src/stores/travels/travelStore'
+import { useTravelSchema } from '@root/src/stores/travels/travelStore'
 
 export type Props = {
     startDate: Date
+    dayId: string
     day: number
     events: { [eventId: string]: Event }
 }
 
 export const SchemaDayCard = (props: Props) => {
-    const { startDate, day, events, ...restProps } = props
-    //const showDetails = useSchemaUiStoreBase().selectedDay
+    const { startDate, dayId, day, events, ...restProps } = props
     const uiStore = useSchemaUiStoreBase()
-    const schemeDay = useTravelStore().getSchemaDay(day)
+    const schema = useTravelSchema()
     const date = addDays(startDate, day)
     const theme = useTheme()
     const dayName = _.upperFirst(format(date, 'EEEE', { locale: sv }))
@@ -40,7 +39,7 @@ export const SchemaDayCard = (props: Props) => {
     const animationType = {}
 
     useEffect(() => {
-        if (uiStore.selectedDay === day) {
+        if (uiStore.selectedDayId === dayId) {
             animation.animateTo((current) => ({
                 height: detailsHeight,
                 opacity: 1,
@@ -53,12 +52,19 @@ export const SchemaDayCard = (props: Props) => {
                 transition: { type: 'timing', duration, ...animationType },
             }))
         }
-    }, [uiStore.selectedDay])
+    }, [uiStore.selectedDayId])
 
     useEffect(() => {
-        const height = (Object.keys(schemeDay || {}).length + 0) * 80 + 10
+        /** NOTE: this has to be updated  */
+        //const height = (Object.keys(schemeDay || {}).length + 0) * 80 + 10
+        //const height = (Object.keys(events || {}).length + 0) * 80 + 10
+
+        const nrOfEvents = Object.keys(schema[dayId].events || {}).length
+        console.log('+++ schemaDayCard - nr of events (height):', dayId, nrOfEvents)
+
+        const height = (nrOfEvents + 0) * 80 + 10
         setDetailsHeight(height)
-        if (uiStore.selectedDay !== day) {
+        if (uiStore.selectedDayId !== dayId) {
             setAnimationState(animation)
         } else {
             animation.animateTo((current) => ({
@@ -67,14 +73,15 @@ export const SchemaDayCard = (props: Props) => {
                 transition: { type: 'timing', duration, ...animationType },
             }))
         }
-    }, [schemeDay, uiStore.selectedDay])
+        //}, [schemeDay, uiStore.selectedDay])
+    }, [schema, uiStore.selectedDayId])
 
     const onPress = () => {
         useSchemaUiStoreBase.setState({ selectedEvent: null })
-        if (uiStore.selectedDay === day) {
-            useSchemaUiStoreBase.setState({ selectedDay: null })
+        if (uiStore.selectedDayId === dayId) {
+            useSchemaUiStoreBase.setState({ selectedDayId: null })
         } else {
-            useSchemaUiStoreBase.setState({ selectedDay: day })
+            useSchemaUiStoreBase.setState({ selectedDayId: dayId })
         }
     }
 
@@ -91,6 +98,9 @@ export const SchemaDayCard = (props: Props) => {
     }
 
     const Details = () => {
+        if (!events) {
+            return null
+        }
         return (
             <MotiView
                 state={animationState}
@@ -111,7 +121,7 @@ export const SchemaDayCard = (props: Props) => {
                     .map(([eventId, event]: [string, Event], i: number) => {
                         return (
                             <SchemaDetailCard
-                                day={day}
+                                dayId={dayId}
                                 event={event}
                                 style={{ marginTop: 0 }}
                                 key={`detailsCard-${i}`}
@@ -142,7 +152,7 @@ export const SchemaDayCard = (props: Props) => {
                         flexDirection: 'row',
                         borderRadius: 5,
                         overflow: 'hidden',
-                        borderWidth: uiStore.isAdminMode && day === uiStore.selectedDay ? 2 : 0,
+                        borderWidth: uiStore.isAdminMode && dayId === uiStore.selectedDayId ? 2 : 0,
                         borderColor: theme.colors.tertiaryContainer,
                     }}
                 >

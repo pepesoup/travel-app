@@ -2,7 +2,7 @@ import { Redirect, useRootNavigation, usePathname, useRouter } from 'expo-router
 import { useEffect, useState } from 'react'
 import { useAuthStoreBase } from '@rne-firebase/stores/authStore'
 import { TextCmn, Links, ButtonCmn } from '@rn-components/commonUi'
-import { useEditData } from './(app)/schema/edit/hooks/useEditData'
+import { useEditActions } from './(app)/schema/edit/hooks/useEditActions'
 import { View } from 'react-native'
 
 export default function Index_0() {
@@ -35,13 +35,11 @@ export default function Index_0() {
         setTimeout(() => {
             /* test */
             router.replace(
-                /* orig */
-                authData.isSignedIn ? '/(app)/retreafy/retreafy' : '/(auth)/login'
-
-                /* experiment */
-                //authData.isSignedIn ? '/(app)/test/test' : '/(auth)/login'
+                /* prod */
+                authData.isSignedIn ? '/(app)' : '/(auth)/login'
 
                 /* dev */
+                //authData.isSignedIn ? '/(app)/test/test' : '/(auth)/login'
                 //authData.isSignedIn ? '/(app)/schema/schemaMain' : '/(auth)/login'
                 //authData.isSignedIn ? '/(app)/schema/edit/[addEvent]' : '/(auth)/login'
             )

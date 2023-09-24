@@ -2,36 +2,41 @@ import { ButtonCmn, ScreenCmn, TextCmn } from '@rn-components/commonUi'
 import { useEffect } from 'react'
 import { useSchemaUiStoreBase } from '../schemaUiStore'
 import { Stack, useRouter } from 'expo-router'
-import { useTravelStoreBase } from '@root/src/stores/travels/travelStore'
-import { displaySelectedDay, displaySelectedEventTime } from '../utils'
 import AddAndUpdate from './components/addAndUpdate'
-import { useEditData } from './hooks/useEditData'
+import { useEditActions } from './hooks/useEditActions'
+import { useTravelSchema, useTravelState } from '@root/src/stores/travels/travelStore'
+import { useDisplayData } from './hooks/useDisplayData'
 
 export default function UpdateEvent() {
     const uiStore = useSchemaUiStoreBase()
-    const travelStore = useTravelStoreBase()
-    const editData = useEditData()
+    const travelState = useTravelState()
+    const schema = useTravelSchema()
+    const editData = useEditActions()
     const router = useRouter()
+    const display = useDisplayData()
 
-    const title = () => `Uppdatera event - Dag ${displaySelectedDay(uiStore.selectedDay)}`
+    const title = () => {
+        return uiStore.selectedDayId !== null
+            ? `Uppdatera event - Dag ${display.displaySelectedDay(uiStore.selectedDayId)}`
+            : 'Error'
+    }
 
     useEffect(() => {
-        if (travelStore.state === 'hasValue') {
+        if (travelState.value === 'hasValue') {
             editData.initUpdateEvent()
         }
-    }, [travelStore])
+    }, [travelState])
 
     const submit = () => {
-        editData.setConfirming()
         router.push({
-            pathname: '/schema/edit/editConfirm',
+            pathname: '/schema/edit/confirmEdit',
             params: {
                 title: title(),
             },
         })
     }
 
-    if (travelStore.state === 'loading') {
+    if (travelState.value === 'loading') {
         return <TextCmn>Travelstore is loading</TextCmn>
     }
 

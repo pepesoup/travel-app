@@ -32,7 +32,7 @@ export const EventLook = ({ eventToShow }: Props) => {
                     paddingHorizontal: 20,
                 }}
             >
-                <SchemaDetailCard day={-1} event={eventToShow} freeStanding />
+                <SchemaDetailCard dayId={'noop'} event={eventToShow} freeStanding />
             </View>
             <View
                 style={{

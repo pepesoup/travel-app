@@ -7,36 +7,9 @@ import { travels } from './devData'
 import { produce } from 'immer'
 import { immer } from 'zustand/middleware/immer'
 import merge from 'ts-deepmerge'
-
-export type NoteStore = {
-    notes: Notes
-    addNote: (note: Note) => void
-}
-
-export const _useNoteStore = create(
-    immer<NoteStore>((set) => ({
-        notes: travels.travelId1.notes,
-        addNote: (note: Note) =>
-            set((state: NoteStore) => {
-                state.notes[note.uuid] = note
-            }),
-    }))
-)
-
-export type SchemaStore = {
-    schema: Schema
-    addEvent: (day: number, event: Event) => void
-}
-
-export const useSchemaStore = create(
-    immer<SchemaStore>((set) => ({
-        schema: travels.travelId1.schema,
-        addEvent: (day: number, event: Event) =>
-            set((state: SchemaStore) => {
-                state.schema[day][event.uuid] = event
-            }),
-    }))
-)
+import { ref, onValue, set } from 'firebase/database'
+import { auth, db } from '@root/src/rne-firebase/firebaseConfig'
+import { setDbValue, listenOnRtdbForTravels } from './db/fb-rtdb'
 
 export type TravelStore = {
     content: Travel
@@ -44,47 +17,45 @@ export type TravelStore = {
         value: 'loading' | 'hasValue' | 'hasError'
         info: string
     }
-    getNotes: () => Notes
-    addNote: (note: Note) => any
-    getSchema: () => Schema
-    getSchemaDay: (day: number) => Events
+    actions: {
+        addNote: (note: Note) => any
+        setSchema: (schema: Schema) => any
+    }
 }
-/*
-inc: () =>
-    set((state) => ({
-      nested: { ...state.nested, count: state.nested.count + 1 },
-    })),
-*/
+
 export const useTravelStore = create(
     immer<TravelStore>((set, get) => ({
-        content: travels.travelId1,
+        content: {} as Travel,
         state: {
-            value: 'hasValue',
-            info: 'ok',
+            value: 'loading',
+            info: '',
         },
-        getNotes: () => get().content.notes, // this is not triggering re-rendering of components
-        addNote: (note: Note) =>
-            set((state: TravelStore) => {
-                state.content.notes[note.uuid] = note
-            }),
-        getSchema: () => get().content?.schema || null,
-        getSchemaDay: (day: number) => {
-            return get().content?.schema[day] || null
+        actions: {
+            addNote: (note: Note) => {
+                setDbValue(`notes/${note.uuid}`, note)
+                /* // Firebase trigger RT update - even if offline -> so set state this way is not needed
+                set((state: TravelStore) => {
+                    state.content.notes[note.uuid] = note
+                })// */
+            },
+            setSchema: (schema: Schema) => {
+                if (schema !== null && schema !== undefined) {
+                    setDbValue(`schema`, schema)
+                } else {
+                    throw Error('Schema is not valid')
+                }
+
+                /* // Firebase trigger RT update - even if offline -> so set state this way is not needed
+                set((state: TravelStore) => {
+                    state.content.notes[note.uuid] = note
+                })// */
+            },
         },
     }))
 )
-
-const fetchTravelFromDb = () => {
-    setTimeout(() => {}, 1000)
-}
-
-/********** utils ***************/
-const createDate = (dateString: string) => {
-    const date: any = new Date(dateString)
-    if (isNaN(date)) {
-        throw new Error(
-            'Error: Wrong value in database:' + dateString + '. Not able to parse to date.'
-        )
-    }
-    return date
-}
+listenOnRtdbForTravels(useTravelStore)
+export const useTravelState = () => useTravelStore((state) => state.state)
+export const useTravelInfo = () => useTravelStore((state) => state.content.info)
+export const useTravelNotes = () => useTravelStore((state) => state.content.notes)
+export const useTravelSchema = () => useTravelStore((state) => state.content.schema)
+export const useTravelActions = () => useTravelStore((state) => state.actions)

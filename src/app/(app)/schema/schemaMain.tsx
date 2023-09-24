@@ -5,7 +5,11 @@ import { Pressable, View, Modal } from 'react-native'
 import { SchemaDayCard } from './components/schemaDayCard'
 import { MotiScrollView } from 'moti'
 import { useSchemaUiStoreBase } from './schemaUiStore'
-import { useTravelStore } from '@root/src/stores/travels/travelStore'
+import {
+    useTravelInfo,
+    useTravelSchema,
+    useTravelState,
+} from '@root/src/stores/travels/travelStore'
 import { DataProvider } from '@root/src/rne-firebase/src/components/data/dataProvider/dataProvider'
 import { HeaderRight, iconSizeAtHeader } from '../_layout'
 import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons'
@@ -15,23 +19,26 @@ import { DayFab } from './edit/components/dayFab'
 export default function SchemaMain() {
     const uiStore = useSchemaUiStoreBase()
     const scrollViewRef = useRef<any>(null)
-    const travelStore = useTravelStore()
     const theme = useTheme()
     const path = usePathname()
+    const travelState = useTravelState()
+    const travelSchema = useTravelSchema()
+    const travelInfo = useTravelInfo()
 
     useEffect(() => {
         useSchemaUiStoreBase.setState({ enableFabs: path === '/schema/schemaMain' })
     }, [path])
 
     useEffect(() => {
-        if (uiStore.selectedDay !== null) {
+        if (uiStore.selectedDayId !== null) {
+            const day = travelSchema[uiStore.selectedDayId].info.day
             scrollViewRef.current?.scrollTo({
                 x: 0,
-                y: (uiStore.selectedDay + 0) * 112 + 30 || 0,
+                y: (day + 0) * 112 + 30 || 0,
                 animated: 0,
             })
         }
-    }, [uiStore.selectedDay])
+    }, [uiStore.selectedDayId])
 
     const AdminIcon = () => (
         <Pressable
@@ -47,7 +54,7 @@ export default function SchemaMain() {
         </Pressable>
     )
 
-    if (travelStore.content === null) {
+    if (travelState.value !== 'hasValue') {
         return null
     }
 
@@ -63,8 +70,9 @@ export default function SchemaMain() {
 
             <MotiScrollView
                 onContentSizeChange={(w, h) => {
-                    if (uiStore.selectedDay !== null) {
-                        const target = (uiStore.selectedDay + 0) * 112 + 30
+                    if (uiStore.selectedDayId !== null) {
+                        const day = travelSchema[uiStore.selectedDayId].info.day
+                        const target = (day + 0) * 112 + 30
                         setTimeout(() => {
                             scrollViewRef.current.scrollTo({
                                 x: 0,
@@ -84,18 +92,22 @@ export default function SchemaMain() {
                 }}
                 ref={scrollViewRef}
             >
-                {Object.entries(travelStore.content?.schema || {}).map(
-                    ([day, events]: [string, any]) => {
+                {Object.keys(travelSchema)
+                    .sort((a, b) => {
+                        return travelSchema[a].info.day - travelSchema[b].info.day
+                    })
+                    .map((dayId) => {
+                        const data = travelSchema[dayId]
                         return (
                             <SchemaDayCard
-                                startDate={travelStore.content?.info.startDate || new Date()}
-                                day={Number(day)}
-                                events={events}
-                                key={`dayCard-${day}`}
+                                startDate={travelInfo.startDate}
+                                dayId={dayId}
+                                day={data.info.day}
+                                events={data.events}
+                                key={`dayCard-${dayId}`}
                             />
                         )
-                    }
-                )}
+                    })}
                 <View style={{ height: 40 }} />
             </MotiScrollView>
         </ScreenCmn>

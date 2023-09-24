@@ -4,6 +4,11 @@ import { IconCmn, TextCmn } from '@root/src/rn-components/src/components/commonU
 import { View, ViewStyle } from 'react-native'
 import { useTheme } from 'react-native-paper'
 
+/**
+ * Used for picker -> to choose event
+ *
+ * */
+
 type Props = {
     size: number
     color: string
@@ -42,77 +47,4 @@ export const eventsList = ({ size, color, withLabel }: Props) => {
         }
     })
     return list
-
-    return [
-        {
-            name: 'walk',
-            icon: (
-                <View style={containerStyle}>
-                    <MaterialCommunityIcons
-                        name="walk"
-                        size={size}
-                        color={color}
-                        allowFontScaling={true}
-                    />
-                    {withLabel ? <Label text="Walk" /> : null}
-                </View>
-            ),
-        },
-        {
-            name: 'meal',
-            icon: (
-                <View style={containerStyle}>
-                    <MaterialCommunityIcons
-                        name="silverware-fork-knife"
-                        size={size}
-                        color={color}
-                        allowFontScaling={true}
-                    />
-                    {withLabel ? <Label text="Meal" /> : null}
-                </View>
-            ),
-        },
-        {
-            name: 'yoga',
-            icon: (
-                <View style={containerStyle}>
-                    <MaterialCommunityIcons
-                        name="meditation"
-                        size={size}
-                        color={color}
-                        allowFontScaling={true}
-                    />
-                    {withLabel ? <Label text="Yoga" /> : null}
-                </View>
-            ),
-        },
-        {
-            name: 'exercise',
-            icon: (
-                <View style={containerStyle}>
-                    <Ionicons
-                        name="barbell-outline"
-                        size={size}
-                        color={color}
-                        allowFontScaling={true}
-                    />
-                    {withLabel ? <Label text="Exercise" /> : null}
-                </View>
-            ),
-        },
-        {
-            name: 'lecture',
-            icon: (
-                <View style={containerStyle}>
-                    <MaterialCommunityIcons
-                        name="human-male-board-poll"
-                        size={size}
-                        color={color}
-                        allowFontScaling={true}
-                    />
-                    {withLabel ? <Label text="Lecture" /> : null}
-                </View>
-            ),
-        },
-    ]
 }

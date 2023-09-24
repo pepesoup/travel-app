@@ -3,15 +3,15 @@ import { StatusBar } from 'expo-status-bar'
 import { GapCmn, ScreenCmn } from '@rn-components/commonUi'
 import { Chip, useTheme } from 'react-native-paper'
 import NoteRow from './components/noteRow'
-import { useTravelStore } from '@root/src/stores/travels/travelStore'
+import { useTravelActions, useTravelNotes } from '@root/src/stores/travels/travelStore'
 import { Note, Notes } from '@root/src/stores/travels/types'
 import { noteTypes } from '@root/src/constants/note.constants'
 import { useNotesAlert } from './hooks/useNotesAlert'
 
 export default function Modal() {
     const theme = useTheme()
-    const notes = useTravelStore((state) => state.content.notes)
-    const addNote = useTravelStore((state) => state.addNote)
+    const notes = useTravelNotes()
+    const { addNote } = useTravelActions()
     const { getNrOfUnreadNotes, setNotesAreRead, clearStorage } = useNotesAlert()
 
     const devAddNote = () => {

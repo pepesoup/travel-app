@@ -6,10 +6,12 @@ import { colors } from './colors'
 import { TextCmn } from '@root/src/rn-components/src/components/commonUi'
 import { View, StyleSheet } from 'react-native'
 import _ from 'lodash'
+import { useTravelSchema } from '@root/src/stores/travels/travelStore'
 
 export const DayFab = () => {
     const theme = useTheme()
-    const uiStore = useSchemaUiStoreBase.getState()
+    const uiStore = useSchemaUiStoreBase()
+    const schema = useTravelSchema()
     const [state, setState] = useState({ open: false })
     const onStateChange = ({ open }: any) => setState({ open })
     const { open } = state
@@ -43,7 +45,10 @@ export const DayFab = () => {
                     variant="titleLarge"
                     style={{ color: 'white', textDecorationLine: 'underline' }}
                 >
-                    Dag {uiStore.selectedDay === null ? '?' : uiStore.selectedDay + 1}
+                    Dag{' '}
+                    {uiStore.selectedDayId === null
+                        ? '?'
+                        : schema[uiStore.selectedDayId].info.day + 1}
                 </TextCmn>
                 <TextCmn variant="titleMedium" style={{ color: 'white' }}>
                     Tid {uiStore.selectedEvent === null ? '--:--' : uiStore.selectedEvent.time}
@@ -104,7 +109,7 @@ export const DayFab = () => {
 
     const getActions = () => {
         return (
-            uiStore.selectedDay !== null && uiStore.selectedEvent !== null
+            uiStore.selectedDayId !== null && uiStore.selectedEvent !== null
                 ? actionsForSelectedDayAndTime
                 : actionsForSelectedDay
         ) as any

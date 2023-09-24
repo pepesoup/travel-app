@@ -4,11 +4,10 @@ import WheelPickerExpo from 'react-native-wheel-picker-expo'
 import { useTheme } from 'react-native-paper'
 import { TextCmn } from '@root/src/rn-components/src/components/commonUi'
 import { EventType } from '@root/src/stores/travels/types'
-import { useEditData } from '../hooks/useEditData'
-import { createTimeString } from '../../utils'
+import { useEditActions } from '../hooks/useEditActions'
 import { useSchemaUiStoreBase } from '../../schemaUiStore'
-import { getCircularReplacer } from '@root/src/utils/json'
 import { eventTypes } from '@root/src/constants/event.constants'
+import { useDisplayData } from '../hooks/useDisplayData'
 
 export const WheelPicker = () => {
     const wheelRef = useRef<WheelPickerExpo>(null)
@@ -17,23 +16,23 @@ export const WheelPicker = () => {
     const borderColor = '#888'
     const timeWidth = 50
     const iconWidth = 140
-    const editData = useEditData()
+    const editData = useEditActions()
     const uiStore = useSchemaUiStoreBase()
+    const display = useDisplayData()
 
-    //if (uiStore.editEventAction === null || uiStore.editEventAction?.confirming) {
     if (uiStore.editEventAction === null) {
         return null
     }
 
     const updateTime = (hour: string | null, minute: string | null) => {
         const [h, m] = editData.getEventData()?.time.split(':') as any[]
-        const newTime = createTimeString(hour || h, minute || m)
+        const newTime = display.createTimeString(hour || h, minute || m)
         editData.updateEventData({ time: newTime })
     }
 
     const checkIfTimeIsTaken = (hour: string | null, minute: string | null) => {
         const [h, m] = editData.getEventData()?.time.split(':') as any[]
-        const newTime = createTimeString(hour || h, minute || m)
+        const newTime = display.createTimeString(hour || h, minute || m)
         return editData.isTimeAlreadyTaken(newTime)
     }
 
@@ -87,7 +86,6 @@ export const WheelPicker = () => {
                     onChange={({ item }) => updateTime(item.value, null)}
                     haptics={true}
                     renderItem={(props) => {
-                        //console.log('props:', props)
                         return (
                             <Text
                                 style={{
@@ -116,7 +114,6 @@ export const WheelPicker = () => {
                         .map((name: string) => ({ label: name, value: name }))}
                     onChange={({ item }) => updateTime(null, item.value)}
                     renderItem={(props) => {
-                        //console.log('props:', props)
                         return (
                             <Text
                                 style={{

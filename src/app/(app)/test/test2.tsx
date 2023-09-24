@@ -11,6 +11,7 @@ import { produce } from 'immer'
 import { useEffect } from 'react'
 import { noteTypes } from '../../../constants/note.constants'
 import { useTravelStore } from '@root/src/stores/travels/travelStore'
+import _ from 'lodash'
 
 /*
 export type TravelStore = Store & {
@@ -41,21 +42,19 @@ export default function Test2() {
         <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
             <TextCmn>hej</TextCmn>
             <ButtonCmn
-                title="add note"
+                title="Object from entries"
                 onPress={() => {
-                    const ts = Date.now().toString()
-                    const newNote: Note = {
-                        uuid: ts,
-                        subject: 'hej',
-                        message: 'hej',
-                        timestamp: Number(ts),
-                        type: noteTypes.schema,
-                        subIcon: { name: 'walk', type: 'MaterialCommunityIcons' },
-                    }
-                    store.addNote(newNote)
+                    const fallback = { schema: Object.fromEntries(_.range(10).map((v) => [v, v])) }
+                    console.log(JSON.stringify(travels.travelId1, null, 4))
                 }}
             />
-            <ButtonCmn title="setFoo" onPress={() => {}} />
+            <ButtonCmn
+                title="Parse travel dev-data"
+                onPress={() => {
+                    const o = JSON.parse(require('@src/stores/travels/devData.json'))
+                    //console.log(JSON.stringify(o, null, 4))
+                }}
+            />
         </View>
     )
 }

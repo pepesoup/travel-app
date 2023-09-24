@@ -4,13 +4,11 @@ import { Event, Schema } from '@root/src/stores/travels/types'
 import { produce } from 'immer'
 
 export type SchemaUiState = {
-    selectedDay: number | null
+    selectedDayId: string | null
     selectedEvent: Event | null
     isAdminMode: boolean
     enableFabs: boolean
     editEventAction: null | {
-        confirming: boolean
-        schema: Schema
         newEvent: Event | null
         oldEvent: Event | null
         action: 'add' | 'delete' | 'update'
@@ -20,7 +18,7 @@ export type SchemaUiState = {
     toggleAdminMode: () => void
 }
 export const useSchemaUiStoreBase = create<SchemaUiState>((set, get) => ({
-    selectedDay: null,
+    selectedDayId: null,
     selectedEvent: null,
     isAdminMode: false,
     enableFabs: false,
@@ -33,7 +31,7 @@ export const useSchemaUiStoreBase = create<SchemaUiState>((set, get) => ({
             })
         ),
 
-    dayFabVisible: () => get().isAdminMode && get().selectedDay !== null && get().enableFabs,
+    dayFabVisible: () => get().isAdminMode && get().selectedDayId !== null && get().enableFabs,
     toggleAdminMode: () => {
         set((state) => ({ isAdminMode: !state.isAdminMode }))
     },
