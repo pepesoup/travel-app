@@ -4,9 +4,19 @@ import { Image } from 'expo-image'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 import { View } from 'react-native'
 import { useTheme } from 'react-native-paper'
+import { useTravelInfo } from '@root/src/stores/travels/travelStore'
+import { differenceInCalendarDays } from 'date-fns'
+import { useEffect } from 'react'
 
 export default function RetreafyIndex() {
     const theme = useTheme()
+    const travelInfo = useTravelInfo()
+
+    const infoText = () => {
+        const daysLeft = differenceInCalendarDays(travelInfo.startDate, new Date())
+        const place = travelInfo.residence.place
+        return `${daysLeft} dagar kvar till ${place}!`
+    }
 
     return (
         <ScreenCmn>
@@ -29,7 +39,7 @@ export default function RetreafyIndex() {
                         color: theme.colors.primary,
                     }}
                 >
-                    10 Dagar kvar till resan!
+                    {infoText()}
                 </TextCmn>
             </View>
             <View style={{ flex: 1, padding: 20, alignItems: 'center' }}>
@@ -93,7 +103,7 @@ export default function RetreafyIndex() {
                             color={theme.colors.primary}
                         />
                     </SurfaceCmn>
-                    <SurfaceCmn text="Blogg">
+                    <SurfaceCmn text="Chat">
                         <MaterialCommunityIcons
                             name="message-text-outline"
                             size={32}

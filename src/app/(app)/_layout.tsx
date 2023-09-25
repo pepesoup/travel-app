@@ -35,7 +35,7 @@ export const HeaderRight = ({ addIcon }: HeaderRightProps) => {
     const { getNrOfUnreadNotes, setNotesAreRead, clearStorage } = useNotesAlert()
 
     return (
-        <RowCmn style={{ gap: 10 }}>
+        <RowCmn.ChildrenRow style={{ gap: 10 }}>
             <Link
                 href="/notes/notes"
                 onPress={async () => {
@@ -59,7 +59,7 @@ export const HeaderRight = ({ addIcon }: HeaderRightProps) => {
                 </View>
             </Link>
             {addIcon ? addIcon : null}
-        </RowCmn>
+        </RowCmn.ChildrenRow>
     )
 }
 

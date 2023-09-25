@@ -54,19 +54,20 @@ export type Travel = {
             name: string
             place: string
             address: string[]
-            web: string
             email: string
-            tel: string
-            pictureUrl: string
+            web: {
+                name: string
+                url: string
+            }
+            tel: string[]
+            pictureUrl: string[]
         }
         acuteContact: [{ name: string; tel: string[]; email: string }]
+        coordinators: {
+            name: string
+            tel: string
+        }[]
     }
     schema: Schema
     notes: Notes
 }
-export type TravelFromDb =
-    | Travel
-    | {
-          startDate: any
-          endDate: any
-      }
