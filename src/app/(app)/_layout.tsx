@@ -124,6 +124,16 @@ export default function Layout_AppApp() {
                     headerLeft: ModalHeaderLeft,
                 }}
             />
+            <Stack.Screen
+                name="travel/video/videoIndex"
+                options={{
+                    title: 'Intro',
+                    // Set the presentation mode to modal for our modal route.
+                    presentation: 'modal',
+                    headerRight: () => null,
+                    headerLeft: ModalHeaderLeft,
+                }}
+            />
         </Stack>
     )
 }

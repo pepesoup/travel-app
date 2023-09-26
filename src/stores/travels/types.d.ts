@@ -62,11 +62,12 @@ export type Travel = {
             tel: string[]
             pictureUrl: string[]
         }
-        acuteContact: [{ name: string; tel: string[]; email: string }]
+        acuteNumber: string[]
         coordinators: {
             name: string
             tel: string
         }[]
+        recommendation: string
     }
     schema: Schema
     notes: Notes

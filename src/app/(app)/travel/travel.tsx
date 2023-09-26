@@ -1,17 +1,33 @@
 import { ScreenCmn, TextCmn } from '@rn-components/commonUi'
 import { ImageBackground } from 'expo-image'
 import { InfoHotel } from './components/infoHotel'
-import { ScrollView, StyleSheet, View } from 'react-native'
+import { Pressable, ScrollView, StyleSheet, View } from 'react-native'
 import { LinearGradient } from 'expo-linear-gradient'
-import { Stack } from 'expo-router'
+import { Stack, useFocusEffect, useRouter } from 'expo-router'
 import { useTravelInfo } from '@root/src/stores/travels/travelStore'
 import { InfoCoordinators } from './components/infoCoordinators'
 import { useEffect, useRef, useState } from 'react'
+import { InfoAcuteNr } from './components/infoAcuteNr'
+import { Octicons } from '@expo/vector-icons'
+import { InfoRecommend } from './components/infoRecommend'
 
 export default function Travel() {
     const travelInfo = useTravelInfo()
+    const router = useRouter()
+    const imgInterval = useRef<any>()
+    const [imgIndex, setImgIndex] = useState(0)
 
-    useEffect(() => {}, [])
+    useEffect(() => {
+        imgInterval.current = setInterval(() => {
+            setImgIndex((current) => {
+                if (current === travelInfo.residence.pictureUrl.length - 1) {
+                    return 0
+                }
+                return current + 1
+            })
+        }, 5000)
+        return () => clearInterval(imgInterval.current)
+    }, [])
 
     return (
         <ScreenCmn>
@@ -21,12 +37,13 @@ export default function Travel() {
                 }}
             />
             <ImageBackground
-                source={travelInfo.residence.pictureUrl[0]}
+                source={travelInfo.residence.pictureUrl[imgIndex]}
                 style={{ flex: 1, width: '100%' }}
                 contentFit="cover"
+                transition={1500}
             >
                 <LinearGradient
-                    colors={['rgba(0,0,0,0.5)', 'transparent']}
+                    colors={['rgba(0,0,0,0.3)', 'transparent']}
                     style={{
                         ...StyleSheet.absoluteFillObject,
                     }}
@@ -41,16 +58,47 @@ export default function Travel() {
                         justifyContent: 'center',
                     }}
                 >
-                    <TextCmn style={{ color: 'white', marginVertical: 30 }} variant="headlineLarge">
-                        Välkommen till {travelInfo.residence.place}!
-                    </TextCmn>
+                    <View
+                        style={{
+                            //flex: 1,
+                            height: '30%',
+                            width: '100%',
+                            alignItems: 'center',
+                            justifyContent: 'space-evenly',
+                        }}
+                    >
+                        <TextCmn style={{ color: 'white', marginTop: 10 }} variant="headlineLarge">
+                            Välkommen till {travelInfo.residence.place}!
+                        </TextCmn>
+                        <Pressable
+                            style={{ marginVertical: 10 }}
+                            onPress={() => {
+                                router.push('travel/video/videoIndex')
+                            }}
+                        >
+                            <Octicons name="video" size={54} color="rgba(255,255,255,.5)" />
+                        </Pressable>
+                    </View>
 
                     <ScrollView
-                        style={{ flex: 1, width: '100%' }}
-                        contentContainerStyle={{ padding: '10%', gap: 20 }}
+                        style={{
+                            flex: 1,
+                            width: '100%',
+                        }}
+                        contentContainerStyle={{
+                            paddingHorizontal: '10%',
+                            gap: 20,
+                            paddingBottom: 20,
+                            //flexDirection: 'column',
+                            //justifyContent: 'flex-end',
+                            //flex: 1,
+                            overflow: 'scroll',
+                        }}
                     >
                         <InfoHotel />
                         <InfoCoordinators />
+                        <InfoAcuteNr />
+                        <InfoRecommend />
                     </ScrollView>
                 </View>
             </ImageBackground>

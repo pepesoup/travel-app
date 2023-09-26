@@ -1,6 +1,6 @@
 import { RowCmn, ScreenCmn, TextCmn } from '@rn-components/commonUi'
 import { Stack } from 'expo-router'
-import { View } from 'react-native'
+import { View, StyleSheet } from 'react-native'
 import { useTheme } from 'react-native-paper'
 import { LinearGradient } from 'expo-linear-gradient'
 import { Image } from 'expo-image'
@@ -38,42 +38,42 @@ export default function Profile() {
                     <TextCmn variant="titleLarge">Marie Nilsson</TextCmn>
                 </View>
                 <View style={{ flex: 1, marginLeft: '10%', gap: 10 }}>
-                    <RowCmn>
+                    <RowCmn.ChildrenRow>
                         <MaterialCommunityIcons
                             name="email-outline"
                             size={24}
                             color={theme.colors.onSurface}
                         />
                         <TextCmn>MarieNilsson@gmail.com</TextCmn>
-                    </RowCmn>
-                    <RowCmn>
+                    </RowCmn.ChildrenRow>
+                    <RowCmn.ChildrenRow>
                         <MaterialCommunityIcons
                             name="phone-outline"
                             size={24}
                             color={theme.colors.onSurface}
                         />
                         <TextCmn>‭070-244 55 40‬</TextCmn>
-                    </RowCmn>
-                    <RowCmn>
+                    </RowCmn.ChildrenRow>
+                    <RowCmn.ChildrenRow>
                         <MaterialCommunityIcons
                             name="account-circle-outline"
                             size={24}
                             color={theme.colors.onSurface}
                         />
                         <TextCmn>Redigera profil</TextCmn>
-                    </RowCmn>
-                    <RowCmn>
+                    </RowCmn.ChildrenRow>
+                    <RowCmn.ChildrenRow>
                         <MaterialIcons name="settings" size={24} color={theme.colors.onSurface} />
                         <TextCmn>Inställningar</TextCmn>
-                    </RowCmn>
-                    <RowCmn>
+                    </RowCmn.ChildrenRow>
+                    <RowCmn.ChildrenRow>
                         <MaterialIcons
                             name="power-settings-new"
                             size={24}
                             color={theme.colors.onSurface}
                         />
                         <TextCmn>Logga ut</TextCmn>
-                    </RowCmn>
+                    </RowCmn.ChildrenRow>
                 </View>
             </LinearGradient>
         </ScreenCmn>

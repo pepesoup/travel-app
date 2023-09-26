@@ -1,6 +1,6 @@
 import { View } from 'react-native'
 import { Stack } from 'expo-router'
-import { ButtonCmn, GapCmn, RowCmn, ScreenCmn, TextCmn } from '@rn-components/commonUi'
+import { ButtonCmn, GapCmn, Links, RowCmn, ScreenCmn, TextCmn } from '@rn-components/commonUi'
 import { useTheme } from 'react-native-paper'
 import { Image } from 'expo-image'
 import * as Linking from 'expo-linking'
@@ -50,56 +50,16 @@ export default function Contact() {
                 <GapCmn size={10} direction="vertical" />
                 <TextCmn>Adress: Östra Hamngatan 16, Göteborg</TextCmn>
                 <GapCmn size={10} direction="vertical" />
-                <RowCmn
-                    style={{
-                        //backgroundColor: 'red',
-                        padding: 0,
-                        margin: 0,
-                        gap: 0,
-                    }}
-                >
-                    <TextCmn>E-mail: </TextCmn>
-                    <ButtonCmn
-                        title="info@retreafy.com"
-                        onPress={() => {
-                            Linking.openURL(encodeURI('mailto:info@retreafy.com'))
-                        }}
-                        mode="text"
-                        style={{
-                            padding: 0,
-                            //backgroundColor: 'green',
-                            marginVertical: 0,
-                            minWidth: 1,
-                            marginHorizontal: 0,
-                        }}
-                        labelStyle={{ textDecorationLine: 'underline' }}
-                    />
-                </RowCmn>
-                <RowCmn
-                    style={{
-                        //backgroundColor: 'red',
-                        padding: 0,
-                        margin: 0,
-                        gap: 0,
-                    }}
-                >
-                    <TextCmn>Instagram: </TextCmn>
-                    <ButtonCmn
-                        title="retrefycom"
-                        onPress={() => {
-                            Linking.openURL('https://www.instagram.com/retreafycom/')
-                        }}
-                        mode="text"
-                        style={{
-                            padding: 0,
-                            //backgroundColor: 'green',
-                            marginVertical: 0,
-                            minWidth: 1,
-                            marginHorizontal: 0,
-                        }}
-                        labelStyle={{ textDecorationLine: 'underline' }}
-                    />
-                </RowCmn>
+                <RowCmn.ChildrenRow label="E-mail:">
+                    <Links.LinkCmn url="mailto:info@retreafy.com">info@retreafy.com</Links.LinkCmn>
+                </RowCmn.ChildrenRow>
+                <GapCmn size={10} direction="vertical" />
+                <RowCmn.ChildrenRow label="Instagram:">
+                    <Links.LinkCmn url="https://www.instagram.com/retreafycom/">
+                        retreafycom
+                    </Links.LinkCmn>
+                </RowCmn.ChildrenRow>
+                <GapCmn size={10} direction="vertical" />
                 <View style={{ flex: 1, alignItems: 'flex-end' }}>
                     <ButtonCmn title="Kontakta oss" mode="contained" />
                 </View>

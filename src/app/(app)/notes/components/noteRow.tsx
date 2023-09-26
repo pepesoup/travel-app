@@ -13,13 +13,28 @@ export type Props = {
 }
 
 export default function NoteRow({ note, containerStyle }: Props) {
-    const _containerStyle = merge({}, containerStyle || {})
+    const _containerStyle = merge(
+        {
+            flexDirection: 'row',
+            width: '100%',
+            // fo
+        },
+        containerStyle || {}
+    ) as ViewStyle
     const theme = useTheme()
     const cm = 12
 
     return (
         <View style={_containerStyle}>
-            <RowCmn style={{ alignItems: 'flex-start', gap: 20 }}>
+            <View
+                style={{
+                    justifyContent: 'center',
+                    flexDirection: 'row',
+                    width: '100%',
+                    alignItems: 'flex-start',
+                    //gap: 20,
+                }}
+            >
                 <SurfaceCmn text="">
                     <IconCmn
                         type={note.type.icon.type}
@@ -44,7 +59,9 @@ export default function NoteRow({ note, containerStyle }: Props) {
                         color={theme.colors.primaryContainer}
                     />
                 </SurfaceCmn>
-                <View style={{ flex: 1, height: '100%' }}>
+                <View
+                    style={{ flex: 1, height: '100%', paddingVertical: 5, paddingHorizontal: 20 }}
+                >
                     <TextCmn
                         variant="titleMedium"
                         style={{ fontWeight: '700' }}
@@ -62,7 +79,7 @@ export default function NoteRow({ note, containerStyle }: Props) {
                         </TextCmn>
                     </View>
                 </View>
-            </RowCmn>
+            </View>
         </View>
     )
 }
