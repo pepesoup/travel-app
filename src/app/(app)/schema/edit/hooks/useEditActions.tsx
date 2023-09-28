@@ -8,7 +8,7 @@ import {
     //useTravelStore,
 } from '@root/src/stores/travels/travelStore'
 import { produce } from 'immer'
-import { Event, Schema } from '@root/src/stores/travels/types'
+import { Event, Schema } from '@root/src/stores/travels/types.travel'
 import uuid from 'react-native-uuid'
 import merge from 'ts-deepmerge'
 import { schemaActions } from '@root/src/stores/travels/schema/schemaActions'

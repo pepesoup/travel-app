@@ -1,4 +1,4 @@
-import { Note, NoteType } from '../stores/travels/types'
+import { Note, NoteType } from '../stores/travels/types.travel'
 
 export const noteTypes: { [key: string]: NoteType } = {
     travel: {

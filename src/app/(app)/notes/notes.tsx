@@ -4,7 +4,7 @@ import { GapCmn, ScreenCmn } from '@rn-components/commonUi'
 import { Chip, useTheme } from 'react-native-paper'
 import NoteRow from './components/noteRow'
 import { useTravelActions, useTravelNotes } from '@root/src/stores/travels/travelStore'
-import { Note, Notes } from '@root/src/stores/travels/types'
+import { Note, Notes } from '@root/src/stores/travels/types.travel'
 import { noteTypes } from '@root/src/constants/note.constants'
 import { useNotesAlert } from './hooks/useNotesAlert'
 

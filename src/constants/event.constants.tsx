@@ -1,4 +1,4 @@
-import { EventType } from '../stores/travels/types'
+import { EventType } from '../stores/travels/types.travel'
 
 export const eventTypes: { [key: string]: EventType } = {
     walk: {

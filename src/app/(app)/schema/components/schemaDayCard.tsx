@@ -8,7 +8,7 @@ import { SchemaDetailCard } from './schemaDetailCard'
 import { MotiView, useDynamicAnimation } from 'moti'
 import { useSchemaUiStoreBase } from '../schemaUiStore'
 import { TouchableRipple, useTheme } from 'react-native-paper'
-import { Event } from '@root/src/stores/travels/types'
+import { Event } from '@root/src/stores/travels/types.travel'
 import { useTravelSchema } from '@root/src/stores/travels/travelStore'
 
 export type Props = {

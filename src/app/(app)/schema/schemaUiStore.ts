@@ -1,6 +1,6 @@
 import { create } from 'zustand'
 import { createSelectorFunctions } from 'auto-zustand-selectors-hook'
-import { Event, Schema } from '@root/src/stores/travels/types'
+import { Event, Schema } from '@root/src/stores/travels/types.travel'
 import { produce } from 'immer'
 
 export type SchemaUiState = {

@@ -1,12 +1,14 @@
 import { StyleSheet } from 'react-native'
 import { AnimatedBadge, ButtonCmn, IconCmn } from '../../../rn-components/src/components/commonUi'
-import { Note } from '@root/src/stores/travels/types'
+import { Note } from '@root/src/stores/travels/types.travel'
 import { useEffect, useReducer } from 'react'
 import { noteTypes } from '../../../constants/note.constants'
 import { useTravelStore } from '@root/src/stores/travels/travelStore'
 import { useRouter } from 'expo-router'
 import { View } from 'moti'
 import { useNotesAlert } from '../notes/hooks/useNotesAlert'
+import ImagePickerExample from './imagePicker'
+import ImagePickerCamera from './imagePickerCamera'
 
 export default function Test() {
     const store = useTravelStore()
@@ -39,27 +41,11 @@ export default function Test() {
                         type: noteTypes.schema,
                         subIcon: { name: 'walk', type: 'MaterialCommunityIcons' },
                     }
-                    store.addNote(newNote)
+                    store.actions.addNote(newNote)
                 }}
             />
-            <ButtonCmn
-                title="set notes are read"
-                onPress={async () => {
-                    await setNotesAreRead()
-                }}
-            />
-            <ButtonCmn
-                title="toggle badge visible"
-                onPress={() => {
-                    toggle()
-                }}
-            />
-            <ButtonCmn
-                title="Clear useNotifyAlert"
-                onPress={async () => {
-                    await clearStorage()
-                }}
-            />
+
+            <ImagePickerCamera />
             <ButtonCmn
                 title="Nav to test2"
                 onPress={() => {

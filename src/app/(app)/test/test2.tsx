@@ -5,8 +5,7 @@ import { create } from 'zustand'
 import { createSelectorFunctions } from 'auto-zustand-selectors-hook'
 import { Store, StoreActions } from '@rne-firebase/stores/store'
 import actionCallAsync from '@rne-firebase/stores/storeHelpers'
-import { Note, Schema, Travel, TravelFromDb } from '@root/src/stores/travels/types'
-import { travels } from '@src/stores/travels/devData'
+import { Note, Schema, Travel } from '@root/src/stores/travels/types.travel'
 import { produce } from 'immer'
 import { useEffect } from 'react'
 import { noteTypes } from '../../../constants/note.constants'
@@ -45,16 +44,9 @@ export default function Test2() {
                 title="Object from entries"
                 onPress={() => {
                     const fallback = { schema: Object.fromEntries(_.range(10).map((v) => [v, v])) }
-                    console.log(JSON.stringify(travels.travelId1, null, 4))
                 }}
             />
-            <ButtonCmn
-                title="Parse travel dev-data"
-                onPress={() => {
-                    const o = JSON.parse(require('@src/stores/travels/devData.json'))
-                    //console.log(JSON.stringify(o, null, 4))
-                }}
-            />
+            <ButtonCmn title="Parse travel dev-data" onPress={() => {}} />
         </View>
     )
 }

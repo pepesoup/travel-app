@@ -1,4 +1,4 @@
-import { Travel } from '../types'
+import { Travel } from '../types.travel'
 import merge from 'ts-deepmerge'
 import { ref, onValue, set } from 'firebase/database'
 import { db } from '@root/src/rne-firebase/firebaseConfig'

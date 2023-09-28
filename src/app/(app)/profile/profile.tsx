@@ -5,9 +5,16 @@ import { useTheme } from 'react-native-paper'
 import { LinearGradient } from 'expo-linear-gradient'
 import { Image } from 'expo-image'
 import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons'
+import { useAccountStore } from '@root/src/stores/user/accountStore'
+import { useEffect } from 'react'
 
 export default function Profile() {
     const theme = useTheme()
+    const account = useAccountStore()
+
+    useEffect(() => {
+        console.log(JSON.stringify(account, null, 3))
+    })
 
     return (
         <ScreenCmn>

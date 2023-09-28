@@ -1,5 +1,5 @@
 import { produce } from 'immer'
-import { EventType, Schema, Event } from '../types'
+import { EventType, Schema, Event } from '../types.travel'
 import uuid from 'react-native-uuid'
 
 /**
@@ -18,6 +18,9 @@ export const schemaActions = {
                     add: (time: string, type: EventType, description: string) => {
                         const day = schema[dayId].info.day
                         return produce(schema, (draft) => {
+                            if (!draft[dayId].events) {
+                                draft[dayId].events = {}
+                            }
                             draft[dayId].events[eventId] = {
                                 uuid: eventId,
                                 day,

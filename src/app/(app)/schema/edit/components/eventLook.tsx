@@ -1,7 +1,7 @@
 import { View } from 'react-native'
 import { useTheme } from 'react-native-paper'
 import { SchemaDetailCard } from '../../components/schemaDetailCard'
-import { Event } from '@root/src/stores/travels/types'
+import { Event } from '@root/src/stores/travels/types.travel'
 
 type Props = {
     eventToShow: Event | null

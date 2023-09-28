@@ -17,6 +17,7 @@ export default function Index_0() {
 
     useEffect(() => {
         console.log('index_0', authData.state)
+        //console.log('index_0', JSON.stringify(authData.content, null, 4))
         if (authData.state === 'loading') {
             setInfoText('Loading Auth...')
         } else if (authData.state === 'hasError') {

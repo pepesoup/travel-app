@@ -1,5 +1,5 @@
 import { useTravelSchema } from '@root/src/stores/travels/travelStore'
-import { Event } from '@root/src/stores/travels/types'
+import { Event } from '@root/src/stores/travels/types.travel'
 
 export const useDisplayData = () => {
     const schema = useTravelSchema()

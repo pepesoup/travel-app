@@ -4,7 +4,7 @@ import { GapCmn, RowCmn, ScreenCmn, SurfaceCmn, TextCmn, IconCmn } from '@rn-com
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 import { useTheme } from 'react-native-paper'
 import merge from 'ts-deepmerge'
-import { Note } from '@root/src/stores/travels/types'
+import { Note } from '@root/src/stores/travels/types.travel'
 import { useEffect } from 'react'
 import { getDateFromTimestamp } from '../utils'
 export type Props = {
