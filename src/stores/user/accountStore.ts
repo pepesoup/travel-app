@@ -10,6 +10,7 @@ export type Account = {
     uid: string
     email: string
     profile: {
+        name: string
         phone: string
         profileImgUrl: string
     }
@@ -21,7 +22,9 @@ export type AccountStore = {
         value: 'loading' | 'hasValue' | 'hasError'
         info: string
     }
-    actions: {}
+    actions: {
+        saveProfile: (profile: Partial<Account['profile']>) => void
+    }
 }
 
 export const useAccountStore = create(
@@ -32,7 +35,7 @@ export const useAccountStore = create(
             info: 'initial',
         },
         actions: {
-            setProfile: (profile: Account['profile']) => {
+            saveProfile: (profile) => {
                 setDbValue('profile', profile)
             },
         },
@@ -45,7 +48,7 @@ export const useAccountActions = () => useAccountStore((state) => state.actions)
 
 /************************ Subscribe on Auth Store **************************/
 const unsubAuthStoreSubscription = useAuthStoreBase.subscribe((authData: any) => {
-    console.log('AccountStore - got auth-data:', JSON.stringify(authData, null, 3))
+    //console.log('AccountStore - got auth-data:', JSON.stringify(authData, null, 3))
     // now we can connect to db to retreive account data
     if (authData.isSignedIn) {
         listenOnRtdbForAccounts(useAccountStore)

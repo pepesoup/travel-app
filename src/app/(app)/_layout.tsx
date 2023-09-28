@@ -134,6 +134,16 @@ export default function Layout_AppApp() {
                     headerLeft: ModalHeaderLeft,
                 }}
             />
+            <Stack.Screen
+                name="profile/editProfile"
+                options={{
+                    title: 'Redigera profil',
+                    // Set the presentation mode to modal for our modal route.
+                    presentation: 'modal',
+                    headerRight: () => null,
+                    headerLeft: ModalHeaderLeft,
+                }}
+            />
         </Stack>
     )
 }

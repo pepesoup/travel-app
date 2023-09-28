@@ -44,11 +44,14 @@ export default function RetreafyIndex() {
             </View>
             <View style={{ flex: 1, padding: 20, alignItems: 'center' }}>
                 <Image
-                    source={require('@src/assets/dev/avatar1.png')}
+                    source={require('@src/assets/dev/greece2.avif')}
                     style={{
                         //flex: 1,
-                        width: '40%',
+                        //width: '40%',
+                        width: 200,
                         aspectRatio: 1,
+                        borderRadius: 200 / 2,
+                        overflow: 'hidden',
                     }}
                     contentFit="cover"
                     transition={1000}

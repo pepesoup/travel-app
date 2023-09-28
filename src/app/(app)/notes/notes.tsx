@@ -29,14 +29,16 @@ export default function Modal() {
 
     return (
         <ScreenCmn style={{ gap: 0, flexDirection: 'column' }}>
-            <View style={{ flexDirection: 'row', gap: 10 }}>
-                <Chip icon="information" onPress={() => clearStorage()}>
-                    Reset
-                </Chip>
-                <Chip icon="information" onPress={() => devAddNote()}>
-                    Add
-                </Chip>
-            </View>
+            {/*(
+                <View style={{ flexDirection: 'row', gap: 10 }}>
+                    <Chip icon="information" onPress={() => clearStorage()}>
+                        Reset
+                    </Chip>
+                    <Chip icon="information" onPress={() => devAddNote()}>
+                        Add
+                    </Chip>
+                </View>
+            )*/}
 
             <StatusBar style="light" />
             <ScrollView style={{ width: '100%' }}>
