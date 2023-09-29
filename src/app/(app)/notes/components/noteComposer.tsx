@@ -4,7 +4,6 @@ import { View } from 'react-native'
 import { useEffect, useState } from 'react'
 import { Checkbox, TextInput, useTheme } from 'react-native-paper'
 import { Stack, useRouter } from 'expo-router'
-import { useTravelStoreBase } from '@root/src/stores/travels/travelStore'
 import { Note } from '@root/src/stores/travels/types.travel'
 
 type Props = {

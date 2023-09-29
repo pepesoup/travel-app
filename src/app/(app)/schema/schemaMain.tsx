@@ -15,6 +15,8 @@ import { HeaderRight, iconSizeAtHeader } from '../_layout'
 import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons'
 import { FAB, Portal, useTheme } from 'react-native-paper'
 import { DayFab } from './edit/components/dayFab'
+import differenceInCalendarDays from 'date-fns/differenceInCalendarDays'
+import { format, addDays } from 'date-fns'
 
 export default function SchemaMain() {
     const uiStore = useSchemaUiStoreBase()
@@ -25,6 +27,19 @@ export default function SchemaMain() {
     const travelSchema = useTravelSchema()
     const travelInfo = useTravelInfo()
 
+    const scrollTo_h = 120
+
+    useEffect(() => {
+        /** open "today's" active schema */
+        const nowDate = addDays(new Date(), 0)
+        Object.entries(travelSchema).map(([dayId, schemaDay]) => {
+            const schemaDate = addDays(travelInfo.startDate, schemaDay.info.day)
+            if (differenceInCalendarDays(nowDate, schemaDate) === 0) {
+                useSchemaUiStoreBase.setState({ selectedDayId: dayId })
+            }
+        })
+    }, [])
+
     useEffect(() => {
         useSchemaUiStoreBase.setState({ enableFabs: path === '/schema/schemaMain' })
     }, [path])
@@ -32,9 +47,10 @@ export default function SchemaMain() {
     useEffect(() => {
         if (uiStore.selectedDayId !== null) {
             const day = travelSchema[uiStore.selectedDayId].info.day
+            const newY = (day + 0) * scrollTo_h + 30
             scrollViewRef.current?.scrollTo({
                 x: 0,
-                y: (day + 0) * 112 + 30 || 0,
+                y: newY < 0 ? 0 : newY,
                 animated: 0,
             })
         }
@@ -72,11 +88,13 @@ export default function SchemaMain() {
                 onContentSizeChange={(w, h) => {
                     if (uiStore.selectedDayId !== null) {
                         const day = travelSchema[uiStore.selectedDayId].info.day
-                        const target = (day + 0) * 112 + 30
+                        const target = (day + 0) * scrollTo_h + 30
+                        const newH = h - 30
+                        const newY = Math.min(target < 0 ? 0 : target, newH < 0 ? 0 : newH)
                         setTimeout(() => {
                             scrollViewRef.current.scrollTo({
                                 x: 0,
-                                y: Math.min(target, h - 30),
+                                y: newY,
                                 //animated: 1000,
                             })
                         }, 0)

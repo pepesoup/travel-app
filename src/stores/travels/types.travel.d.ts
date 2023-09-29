@@ -1,7 +1,7 @@
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 import { IconCmn } from '../../rn-components/src/components/commonUi'
 export type EventType = {
-    name: 'walk' | 'meal' | 'yoga' | 'exercise' | 'lecture'
+    name: 'walk' | 'meal' | 'yoga' | 'exercise' | 'lecture' | 'pool' | 'travel' | 'party'
     icon: {
         name: (typeof IconCmn)['name']
         type: (typeof IconCmn)['type']

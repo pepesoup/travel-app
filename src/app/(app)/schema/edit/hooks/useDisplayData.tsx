@@ -5,14 +5,29 @@ export const useDisplayData = () => {
     const schema = useTravelSchema()
 
     const fixTimeString = (time: any) => {
+        console.log('fixTimeString:', time)
         if (time === undefined || time === null) {
             return ''
         }
         const [hour, minute] = time.split(':')
-        return `${hour.padStart(2, '0')}:${minute.padStart(2, '0')}`
+        const h = hour === undefined || hour === '-' ? '-' : hour.padStart(2, '0')
+        const m = minute === undefined || minute === '-' ? '-' : minute.padStart(2, '0')
+        if (h === '-') {
+            return '-'
+        }
+        return `${h}:${m}`
     }
 
-    const createTimeString = (hour: number | string, minute: number | string) => {
+    const createTimeString = (
+        hour: number | string | undefined,
+        minute: number | string | undefined
+    ) => {
+        if (hour === undefined || hour === '-') {
+            return '-'
+        }
+        if (minute === undefined || minute === '-') {
+            return `${hour.toString().padStart(2, '0')}:-}`
+        }
         return `${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}`
     }
 

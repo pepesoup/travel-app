@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from 'react'
 import { StyleSheet, View, Text, useWindowDimensions } from 'react-native'
 import WheelPickerExpo from 'react-native-wheel-picker-expo'
-import { useTheme } from 'react-native-paper'
+import { Checkbox, useTheme } from 'react-native-paper'
 import { TextCmn } from '@root/src/rn-components/src/components/commonUi'
 import { EventType } from '@root/src/stores/travels/types.travel'
 import { useEditActions } from '../hooks/useEditActions'
@@ -19,12 +19,17 @@ export const WheelPicker = () => {
     const editData = useEditActions()
     const uiStore = useSchemaUiStoreBase()
     const display = useDisplayData()
+    const [useTime, setUseTime] = useState(true)
 
     if (uiStore.editEventAction === null) {
         return null
     }
 
     const updateTime = (hour: string | null, minute: string | null) => {
+        if (hour === '-') {
+            editData.updateEventData({ time: '-' })
+            return
+        }
         const [h, m] = editData.getEventData()?.time.split(':') as any[]
         const newTime = display.createTimeString(hour || h, minute || m)
         editData.updateEventData({ time: newTime })
@@ -38,7 +43,7 @@ export const WheelPicker = () => {
 
     const getInitialHourIndex = () => {
         if (uiStore.editEventAction?.action === 'add') {
-            return 0
+            return 8
         }
 
         const [h, m] = editData.getEventData()?.time.split(':') as any[]
@@ -46,7 +51,7 @@ export const WheelPicker = () => {
     }
     const getInitialMinuteIndex = () => {
         if (uiStore.editEventAction?.action === 'add') {
-            return 0
+            return 1
         }
         const [h, m] = editData.getEventData()?.time.split(':') as any[]
         return editData.getAvailableData('minutes').findIndex((minute: string) => minute === m)
@@ -73,6 +78,17 @@ export const WheelPicker = () => {
                     justifyContent: 'center',
                 }}
             >
+                {/*<Checkbox.Item
+                    label=""
+                    status={useTime ? 'checked' : 'unchecked'}
+                    color={useTime ? 'rgba(0, 200, 0, 1)' : 'rgba(111,111,111,0.3)'}
+                    //uncheckedColor="red"
+                    mode="android"
+                    onPress={() => {
+                        setUseTime(!useTime)
+                    }}
+                    style={{ marginLeft: -20 }}
+                />*/}
                 <WheelPickerExpo
                     ref={wheelRef}
                     width={timeWidth}
