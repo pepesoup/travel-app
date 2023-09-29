@@ -5,7 +5,6 @@ export const useDisplayData = () => {
     const schema = useTravelSchema()
 
     const fixTimeString = (time: any) => {
-        console.log('fixTimeString:', time)
         if (time === undefined || time === null) {
             return ''
         }

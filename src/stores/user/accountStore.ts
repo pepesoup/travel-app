@@ -14,6 +14,9 @@ export type Account = {
         phone: string
         profileImgUrl: string
     }
+    settings: {
+        admin: boolean
+    }
 }
 
 export type AccountStore = {

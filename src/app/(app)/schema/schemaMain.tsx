@@ -17,6 +17,7 @@ import { FAB, Portal, useTheme } from 'react-native-paper'
 import { DayFab } from './edit/components/dayFab'
 import differenceInCalendarDays from 'date-fns/differenceInCalendarDays'
 import { format, addDays } from 'date-fns'
+import { useAccountStore } from '@root/src/stores/user/accountStore'
 
 export default function SchemaMain() {
     const uiStore = useSchemaUiStoreBase()
@@ -26,8 +27,10 @@ export default function SchemaMain() {
     const travelState = useTravelState()
     const travelSchema = useTravelSchema()
     const travelInfo = useTravelInfo()
+    const account = useAccountStore()
 
-    const scrollTo_h = 120
+    const scrollTo_h = 122
+    const scrollTo_addH = 25
 
     useEffect(() => {
         /** open "today's" active schema */
@@ -47,7 +50,7 @@ export default function SchemaMain() {
     useEffect(() => {
         if (uiStore.selectedDayId !== null) {
             const day = travelSchema[uiStore.selectedDayId].info.day
-            const newY = (day + 0) * scrollTo_h + 30
+            const newY = (day + 0) * scrollTo_h + scrollTo_addH
             scrollViewRef.current?.scrollTo({
                 x: 0,
                 y: newY < 0 ? 0 : newY,
@@ -56,19 +59,26 @@ export default function SchemaMain() {
         }
     }, [uiStore.selectedDayId])
 
-    const AdminIcon = () => (
-        <Pressable
-            onPress={() => {
-                uiStore.toggleAdminMode()
-            }}
-        >
-            <MaterialCommunityIcons
-                name="pencil"
-                size={iconSizeAtHeader}
-                color={uiStore.isAdminMode ? theme.colors.tertiaryContainer : theme.colors.primary}
-            />
-        </Pressable>
-    )
+    const AdminIcon = () => {
+        if (account.content?.settings?.admin !== true) {
+            return null
+        }
+        return (
+            <Pressable
+                onPress={() => {
+                    uiStore.toggleAdminMode()
+                }}
+            >
+                <MaterialCommunityIcons
+                    name="pencil"
+                    size={iconSizeAtHeader}
+                    color={
+                        uiStore.isAdminMode ? theme.colors.tertiaryContainer : theme.colors.primary
+                    }
+                />
+            </Pressable>
+        )
+    }
 
     if (travelState.value !== 'hasValue') {
         return null
@@ -88,8 +98,8 @@ export default function SchemaMain() {
                 onContentSizeChange={(w, h) => {
                     if (uiStore.selectedDayId !== null) {
                         const day = travelSchema[uiStore.selectedDayId].info.day
-                        const target = (day + 0) * scrollTo_h + 30
-                        const newH = h - 30
+                        const target = (day + 0) * scrollTo_h + scrollTo_addH
+                        const newH = h - scrollTo_addH
                         const newY = Math.min(target < 0 ? 0 : target, newH < 0 ? 0 : newH)
                         setTimeout(() => {
                             scrollViewRef.current.scrollTo({

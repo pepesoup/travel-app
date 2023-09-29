@@ -60,7 +60,6 @@ export const SchemaDayCard = (props: Props) => {
         //const height = (Object.keys(events || {}).length + 0) * 80 + 10
 
         const nrOfEvents = Object.keys(schema[dayId].events || {}).length
-        console.log('+++ schemaDayCard - nr of events (height):', dayId, nrOfEvents)
 
         const height = (nrOfEvents + 0) * 80 + 10
         setDetailsHeight(height)
