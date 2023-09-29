@@ -36,6 +36,9 @@ export const useAccountStore = create(
         },
         actions: {
             saveProfile: (profile) => {
+                set((state: AccountStore) => {
+                    return merge(state.content.profile || {}, profile || {})
+                })
                 setDbValue('profile', profile)
             },
         },

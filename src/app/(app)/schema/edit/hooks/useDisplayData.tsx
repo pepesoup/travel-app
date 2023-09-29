@@ -15,6 +15,9 @@ export const useDisplayData = () => {
         if (h === '-') {
             return '-'
         }
+        if (m === '-') {
+            return `${h} - `
+        }
         return `${h}:${m}`
     }
 
@@ -26,7 +29,7 @@ export const useDisplayData = () => {
             return '-'
         }
         if (minute === undefined || minute === '-') {
-            return `${hour.toString().padStart(2, '0')}:-}`
+            return `${hour.toString().padStart(2, '0')}`
         }
         return `${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}`
     }
