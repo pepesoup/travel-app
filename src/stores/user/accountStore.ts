@@ -3,7 +3,7 @@ import { immer } from 'zustand/middleware/immer'
 import merge from 'ts-deepmerge'
 import { ref, onValue, set } from 'firebase/database'
 import { auth, db } from '@root/src/rne-firebase/firebaseConfig'
-import * as _ from 'lodash'
+import _ from 'lodash'
 import { useAuthStoreBase } from '@root/src/rne-firebase/src/stores/authStore'
 
 export type Account = {

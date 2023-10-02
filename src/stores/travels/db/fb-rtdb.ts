@@ -15,7 +15,7 @@ export const setDbValue = (relativePath: string, value: any) => {
 }
 
 // TODO: split this to listen on child events - instead of whole travel each time
-export const listenOnRtdbForTravels = (useTravelStore: any) => {
+export const listenOnRtdbForTravels = (useTravelStore: any): 'listening' | undefined => {
     const travelRef = ref(db, `${TRAVEL_BASE}/${CURRENT_TRAVEL_ID}`)
     setTimeout(() => {
         onValue(travelRef, (snapshot) => {
@@ -43,5 +43,6 @@ export const listenOnRtdbForTravels = (useTravelStore: any) => {
                 })
             }
         })
-    }, 0)
+    }, 1)
+    return 'listening'
 }

@@ -14,7 +14,7 @@ import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons'
 import { AnimatedBadge, RowCmn, TextCmn } from '@rn-components/commonUi'
 import { ReactNode, useEffect, useState } from 'react'
 import { Badge } from 'react-native-paper'
-import { useTravelStore } from '@root/src/stores/travels/travelStore'
+import { useTravelState, useTravelStore } from '@root/src/stores/travels/travelStore'
 import { View } from 'react-native'
 import { useNotesAlert } from './notes/hooks/useNotesAlert'
 
@@ -68,7 +68,7 @@ export default function Layout_AppApp() {
     const theme = useTheme()
     const authData = useAuthStoreBase()
     const router = useRouter()
-    const notes = useTravelStore((state) => state.content.notes)
+    const travelState = useTravelState()
 
     useEffect(() => {
         if (rootNavigation?.isReady()) {
@@ -82,11 +82,18 @@ export default function Layout_AppApp() {
     if (authData.state === 'loading') {
         console.log('Auth is loading')
         return (
-            <>
-                <Text style={{ color: 'purple' }} variant="titleLarge">
-                    Layout_AppApp: Loading...
-                </Text>
-            </>
+            <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+                <Text variant="titleLarge">@(app)/_layout: Loading Auth...</Text>
+            </View>
+        )
+    }
+
+    if (travelState.value === 'loading') {
+        console.log('Travel is loading')
+        return (
+            <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+                <Text variant="titleLarge">@(app)/_layout: Loading Travels...</Text>
+            </View>
         )
     }
 

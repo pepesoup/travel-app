@@ -9,6 +9,7 @@ import merge from 'ts-deepmerge'
 import { ref, onValue, set } from 'firebase/database'
 import { auth, db } from '@root/src/rne-firebase/firebaseConfig'
 import { setDbValue, listenOnRtdbForTravels } from './db/fb-rtdb'
+import { useAuthStoreBase } from '@root/src/rne-firebase/src/stores/authStore'
 
 export type TravelStore = {
     content: Travel
@@ -49,7 +50,15 @@ export const useTravelStore = create(
         },
     }))
 )
-listenOnRtdbForTravels(useTravelStore)
+
+const unsubAuthStoreSubscription = useAuthStoreBase.subscribe((authData: any) => {
+    //console.log('AccountStore - got auth-data:', JSON.stringify(authData, null, 3))
+    // now we can connect to db to retreive account data
+
+    if (authData.isSignedIn) {
+        listenOnRtdbForTravels(useTravelStore)
+    }
+})
 export const useTravelState = () => useTravelStore((state) => state.state)
 export const useTravelInfo = () => useTravelStore((state) => state.content.info)
 export const useTravelNotes = () => useTravelStore((state) => state.content.notes)
