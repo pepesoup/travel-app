@@ -14,11 +14,17 @@ export const setDbValue = (relativePath: string, value: any) => {
     set(_ref, value)
 }
 
+// TODO: Enable listening again if there was error inside onValue ??
 // TODO: split this to listen on child events - instead of whole travel each time
-export const listenOnRtdbForTravels = (useTravelStore: any): 'listening' | undefined => {
+let travelDbOnValue: any = null
+export const listenOnRtdbForTravels = (useTravelStore: any) => {
+    if (travelDbOnValue !== null) {
+        console.warn('onValue for Travel is already active - cancel start listening again')
+        return false
+    }
     const travelRef = ref(db, `${TRAVEL_BASE}/${CURRENT_TRAVEL_ID}`)
     setTimeout(() => {
-        onValue(travelRef, (snapshot) => {
+        travelDbOnValue = onValue(travelRef, (snapshot) => {
             const data: Travel = snapshot.val()
             try {
                 //console.log(JSON.stringify(data, null, 4))
@@ -44,5 +50,5 @@ export const listenOnRtdbForTravels = (useTravelStore: any): 'listening' | undef
             }
         })
     }, 1)
-    return 'listening'
+    return true
 }

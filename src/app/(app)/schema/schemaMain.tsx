@@ -1,7 +1,7 @@
 import { ScreenCmn } from '@rn-components/commonUi'
-import { Stack, usePathname, useRouter } from 'expo-router'
-import { useEffect, useRef, useState } from 'react'
-import { Pressable, View, Modal } from 'react-native'
+import { Stack, usePathname } from 'expo-router'
+import { useEffect, useRef } from 'react'
+import { Pressable, View } from 'react-native'
 import { SchemaDayCard } from './components/schemaDayCard'
 import { MotiScrollView } from 'moti'
 import { useSchemaUiStoreBase } from './schemaUiStore'
@@ -10,13 +10,12 @@ import {
     useTravelSchema,
     useTravelState,
 } from '@root/src/stores/travels/travelStore'
-import { DataProvider } from '@root/src/rne-firebase/src/components/data/dataProvider/dataProvider'
 import { HeaderRight, iconSizeAtHeader } from '../_layout'
-import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons'
-import { FAB, Portal, useTheme } from 'react-native-paper'
+import { MaterialCommunityIcons } from '@expo/vector-icons'
+import { useTheme } from 'react-native-paper'
 import { DayFab } from './edit/components/dayFab'
 import differenceInCalendarDays from 'date-fns/differenceInCalendarDays'
-import { format, addDays } from 'date-fns'
+import { addDays } from 'date-fns'
 import { useAccountStore } from '@root/src/stores/user/accountStore'
 
 export default function SchemaMain() {
@@ -33,6 +32,7 @@ export default function SchemaMain() {
     const scrollTo_addH = 25
 
     useEffect(() => {
+        console.log('-- main: []')
         /** open "today's" active schema */
         const nowDate = addDays(new Date(), 0)
         Object.entries(travelSchema).map(([dayId, schemaDay]) => {
@@ -45,6 +45,7 @@ export default function SchemaMain() {
 
     useEffect(() => {
         useSchemaUiStoreBase.setState({ enableFabs: path === '/schema/schemaMain' })
+        console.log('-- main: Path:', path)
     }, [path])
 
     useEffect(() => {
@@ -58,6 +59,12 @@ export default function SchemaMain() {
             })
         }
     }, [uiStore.selectedDayId])
+
+    useEffect(() => {
+        console.log('---------------- main - start ---------------------')
+        console.log(JSON.stringify(uiStore, null, 4))
+        console.log('---------------- main - end ---------------------')
+    }, [uiStore])
 
     const AdminIcon = () => {
         if (account.content?.settings?.admin !== true) {
@@ -104,7 +111,7 @@ export default function SchemaMain() {
                         setTimeout(() => {
                             scrollViewRef.current.scrollTo({
                                 x: 0,
-                                y: newY,
+                                y: newY < 0 ? 0 : newY,
                                 //animated: 1000,
                             })
                         }, 0)

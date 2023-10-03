@@ -108,6 +108,24 @@ export const DayFab = () => {
     ]
 
     const getActions = () => {
+        /*
+        console.log('------------------------------------------------------------------- ')
+        console.log('selectedDayId - before:', JSON.stringify(uiStore.selectedDayId, null, 4))
+        console.log('selectedEvent - before:', JSON.stringify(uiStore.selectedEvent, null, 4))
+        console.log(
+            'editEventAction.newEvent - before:',
+            JSON.stringify(uiStore.editEventAction?.newEvent, null, 4)
+        )
+        console.log(
+            'editEventAction.oldEvent - before:',
+            JSON.stringify(uiStore.editEventAction?.oldEvent, null, 4)
+        )
+        console.log(
+            'editEventAction.oldEvent - before:',
+            JSON.stringify(uiStore.editEventAction?.action, null, 4)
+        )
+        console.log('------------------------------------------------------------------- ')
+        */
         return (
             uiStore.selectedDayId !== null && uiStore.selectedEvent !== null
                 ? actionsForSelectedDayAndTime

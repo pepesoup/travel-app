@@ -1,11 +1,14 @@
 import { ButtonCmn, ScreenCmn, TextCmn } from '@rn-components/commonUi'
 import { useEffect } from 'react'
 import { useSchemaUiStoreBase } from '../schemaUiStore'
-import { Stack, useRouter } from 'expo-router'
+import { Stack, useNavigation, useRouter } from 'expo-router'
 import AddAndUpdate from './components/addAndUpdate'
 import { useEditActions } from './hooks/useEditActions'
 import { useTravelSchema, useTravelState } from '@root/src/stores/travels/travelStore'
 import { useDisplayData } from './hooks/useDisplayData'
+import { IconButton } from 'react-native-paper'
+import { StackActions } from '@react-navigation/native'
+
 
 export default function UpdateEvent() {
     const uiStore = useSchemaUiStoreBase()
@@ -14,6 +17,7 @@ export default function UpdateEvent() {
     const editData = useEditActions()
     const router = useRouter()
     const display = useDisplayData()
+    const navigation = useNavigation()
 
     const title = () => {
         return uiStore.selectedDayId !== null
@@ -22,10 +26,8 @@ export default function UpdateEvent() {
     }
 
     useEffect(() => {
-        if (travelState.value === 'hasValue') {
-            editData.initUpdateEvent()
-        }
-    }, [travelState])
+        editData.initUpdateEvent()
+    }, [])
 
     const submit = () => {
         router.push({
@@ -36,10 +38,6 @@ export default function UpdateEvent() {
         })
     }
 
-    if (travelState.value === 'loading') {
-        return <TextCmn>Travelstore is loading</TextCmn>
-    }
-
     return (
         <ScreenCmn>
             <Stack.Screen
@@ -47,6 +45,19 @@ export default function UpdateEvent() {
                 options={{
                     title: title(),
                     headerRight: () => null,
+                    headerLeft: (props) => {
+                        return (
+                            <IconButton
+                                icon="arrow-left"
+                                iconColor={props.tintColor}
+                                onPress={() => {
+                                    console.log('hepp')
+                                    editData.unInitializeEdit()
+                                    navigation.dispatch(StackActions.pop(1))
+                                }}
+                            />
+                        )
+                    },
                 }}
             />
             <AddAndUpdate action="update" />

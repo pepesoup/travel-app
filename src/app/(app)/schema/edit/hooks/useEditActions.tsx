@@ -94,6 +94,26 @@ export const useEditActions = () => {
         uiStore.setEditedEventAction(editEventAction)
     }
 
+    const unInitializeEdit = () => {
+        /*
+        useSchemaUiStoreBase.setState(
+            //produce(useSchemaUiStoreBase.getState(), (draft) => {
+            produce(uiStore, (draft) => {
+                draft.enableFabs = false // test
+                draft.selectedDayId = null // test
+                draft.selectedEvent = null
+                draft.editEventAction = null
+            })
+        )*/
+
+        useSchemaUiStoreBase.setState({
+            selectedDayId: null,
+            selectedEvent: null,
+            isAdminMode: false,
+            enableFabs: false,
+            editEventAction: null,
+        })
+    }
     /**
      *********************** General ******************************
      */
@@ -186,7 +206,8 @@ export const useEditActions = () => {
                 .add(newEvent?.time as any, newEvent?.type as any, newEvent?.description as any)
 
             useSchemaUiStoreBase.setState(
-                produce(useSchemaUiStoreBase.getState(), (draft) => {
+                //produce(useSchemaUiStoreBase.getState(), (draft) => {
+                produce(uiStore, (draft) => {
                     draft.selectedEvent = null
                     draft.editEventAction = null
                 })
@@ -241,6 +262,7 @@ export const useEditActions = () => {
         initAddEvent,
         initDeleteEvent,
         initUpdateEvent,
+        unInitializeEdit,
         updateEventData,
         getEventData,
         getAvailableData,

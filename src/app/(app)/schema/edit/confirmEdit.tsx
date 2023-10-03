@@ -75,8 +75,7 @@ export default function ConfirmEdit() {
         )*/
 
         /** Very good - this one is working great! */
-        const popAction = StackActions.pop(2)
-        navigation.dispatch(popAction)
+        navigation.dispatch(StackActions.pop(2))
     }
 
     return (

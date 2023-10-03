@@ -1,0 +1,106 @@
+{
+    "travelId1": {
+        "info": {
+            "acuteNumber": [112],
+            "coordinators": [
+                {
+                    "name": "Ebba Färdmar",
+                    "tel": "+46 73 891 29 34"
+                },
+                {
+                    "name": "Pelle Persson",
+                    "tel": "+46 725 22 33 44"
+                }
+            ],
+            "endDate": "2023-10-14T00:00:00.000Z",
+            "recommendation": "https://www.apollo.se/grekland/kreta/kolymbari/hotell/cavo-spada-deluxe-och-spa-giannoulis-hotels?productCategoryCode=FlightAndHotel&page=priceCalendar&paxAges=18,18&departureDate=2023-09-26&duration=0&catalogueItemId=542262&departureAirportCode=ARN",
+            "residence": {
+                "address": ["Cavo Spada Deluxe & Spa Giannoulis Hotels", "GR-730 06", "Crete"],
+                "email": "",
+                "name": "Cavo Spada Deluxe & Spa Giannoulis Hotels",
+                "pictureUrl": [
+                    "https://bilder.apollo.se/cavo-spada-deluxe-och-spa-giannoulis-hotels-1657199554-113958-ImageGalleryX2.jpg",
+                    "https://bilder.apollo.se/cavo-spada-deluxe-och-spa-giannoulis-hotels-1592914479-113954-ImageGalleryX2.jpg",
+                    "https://bilder.apollo.se/cavo-spada-deluxe-och-spa-giannoulis-hotels-1556701924-137053-ImageGalleryX2.jpg"
+                ],
+                "place": "Kreta",
+                "tel": ["+30 28240 22121"],
+                "web": {
+                    "name": "www.apollo.se",
+                    "url": "https://www.apollo.se/grekland/kreta/kolymbari/hotell/cavo-spada-deluxe-och-spa-giannoulis-hotels?productCategoryCode=FlightAndHotel&catalogueItemId=542262&page=priceCalendar&duration=0&paxAges=18,18&departureAirportCode=ARN&departureDate=2023-09-25"
+                }
+            },
+            "startDate": "2023-10-07T00:00:00.000Z"
+        },
+        "notes": {},
+        "schema": {
+            "day_0": {
+                "events": {
+                    "f5f8231e-ee89-479d-9527-de9443ef56aa": {
+                        "day": 0,
+                        "description": "Ankomst",
+                        "time": "-",
+                        "type": {
+                            "icon": {
+                                "name": "airplane",
+                                "type": "MaterialCommunityIcons"
+                            },
+                            "name": "travel"
+                        },
+                        "uuid": "f5f8231e-ee89-479d-9527-de9443ef56aa"
+                    },
+                    "guid1": {
+                        "day": 0,
+                        "description": "Välkomstmöte - Team Retreafy",
+                        "time": "18:00",
+                        "type": {
+                            "icon": {
+                                "name": "silverware-fork-knife",
+                                "type": "MaterialCommunityIcons"
+                            },
+                            "name": "meal"
+                        },
+                        "uuid": "guid1"
+                    }
+                },
+                "info": {
+                    "day": 0
+                }
+            },
+            "day_1": {
+                "events": {
+                    "50b5c578-7a91-462b-bafe-624deb05f168": {
+                        "day": 1,
+                        "description": "GlobalYoga Yin - Johanna",
+                        "time": "16:00",
+                        "type": {
+                            "icon": {
+                                "name": "meditation",
+                                "type": "MaterialCommunityIcons"
+                            },
+                            "name": "yoga"
+                        },
+                        "uuid": "50b5c578-7a91-462b-bafe-624deb05f168"
+                    },
+
+                    "guid2": {
+                        "day": 1,
+                        "description": "Morgonpromenad",
+                        "time": "07:45",
+                        "type": {
+                            "icon": {
+                                "name": "walk",
+                                "type": "MaterialCommunityIcons"
+                            },
+                            "name": "walk"
+                        },
+                        "uuid": "guid2"
+                    }
+                },
+                "info": {
+                    "day": 1
+                }
+            }
+        }
+    }
+}

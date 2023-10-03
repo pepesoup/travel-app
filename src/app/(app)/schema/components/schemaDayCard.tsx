@@ -55,6 +55,12 @@ export const SchemaDayCard = (props: Props) => {
     }, [uiStore.selectedDayId])
 
     useEffect(() => {
+        console.log('---------------- dayCard - start ---------------------')
+        console.log(JSON.stringify(uiStore, null, 4))
+        console.log('---------------- dayCard - end ---------------------')
+    }, [uiStore])
+
+    useEffect(() => {
         /** NOTE: this has to be updated  */
         //const height = (Object.keys(schemeDay || {}).length + 0) * 80 + 10
         //const height = (Object.keys(events || {}).length + 0) * 80 + 10
@@ -64,8 +70,10 @@ export const SchemaDayCard = (props: Props) => {
         const height = (nrOfEvents + 0) * 80 + 10
         setDetailsHeight(height)
         if (uiStore.selectedDayId !== dayId) {
+            console.log('---------------- dayCard - closing details ---------------------')
             setAnimationState(animation)
         } else {
+            console.log('---------------- dayCard - opening details ---------------------')
             animation.animateTo((current) => ({
                 height: height,
                 opacity: 1,
