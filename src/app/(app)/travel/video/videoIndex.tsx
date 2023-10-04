@@ -8,6 +8,8 @@ import { noteTypes } from '@root/src/constants/note.constants'
 import { ResizeMode, Video } from 'expo-av'
 import { useEffect, useRef, useState } from 'react'
 
+const videoUri = require('@src/assets/IMG_2111.mp4')
+
 export default function Modal() {
     const theme = useTheme()
     const video = useRef<any>(null)
@@ -22,11 +24,12 @@ export default function Modal() {
             <Video
                 ref={video}
                 style={{ width: '100%', height: '80%' }}
-                source={{
+                /*source={{
                     uri: 'https://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4',
-                }}
+                }}*/
+                source={videoUri}
                 useNativeControls
-                resizeMode={ResizeMode.CONTAIN}
+                resizeMode={ResizeMode.COVER}
                 isLooping
                 onPlaybackStatusUpdate={(status) => setStatus(() => status)}
             />
