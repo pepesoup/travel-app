@@ -8,7 +8,7 @@ import { useTravelInfo } from '@root/src/stores/travels/travelStore'
 import { InfoCoordinators } from './components/infoCoordinators'
 import { useEffect, useRef, useState } from 'react'
 import { InfoAcuteNr } from './components/infoAcuteNr'
-import { Octicons } from '@expo/vector-icons'
+import { Octicons, Ionicons } from '@expo/vector-icons'
 import { InfoRecommend } from './components/infoRecommend'
 
 export default function Travel() {
@@ -76,7 +76,31 @@ export default function Travel() {
                                 router.push('travel/video/videoIndex')
                             }}
                         >
-                            <Octicons name="video" size={54} color="rgba(255,255,255,.5)" />
+                            <LinearGradient colors={['rgba(0,0,0,.0)', 'rgba(0,0,0,.0)']}>
+                                <ImageBackground
+                                    style={{
+                                        width: 120,
+                                        opacity: 0.9,
+                                        borderColor: 'rgba(0,0,0,0.8)',
+                                        borderTopWidth: 10,
+                                        borderBottomWidth: 10,
+                                        borderLeftWidth: 1,
+                                        borderRightWidth: 1,
+                                        borderRadius: 5,
+                                        overflow: 'hidden',
+                                        alignItems: 'center',
+                                        justifyContent: 'center',
+                                    }}
+                                    source={require('@src/assets/tn1.png')}
+                                >
+                                    <Ionicons
+                                        style={{ alignItems: 'center', justifyContent: 'center' }}
+                                        name="play-circle-outline"
+                                        size={70}
+                                        color="rgba(255,255,255,.7)"
+                                    />
+                                </ImageBackground>
+                            </LinearGradient>
                         </Pressable>
                     </View>
 
