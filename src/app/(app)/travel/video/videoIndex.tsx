@@ -29,7 +29,7 @@ export default function Modal() {
                 }}*/
                 source={videoUri}
                 useNativeControls
-                resizeMode={ResizeMode.COVER}
+                resizeMode={ResizeMode.CONTAIN}
                 isLooping
                 onPlaybackStatusUpdate={(status) => setStatus(() => status)}
             />
