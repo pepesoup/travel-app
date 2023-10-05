@@ -47,23 +47,28 @@ export const WheelPicker = () => {
         }
 
         const [h, m] = editData.getEventData()?.time.split(':') as any[]
-        return editData.getAvailableData('hours').findIndex((hour: string) => hour === h)
+        const tryIndex = editData.getAvailableData('hours').findIndex((hour: string) => hour === h)
+        return tryIndex < 0 ? 0 : tryIndex
     }
     const getInitialMinuteIndex = () => {
         if (uiStore.editEventAction?.action === 'add') {
             return 1
         }
         const [h, m] = editData.getEventData()?.time.split(':') as any[]
-        return editData.getAvailableData('minutes').findIndex((minute: string) => minute === m)
+        const tryIndex = editData
+            .getAvailableData('minutes')
+            .findIndex((minute: string) => minute === m)
+        return tryIndex < 0 ? 0 : tryIndex
     }
     const getInitialEventTypeIndex = () => {
         if (uiStore.editEventAction?.action === 'add') {
             return 0
         }
         const typeName = editData.getEventData()?.type.name
-        return editData
+        const tryIndex = editData
             .getAvailableData('rendableEventTypes')
             .findIndex((et: EventType) => et.name === typeName)
+        return tryIndex < 0 ? 0 : tryIndex
     }
 
     return (

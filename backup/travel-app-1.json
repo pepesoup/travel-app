@@ -1,0 +1,694 @@
+{
+    "accounts": {
+        "00v7jSneUqVh9sKK7OHrLoRIYT53": {
+            "profile": {
+                "name": "Hej",
+                "phone": "123"
+            },
+            "settings": {
+                "admin": true
+            }
+        },
+        "DbRrTLBKBbUUidajsbxeW3M8W5X2": {
+            "settings": {
+                "admin": true
+            }
+        },
+        "QgSXB13Q5AMhv2uaLQPTLkDTnAl1": {
+            "profile": {
+                "name": "Lla",
+                "phone": "333333"
+            },
+            "settings": {
+                "admin": true
+            }
+        }
+    },
+    "travels": {
+        "travelId1": {
+            "info": {
+                "acuteNumber": [112],
+                "coordinators": [
+                    {
+                        "name": "Ebba Färdmar",
+                        "tel": "+46 73 891 29 34"
+                    },
+                    {
+                        "name": "Pelle Persson",
+                        "tel": "+46 725 22 33 44"
+                    }
+                ],
+                "endDate": "2023-10-14T00:00:00.000Z",
+                "recommendation": "https://www.apollo.se/grekland/kreta/kolymbari/hotell/cavo-spada-deluxe-och-spa-giannoulis-hotels?productCategoryCode=FlightAndHotel&page=priceCalendar&paxAges=18,18&departureDate=2023-09-26&duration=0&catalogueItemId=542262&departureAirportCode=ARN",
+                "residence": {
+                    "address": ["Cavo Spada Deluxe & Spa Giannoulis Hotels", "GR-730 06", "Crete"],
+                    "email": "",
+                    "name": "Cavo Spada Deluxe & Spa Giannoulis Hotels",
+                    "pictureUrl": [
+                        "https://bilder.apollo.se/cavo-spada-deluxe-och-spa-giannoulis-hotels-1657199554-113958-ImageGalleryX2.jpg",
+                        "https://bilder.apollo.se/cavo-spada-deluxe-och-spa-giannoulis-hotels-1592914479-113954-ImageGalleryX2.jpg",
+                        "https://bilder.apollo.se/cavo-spada-deluxe-och-spa-giannoulis-hotels-1556701924-137053-ImageGalleryX2.jpg"
+                    ],
+                    "place": "Kreta",
+                    "tel": ["+30 28240 22121"],
+                    "web": {
+                        "name": "www.apollo.se",
+                        "url": "https://www.apollo.se/grekland/kreta/kolymbari/hotell/cavo-spada-deluxe-och-spa-giannoulis-hotels?productCategoryCode=FlightAndHotel&catalogueItemId=542262&page=priceCalendar&duration=0&paxAges=18,18&departureAirportCode=ARN&departureDate=2023-09-25"
+                    }
+                },
+                "startDate": "2023-10-07T00:00:00.000Z"
+            },
+            "notes": {},
+            "schema": {
+                "day_0": {
+                    "events": {
+                        "f5f8231e-ee89-479d-9527-de9443ef56aa": {
+                            "day": 0,
+                            "description": "Ankomst",
+                            "time": "-",
+                            "type": {
+                                "icon": {
+                                    "name": "airplane",
+                                    "type": "MaterialCommunityIcons"
+                                },
+                                "name": "travel"
+                            },
+                            "uuid": "f5f8231e-ee89-479d-9527-de9443ef56aa"
+                        },
+                        "guid1": {
+                            "day": 0,
+                            "description": "Välkomstmöte - Team Retreafy",
+                            "time": "18:00",
+                            "type": {
+                                "icon": {
+                                    "name": "silverware-fork-knife",
+                                    "type": "MaterialCommunityIcons"
+                                },
+                                "name": "meal"
+                            },
+                            "uuid": "guid1"
+                        }
+                    },
+                    "info": {
+                        "day": 0
+                    }
+                },
+                "day_1": {
+                    "events": {
+                        "50b5c578-7a91-462b-bafe-624deb05f168": {
+                            "day": 1,
+                            "description": "GlobalYoga Yin - Johanna",
+                            "time": "16:00",
+                            "type": {
+                                "icon": {
+                                    "name": "meditation",
+                                    "type": "MaterialCommunityIcons"
+                                },
+                                "name": "yoga"
+                            },
+                            "uuid": "50b5c578-7a91-462b-bafe-624deb05f168"
+                        },
+                        "71b538ea-3bb5-4283-a45c-1f8ba7c1e59e": {
+                            "day": 1,
+                            "description": "Välkomstmöte med Göteborg",
+                            "time": "09:45",
+                            "type": {
+                                "icon": {
+                                    "name": "human-male-board-poll",
+                                    "type": "MaterialCommunityIcons"
+                                },
+                                "name": "lecture"
+                            },
+                            "uuid": "71b538ea-3bb5-4283-a45c-1f8ba7c1e59e"
+                        },
+                        "9ca5e61c-b34e-4f5a-8cdd-aba59145df77": {
+                            "day": 1,
+                            "description": "Gemensam Middag - Grupp 2",
+                            "time": "19:45",
+                            "type": {
+                                "icon": {
+                                    "name": "silverware-fork-knife",
+                                    "type": "MaterialCommunityIcons"
+                                },
+                                "name": "meal"
+                            },
+                            "uuid": "9ca5e61c-b34e-4f5a-8cdd-aba59145df77"
+                        },
+                        "c7b4c725-2008-4ec0-9a06-f647312ca124": {
+                            "day": 1,
+                            "description": "Föreläsning - Mårten",
+                            "time": "18:30",
+                            "type": {
+                                "icon": {
+                                    "name": "human-male-board-poll",
+                                    "type": "MaterialCommunityIcons"
+                                },
+                                "name": "lecture"
+                            },
+                            "uuid": "c7b4c725-2008-4ec0-9a06-f647312ca124"
+                        },
+                        "cba902a3-088c-4876-b0d2-bc62366a2b39": {
+                            "day": 1,
+                            "description": "Smart Träning - Mårten",
+                            "time": "10:30",
+                            "type": {
+                                "icon": {
+                                    "name": "barbell-outline",
+                                    "type": "Ionicons"
+                                },
+                                "name": "exercise"
+                            },
+                            "uuid": "cba902a3-088c-4876-b0d2-bc62366a2b39"
+                        },
+                        "cfc50679-6e27-4c53-99f4-fd10778c6b68": {
+                            "day": 1,
+                            "description": "Gemensam Middag - Grupp 1",
+                            "time": "19:30",
+                            "type": {
+                                "icon": {
+                                    "name": "silverware-fork-knife",
+                                    "type": "MaterialCommunityIcons"
+                                },
+                                "name": "meal"
+                            },
+                            "uuid": "cfc50679-6e27-4c53-99f4-fd10778c6b68"
+                        },
+                        "d2824a42-e891-43da-b9cf-2b2ae29c9f09": {
+                            "day": 1,
+                            "description": "Vattenträning",
+                            "time": "12:00",
+                            "type": {
+                                "icon": {
+                                    "name": "pool",
+                                    "type": "MaterialIcons"
+                                },
+                                "name": "pool"
+                            },
+                            "uuid": "d2824a42-e891-43da-b9cf-2b2ae29c9f09"
+                        },
+                        "guid2": {
+                            "day": 1,
+                            "description": "Morgonpromenad",
+                            "time": "07:45",
+                            "type": {
+                                "icon": {
+                                    "name": "walk",
+                                    "type": "MaterialCommunityIcons"
+                                },
+                                "name": "walk"
+                            },
+                            "uuid": "guid2"
+                        }
+                    },
+                    "info": {
+                        "day": 1
+                    }
+                },
+                "day_2": {
+                    "events": {
+                        "323c2d6b-9624-4d79-82a7-112c14a0fc8f": {
+                            "day": 2,
+                            "description": "Morgonpromenad",
+                            "time": "07:45",
+                            "type": {
+                                "icon": {
+                                    "name": "walk",
+                                    "type": "MaterialCommunityIcons"
+                                },
+                                "name": "walk"
+                            },
+                            "uuid": "323c2d6b-9624-4d79-82a7-112c14a0fc8f"
+                        },
+                        "5e18fed6-a0cb-4056-969a-a61d8326f604": {
+                            "day": 2,
+                            "description": "GlobalYoga Power - Johanna",
+                            "time": "10:30",
+                            "type": {
+                                "icon": {
+                                    "name": "meditation",
+                                    "type": "MaterialCommunityIcons"
+                                },
+                                "name": "yoga"
+                            },
+                            "uuid": "5e18fed6-a0cb-4056-969a-a61d8326f604"
+                        },
+                        "9725a756-2b55-44ea-b816-dcdc7d386aa3": {
+                            "day": 2,
+                            "description": "Smart Träning - Mårten",
+                            "time": "16:00",
+                            "type": {
+                                "icon": {
+                                    "name": "barbell-outline",
+                                    "type": "Ionicons"
+                                },
+                                "name": "exercise"
+                            },
+                            "uuid": "9725a756-2b55-44ea-b816-dcdc7d386aa3"
+                        },
+                        "guid3": {
+                            "day": 2,
+                            "description": "Vattenträning",
+                            "time": "12:00",
+                            "type": {
+                                "icon": {
+                                    "name": "pool",
+                                    "type": "MaterialIcons"
+                                },
+                                "name": "pool"
+                            },
+                            "uuid": "guid3"
+                        },
+                        "guid4": {
+                            "day": 2,
+                            "description": "Gemensam Middag - Grupp 2",
+                            "time": "19:30",
+                            "type": {
+                                "icon": {
+                                    "name": "silverware-fork-knife",
+                                    "type": "MaterialCommunityIcons"
+                                },
+                                "name": "meal"
+                            },
+                            "uuid": "guid4"
+                        },
+                        "guid5": {
+                            "day": 2,
+                            "description": "Gemensam Middag - Grupp 1",
+                            "time": "19:45",
+                            "type": {
+                                "icon": {
+                                    "name": "silverware-fork-knife",
+                                    "type": "MaterialCommunityIcons"
+                                },
+                                "name": "meal"
+                            },
+                            "uuid": "guid5"
+                        }
+                    },
+                    "info": {
+                        "day": 2
+                    }
+                },
+                "day_3": {
+                    "events": {
+                        "1ce21866-c415-4509-ba2a-8751685ea588": {
+                            "day": 3,
+                            "description": "Smart Träning - Mårten",
+                            "time": "16:00",
+                            "type": {
+                                "icon": {
+                                    "name": "barbell-outline",
+                                    "type": "Ionicons"
+                                },
+                                "name": "exercise"
+                            },
+                            "uuid": "1ce21866-c415-4509-ba2a-8751685ea588"
+                        },
+                        "29fada77-353b-46af-b545-84d8bb2c2b58": {
+                            "day": 3,
+                            "description": "Vattenträning",
+                            "time": "12:00",
+                            "type": {
+                                "icon": {
+                                    "name": "barbell-outline",
+                                    "type": "Ionicons"
+                                },
+                                "name": "exercise"
+                            },
+                            "uuid": "29fada77-353b-46af-b545-84d8bb2c2b58"
+                        },
+                        "35815444-dd44-4557-a026-3841825539e9": {
+                            "day": 3,
+                            "description": "GlobalYoga Flow - Johanna",
+                            "time": "07:45",
+                            "type": {
+                                "icon": {
+                                    "name": "meditation",
+                                    "type": "MaterialCommunityIcons"
+                                },
+                                "name": "yoga"
+                            },
+                            "uuid": "35815444-dd44-4557-a026-3841825539e9"
+                        },
+                        "97076d1b-983b-4b23-8582-f20b48eb157b": {
+                            "day": 3,
+                            "description": "Föreläsning - Johanna",
+                            "time": "18:30",
+                            "type": {
+                                "icon": {
+                                    "name": "human-male-board-poll",
+                                    "type": "MaterialCommunityIcons"
+                                },
+                                "name": "lecture"
+                            },
+                            "uuid": "97076d1b-983b-4b23-8582-f20b48eb157b"
+                        },
+                        "af8034f3-f707-49a2-9843-e3f837ec7f6f": {
+                            "day": 3,
+                            "description": "Gemensam Middag - Grupp 2",
+                            "time": "19:45",
+                            "type": {
+                                "icon": {
+                                    "name": "silverware-fork-knife",
+                                    "type": "MaterialCommunityIcons"
+                                },
+                                "name": "meal"
+                            },
+                            "uuid": "af8034f3-f707-49a2-9843-e3f837ec7f6f"
+                        },
+                        "f3f8fc84-4c79-4b42-83d1-2a640550e0a8": {
+                            "day": 3,
+                            "description": "Gemensam Middag - Grupp 1",
+                            "time": "19:30",
+                            "type": {
+                                "icon": {
+                                    "name": "silverware-fork-knife",
+                                    "type": "MaterialCommunityIcons"
+                                },
+                                "name": "meal"
+                            },
+                            "uuid": "f3f8fc84-4c79-4b42-83d1-2a640550e0a8"
+                        }
+                    },
+                    "info": {
+                        "day": 3
+                    }
+                },
+                "day_4": {
+                    "events": {
+                        "4cece139-2a39-4005-9dca-f905d3f4687c": {
+                            "day": 4,
+                            "description": "Vattenträning",
+                            "time": "12:00",
+                            "type": {
+                                "icon": {
+                                    "name": "pool",
+                                    "type": "MaterialIcons"
+                                },
+                                "name": "pool"
+                            },
+                            "uuid": "4cece139-2a39-4005-9dca-f905d3f4687c"
+                        },
+                        "50e7de77-d080-4b3f-973f-e2ecefdbbc14": {
+                            "day": 4,
+                            "description": "Morgonpromenad",
+                            "time": "07:45",
+                            "type": {
+                                "icon": {
+                                    "name": "walk",
+                                    "type": "MaterialCommunityIcons"
+                                },
+                                "name": "walk"
+                            },
+                            "uuid": "50e7de77-d080-4b3f-973f-e2ecefdbbc14"
+                        },
+                        "548c7abf-0f14-49e5-86d6-0ee3b470aaf5": {
+                            "day": 4,
+                            "description": "Yoga Workshop - Johanna",
+                            "time": "10:30",
+                            "type": {
+                                "icon": {
+                                    "name": "meditation",
+                                    "type": "MaterialCommunityIcons"
+                                },
+                                "name": "yoga"
+                            },
+                            "uuid": "548c7abf-0f14-49e5-86d6-0ee3b470aaf5"
+                        },
+                        "79ce778b-e405-4cb0-a8c4-8782aa3bd64b": {
+                            "day": 4,
+                            "description": "Gemensam Middag - Grupp 1",
+                            "time": "19:45",
+                            "type": {
+                                "icon": {
+                                    "name": "silverware-fork-knife",
+                                    "type": "MaterialCommunityIcons"
+                                },
+                                "name": "meal"
+                            },
+                            "uuid": "79ce778b-e405-4cb0-a8c4-8782aa3bd64b"
+                        },
+                        "7a9ffd1a-2cc8-4d80-b55d-aae94114d126": {
+                            "day": 4,
+                            "description": "Smart Träning - Mårten",
+                            "time": "16:00",
+                            "type": {
+                                "icon": {
+                                    "name": "barbell-outline",
+                                    "type": "Ionicons"
+                                },
+                                "name": "exercise"
+                            },
+                            "uuid": "7a9ffd1a-2cc8-4d80-b55d-aae94114d126"
+                        },
+                        "a290f13f-b23d-4d06-8886-47ae90059354": {
+                            "day": 4,
+                            "description": "Gemensam Middag - Grupp 2",
+                            "time": "19:30",
+                            "type": {
+                                "icon": {
+                                    "name": "silverware-fork-knife",
+                                    "type": "MaterialCommunityIcons"
+                                },
+                                "name": "meal"
+                            },
+                            "uuid": "a290f13f-b23d-4d06-8886-47ae90059354"
+                        }
+                    },
+                    "info": {
+                        "day": 4
+                    }
+                },
+                "day_5": {
+                    "events": {
+                        "742f893c-e0db-41ac-b97b-910ddd9b3f52": {
+                            "day": 5,
+                            "description": "GlobalYoga Yin - Johanna",
+                            "time": "16:00",
+                            "type": {
+                                "icon": {
+                                    "name": "meditation",
+                                    "type": "MaterialCommunityIcons"
+                                },
+                                "name": "yoga"
+                            },
+                            "uuid": "742f893c-e0db-41ac-b97b-910ddd9b3f52"
+                        },
+                        "7bae8b10-7ab0-4c43-b6f2-97872999d2f9": {
+                            "day": 5,
+                            "description": "Gemensam Middag - Grupp 2",
+                            "time": "19:45",
+                            "type": {
+                                "icon": {
+                                    "name": "silverware-fork-knife",
+                                    "type": "MaterialCommunityIcons"
+                                },
+                                "name": "meal"
+                            },
+                            "uuid": "7bae8b10-7ab0-4c43-b6f2-97872999d2f9"
+                        },
+                        "8d01d2cf-9e80-41e3-8192-37425b1fe5ba": {
+                            "day": 5,
+                            "description": "Vattenträning",
+                            "time": "12:00",
+                            "type": {
+                                "icon": {
+                                    "name": "pool",
+                                    "type": "MaterialIcons"
+                                },
+                                "name": "pool"
+                            },
+                            "uuid": "8d01d2cf-9e80-41e3-8192-37425b1fe5ba"
+                        },
+                        "a37bb393-55cb-4bb0-bb1a-306a2ad58c8e": {
+                            "day": 5,
+                            "description": "Morgonpromenad",
+                            "time": "07:45",
+                            "type": {
+                                "icon": {
+                                    "name": "walk",
+                                    "type": "MaterialCommunityIcons"
+                                },
+                                "name": "walk"
+                            },
+                            "uuid": "a37bb393-55cb-4bb0-bb1a-306a2ad58c8e"
+                        },
+                        "c02d51b8-8ab8-428e-93cb-659f77b27e49": {
+                            "day": 5,
+                            "description": "Q&A - Mårten/Johanna",
+                            "time": "18:30",
+                            "type": {
+                                "icon": {
+                                    "name": "human-male-board-poll",
+                                    "type": "MaterialCommunityIcons"
+                                },
+                                "name": "lecture"
+                            },
+                            "uuid": "c02d51b8-8ab8-428e-93cb-659f77b27e49"
+                        },
+                        "e1622cde-1b27-4bfe-88ea-d57cec827a7e": {
+                            "day": 5,
+                            "description": "Gemensam Middag - Grupp 1",
+                            "time": "19:30",
+                            "type": {
+                                "icon": {
+                                    "name": "silverware-fork-knife",
+                                    "type": "MaterialCommunityIcons"
+                                },
+                                "name": "meal"
+                            },
+                            "uuid": "e1622cde-1b27-4bfe-88ea-d57cec827a7e"
+                        },
+                        "e306eb7d-723c-43b4-ad34-145176eff135": {
+                            "day": 5,
+                            "description": "Smart Träning - Mårten",
+                            "time": "10:30",
+                            "type": {
+                                "icon": {
+                                    "name": "barbell-outline",
+                                    "type": "Ionicons"
+                                },
+                                "name": "exercise"
+                            },
+                            "uuid": "e306eb7d-723c-43b4-ad34-145176eff135"
+                        }
+                    },
+                    "info": {
+                        "day": 5
+                    }
+                },
+                "day_6": {
+                    "events": {
+                        "00a47f6a-a02a-4967-99f4-c13db41c4119": {
+                            "day": 6,
+                            "description": "Avslutning - Terassen",
+                            "time": "18:30",
+                            "type": {
+                                "icon": {
+                                    "name": "glass-cheers",
+                                    "type": "FontAwesome5"
+                                },
+                                "name": "party"
+                            },
+                            "uuid": "00a47f6a-a02a-4967-99f4-c13db41c4119"
+                        },
+                        "31e14af9-ffbf-457e-a614-999bda7496c1": {
+                            "day": 6,
+                            "description": "GlobalYoga - Johanna",
+                            "time": "10:30",
+                            "type": {
+                                "icon": {
+                                    "name": "meditation",
+                                    "type": "MaterialCommunityIcons"
+                                },
+                                "name": "yoga"
+                            },
+                            "uuid": "31e14af9-ffbf-457e-a614-999bda7496c1"
+                        },
+                        "4f97ad2a-c293-4add-818a-b4beebedef0d": {
+                            "day": 6,
+                            "description": "Gemensam Middag - Grupp 2",
+                            "time": "19:30",
+                            "type": {
+                                "icon": {
+                                    "name": "silverware-fork-knife",
+                                    "type": "MaterialCommunityIcons"
+                                },
+                                "name": "meal"
+                            },
+                            "uuid": "4f97ad2a-c293-4add-818a-b4beebedef0d"
+                        },
+                        "69ca06de-48c8-47ef-a80b-c7a34834a5ef": {
+                            "day": 6,
+                            "description": "Vattenträning",
+                            "time": "12:00",
+                            "type": {
+                                "icon": {
+                                    "name": "pool",
+                                    "type": "MaterialIcons"
+                                },
+                                "name": "pool"
+                            },
+                            "uuid": "69ca06de-48c8-47ef-a80b-c7a34834a5ef"
+                        },
+                        "73f0f349-c877-4bd3-8d61-06948794b31e": {
+                            "day": 6,
+                            "description": "Smart Träning - Mårten",
+                            "time": "16:00",
+                            "type": {
+                                "icon": {
+                                    "name": "barbell-outline",
+                                    "type": "Ionicons"
+                                },
+                                "name": "exercise"
+                            },
+                            "uuid": "73f0f349-c877-4bd3-8d61-06948794b31e"
+                        },
+                        "8dc31199-8db6-4261-9085-7b0736f9e767": {
+                            "day": 6,
+                            "description": "Gemensam Middag - Grupp 1",
+                            "time": "19:45",
+                            "type": {
+                                "icon": {
+                                    "name": "silverware-fork-knife",
+                                    "type": "MaterialCommunityIcons"
+                                },
+                                "name": "meal"
+                            },
+                            "uuid": "8dc31199-8db6-4261-9085-7b0736f9e767"
+                        },
+                        "8e959395-4401-4b42-96f7-fb54a37bf9c8": {
+                            "day": 6,
+                            "description": "Poolparty",
+                            "time": "20:00",
+                            "type": {
+                                "icon": {
+                                    "name": "pool",
+                                    "type": "MaterialIcons"
+                                },
+                                "name": "pool"
+                            },
+                            "uuid": "8e959395-4401-4b42-96f7-fb54a37bf9c8"
+                        },
+                        "b8218094-4149-4fbf-b131-e8c173d66851": {
+                            "day": 6,
+                            "description": "Morgonpromenad",
+                            "time": "07:45",
+                            "type": {
+                                "icon": {
+                                    "name": "walk",
+                                    "type": "MaterialCommunityIcons"
+                                },
+                                "name": "walk"
+                            },
+                            "uuid": "b8218094-4149-4fbf-b131-e8c173d66851"
+                        }
+                    },
+                    "info": {
+                        "day": 6
+                    }
+                },
+                "day_7": {
+                    "events": {
+                        "9d274491-ef45-4701-90cc-73fca333ce49": {
+                            "day": 7,
+                            "description": "Hemfärd - Huvudbokare får ett Mail med upphämtningstider. ",
+                            "time": "07:00",
+                            "type": {
+                                "icon": {
+                                    "name": "human-male-board-poll",
+                                    "type": "MaterialCommunityIcons"
+                                },
+                                "name": "lecture"
+                            },
+                            "uuid": "9d274491-ef45-4701-90cc-73fca333ce49"
+                        }
+                    },
+                    "info": {
+                        "day": 7
+                    }
+                }
+            }
+        }
+    }
+}
