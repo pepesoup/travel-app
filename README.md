@@ -1,3 +1,17 @@
+# Init the app - first time
+
+### Run on command line:
+
+`./scripts/resetInstallUsingLockedVersions.bash`
+
+#### Note
+
+This command is installing the app by not proceeding the versions defined in yarn.lock.
+Reason is that the latest version updates of some packages is not working,
+so that bug has to be fixed before the latest versions can be used.
+
+# Various info 👇
+
 # Expo (Go)
 
 ## update Expo Server
@@ -17,7 +31,7 @@ Used version:
     app.json:
     {
         "expo": {
-            "sdkVersion": "48.0.0",
+            "sdkVersion": "49.0.0",
             ...
 ```
 
