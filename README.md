@@ -10,6 +10,10 @@ This command is installing the app by not proceeding the versions defined in yar
 Reason is that the latest version updates of some packages is not working,
 so that bug has to be fixed before the latest versions can be used.
 
+### Start the simulator, on the command line:
+
+`./go.bash`
+
 # Various info 👇
 
 # Expo (Go)
