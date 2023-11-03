@@ -1,5 +1,9 @@
 # Init the app - first time
 
+## checkout branch with fixes
+
+schema-admin-fix
+
 ### Run on command line:
 
 `./scripts/resetInstallUsingLockedVersions.bash`
