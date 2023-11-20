@@ -7,20 +7,19 @@ import { differenceInCalendarDays } from 'date-fns'
 import * as _ from 'lodash'
 
 const TRAVEL_BASE = '/travel-app/travels'
-const CURRENT_TRAVEL_ID = 'travelId1'
 
 export const setDbValue = (relativePath: string, value: any) => {
-    const _ref = ref(db, `${TRAVEL_BASE}/${CURRENT_TRAVEL_ID}/${relativePath}`)
+    const _ref = ref(db, `${TRAVEL_BASE}/${relativePath}`)
     set(_ref, value)
 }
-
 // TODO: split this to listen on child events - instead of whole travel each time
-export const listenOnRtdbForTravels = (useTravelStore: any) => {
-    const travelRef = ref(db, `${TRAVEL_BASE}/${CURRENT_TRAVEL_ID}`)
+export const listenOnRtdbForTravels = (useTravelStore: any, travelId: string) => {
+    const travelRef = ref(db, `${TRAVEL_BASE}/${travelId}`)
+
     setTimeout(() => {
         onValue(travelRef, (snapshot) => {
             const data: Travel = snapshot.val()
-            try {
+                        try {
                 //console.log(JSON.stringify(data, null, 4))
                 const overwrite = {
                     info: {
