@@ -33,6 +33,7 @@ export const listenOnRtdbForTravels = (useTravelStore: any, travelId: string) =>
 
                 useTravelStore.setState({
                     content: update,
+                    selectedTravelId: travelId,
                     state: { value: 'hasValue', info: 'ok' },
                 })
             } catch (e: any) {

@@ -5,6 +5,7 @@ import { ref, onValue, set } from 'firebase/database'
 import { auth, db } from '@root/src/rne-firebase/firebaseConfig'
 import * as _ from 'lodash'
 import { useAuthStoreBase } from '@root/src/rne-firebase/src/stores/authStore'
+import { TravelPO } from '../travels/types.travel'
 
 export type Account = {
     uid: string
@@ -18,8 +19,8 @@ export type Account = {
         admin: boolean
     }
     myTravelPlans: {
-        selectedTravel: string
-        allPlannedTravels: string[]
+        selectedTravel: TravelPO
+        allPlannedTravels: TravelPO[]
     }
 }
 
@@ -31,7 +32,7 @@ export type AccountStore = {
     }
     actions: {
         saveProfile: (profile: Partial<Account['profile']>) => void
-        setSelectedTravel: (travelId: string) => void
+        setSelectedTravel: (travel: TravelPO) => void
         /* - this function will be used in future, in admin interface 
         setAllPlannedTravels: (travelId: string) => void 
         */
@@ -53,11 +54,11 @@ export const useAccountStore = create(
                 setDbValue('profile', profile)
             },
 
-            setSelectedTravel: (travelId) => {
+            setSelectedTravel: (travel: TravelPO) => {
                 set((state: AccountStore) => {
-                    state.content.myTravelPlans.selectedTravel = travelId
+                    state.content.myTravelPlans.selectedTravel = { ...travel }
                 })
-                setDbValue('myTravelPlans/selectedTravel', travelId)
+                setDbValue('myTravelPlans/selectedTravel', { ...travel })
             },
 
             /* this function will be used in future, in admin interface 

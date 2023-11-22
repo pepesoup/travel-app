@@ -72,3 +72,8 @@ export type Travel = {
     schema: Schema
     notes: Notes
 }
+
+export interface TravelPO {
+    id: string
+    name: string
+}

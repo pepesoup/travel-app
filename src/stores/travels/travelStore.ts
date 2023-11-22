@@ -14,34 +14,36 @@ import { AccountStore, useAccountStore } from '../user/accountStore'
 
 export type TravelStore = {
     content: Travel
+    selectedTravelId: string
     state: {
         value: 'loading' | 'hasValue' | 'hasError'
         info: string
     }
     actions: {
-        addNote: (travelId: string, note: Note) => any
-        setSchema: (travelId: string, schema: Schema) => any
+        addNote: (note: Note) => any
+        setSchema: (schema: Schema) => any
     }
 } 
 
 export const useTravelStore = create(
     immer<TravelStore>((set, get) => ({
         content: {} as Travel,
+        selectedTravelId: '',
         state: {
             value: 'loading',
             info: 'initial',
         },
         actions: {
-            addNote: (travelId: string, note: Note) => {
-                setDbValue(`${travelId}/notes/${note.uuid}`, note)
+            addNote: (note: Note) => {
+                setDbValue(`${get().selectedTravelId}/notes/${note.uuid}`, note)
                 
                 /* // Firebase trigger RT update - even if offline -> so set state this way is not needed
                 set((state: TravelStore) => {
                     state.content.notes[note.uuid] = note
                 })// */
             },
-            setSchema: (travelId: string, schema: Schema) => {
-                setDbValue(`${travelId}/schema`, schema)
+            setSchema: (schema: Schema) => {
+               setDbValue(`${get().selectedTravelId}/schema`, schema)
 
                 /* // Firebase trigger RT update - even if offline -> so set state this way is not needed
                 set((state: TravelStore) => {
@@ -53,7 +55,8 @@ export const useTravelStore = create(
 )
 
 useAccountStore.subscribe((accountStore: AccountStore) => {
-    listenOnRtdbForTravels(useTravelStore, accountStore.content.myTravelPlans.selectedTravel)
+    listenOnRtdbForTravels(useTravelStore, accountStore.content.myTravelPlans.selectedTravel.id)
+})
 
 export const useTravelState = () => useTravelStore((state) => state.state)
 export const useTravelInfo = () => useTravelStore((state) => state.content.info)

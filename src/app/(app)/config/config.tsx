@@ -9,7 +9,7 @@ import {
     useAccountSelectedTravel,
 } from '@root/src/stores/user/accountStore'
 import { View } from 'react-native'
-
+import { TravelPO } from '@root/src/stores/travels/types.travel'
 
 export default function Modal() {
     const router = useRouter()
@@ -17,15 +17,15 @@ export default function Modal() {
     const theme = useTheme()
     const accountActions = useAccountActions()
     const allTravels = useAccountAllTravels()
-    const selectedTravelId = useAccountSelectedTravel()
+    const selectedTravel = useAccountSelectedTravel()
 
     const onLogoutPress = async () => {
         await authStoreActions.signOut()
         //router.replace('/')
     }
 
-    const selectTravelAndRedirect = (currentTravelId: string) => {
-        accountActions.setSelectedTravel(currentTravelId)
+    const selectTravelAndRedirect = (currentTravel: TravelPO) => {
+        accountActions.setSelectedTravel(currentTravel)
         setTimeout(() => {
             router.push('/retreafy/retreafy')
         }, 1)
@@ -35,11 +35,11 @@ export default function Modal() {
         <ScreenCmn style={{ gap: 0, justifyContent: 'center', alignItems: 'center' }}>
             {!isPresented && <Link href="../">Dismiss</Link>}
             <View style={{ flex: 1 }}>
-                {allTravels.map((currentTravelId, index) => (
+                {allTravels.map((currentTravel, index) => (
                     <Menu.Item
-                        trailingIcon={selectedTravelId === currentTravelId ? 'check' : ''}
-                        onPress={() => selectTravelAndRedirect(currentTravelId)}
-                        title={currentTravelId}
+                        trailingIcon={selectedTravel.id === currentTravel.id ? 'check' : ''}
+                        onPress={() => selectTravelAndRedirect(currentTravel)}
+                        title={currentTravel.name}
                         key={index}
                     />
                 ))}
