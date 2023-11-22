@@ -10,6 +10,7 @@ import { ref, onValue, set } from 'firebase/database'
 import { auth, db } from '@root/src/rne-firebase/firebaseConfig'
 import { setDbValue, listenOnRtdbForTravels } from './db/fb-rtdb'
 import { useAuthStoreBase } from '@root/src/rne-firebase/src/stores/authStore'
+import { Account, AccountStore, useAccountStore } from '../user/accountStore'
 
 export type TravelStore = {
     content: Travel
@@ -32,6 +33,12 @@ export const useTravelStore = create(
         },
         actions: {
             addNote: (note: Note) => {
+                // todo: get selected travelId from AccountStore
+                const currentlySelectedTravelId =
+                    useAccountStore.getState()?.content?.depExample?.ex1?.id
+                console.log('currentlySelectedTravelId:', currentlySelectedTravelId)
+                //setDbValue(`notes/${note.uuid}`, note, currentlySelectedTravelId)
+
                 setDbValue(`notes/${note.uuid}`, note)
 
                 /* // Firebase trigger RT update - even if offline -> so set state this way is not needed
@@ -57,6 +64,20 @@ const unsubAuthStoreSubscription = useAuthStoreBase.subscribe((authData: any) =>
 
     if (authData.isSignedIn) {
         listenOnRtdbForTravels(useTravelStore)
+    }
+})
+
+// Example
+useAccountStore.subscribe((data: AccountStore) => {
+    if (data.state.value === 'hasValue') {
+        if (data?.content?.depExample?.ex1?.name) {
+            // just a simplyfied example here... in reality, use selected id -> fetch from db
+            useTravelStore.setState((state) => {
+                state.content.info.residence.place = data.content.depExample.ex1.name
+            })
+
+            //listenOnRtdbForTravels(useTravelStore, data.content.depExample.ex1.id)
+        }
     }
 })
 
