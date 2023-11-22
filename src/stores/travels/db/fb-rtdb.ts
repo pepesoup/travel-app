@@ -14,34 +14,36 @@ export const setDbValue = (relativePath: string, value: any) => {
     set(_ref, value)
 }
 
+let unsubscribeDbListenerForTravels = () => {} // init with noop function
 // TODO: split this to listen on child events - instead of whole travel each time
 export const listenOnRtdbForTravels = (useTravelStore: any) => {
     const travelRef = ref(db, `${TRAVEL_BASE}/${CURRENT_TRAVEL_ID}`)
-    setTimeout(() => {
-        onValue(travelRef, (snapshot) => {
-            const data: Travel = snapshot.val()
-            try {
-                //console.log(JSON.stringify(data, null, 4))
-                const overwrite = {
-                    info: {
-                        startDate: new Date(data.info.startDate),
-                        endDate: new Date(data.info.endDate),
-                    },
-                }
 
-                const fallback = {}
-                const update = merge(fallback, data, overwrite)
-
-                useTravelStore.setState({
-                    content: update,
-                    state: { value: 'hasValue', info: 'ok' },
-                })
-            } catch (e: any) {
-                useTravelStore.setState({
-                    content: {} as Travel,
-                    state: { value: 'hasError', info: e.message },
-                })
+    // don't use more than 1 listener
+    unsubscribeDbListenerForTravels()
+    unsubscribeDbListenerForTravels = onValue(travelRef, (snapshot) => {
+        const data: Travel = snapshot.val()
+        try {
+            //console.log(JSON.stringify(data, null, 4))
+            const overwrite = {
+                info: {
+                    startDate: new Date(data.info.startDate),
+                    endDate: new Date(data.info.endDate),
+                },
             }
-        })
-    }, 0)
+
+            const fallback = {}
+            const update = merge(fallback, data, overwrite)
+
+            useTravelStore.setState({
+                content: update,
+                state: { value: 'hasValue', info: 'ok' },
+            })
+        } catch (e: any) {
+            useTravelStore.setState({
+                content: {} as Travel,
+                state: { value: 'hasError', info: e.message },
+            })
+        }
+    })
 }

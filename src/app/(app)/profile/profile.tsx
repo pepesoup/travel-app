@@ -14,6 +14,10 @@ export default function Profile() {
     const account = useAccountStore()
     const router = useRouter()
 
+    useEffect(() => {
+        console.log(JSON.stringify(account, null, 4))
+    }, [account])
+
     return (
         <ScreenCmn>
             <Stack.Screen

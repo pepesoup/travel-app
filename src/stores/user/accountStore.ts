@@ -17,6 +17,12 @@ export type Account = {
     settings: {
         admin: boolean
     }
+    depExample: {
+        ex1: {
+            id: string
+            name: string
+        }
+    }
 }
 
 export type AccountStore = {
@@ -58,6 +64,17 @@ const unsubAuthStoreSubscription = useAuthStoreBase.subscribe((authData: any) =>
     // now we can connect to db to retreive account data
     if (authData.isSignedIn) {
         listenOnRtdbForAccounts(useAccountStore)
+
+        /* just an example 
+        this value will be set with a little delay
+        and travelStore has a dependecy to this as an example
+        Imitates if this value would be changed by user
+        */
+        setTimeout(() => {
+            useAccountStore.setState((state) => {
+                state.content.depExample = { ex1: { id: 'id1', name: 'new name...' } }
+            })
+        }, 5000)
     }
 })
 
