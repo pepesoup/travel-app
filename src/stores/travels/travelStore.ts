@@ -14,7 +14,6 @@ import { AccountStore, useAccountStore } from '../user/accountStore'
 
 export type TravelStore = {
     content: Travel
-    selectedTravelId: string
     state: {
         value: 'loading' | 'hasValue' | 'hasError'
         info: string
@@ -28,14 +27,15 @@ export type TravelStore = {
 export const useTravelStore = create(
     immer<TravelStore>((set, get) => ({
         content: {} as Travel,
-        selectedTravelId: '',
         state: {
             value: 'loading',
             info: 'initial',
         },
         actions: {
             addNote: (note: Note) => {
-                setDbValue(`${get().selectedTravelId}/notes/${note.uuid}`, note)
+                const currentlySelectedTravelId =
+                    useAccountStore.getState()?.content?.myTravelPlans?.selectedTravel?.id
+                setDbValue(`${currentlySelectedTravelId}/notes/${note.uuid}`, note)
                 
                 /* // Firebase trigger RT update - even if offline -> so set state this way is not needed
                 set((state: TravelStore) => {
@@ -43,7 +43,9 @@ export const useTravelStore = create(
                 })// */
             },
             setSchema: (schema: Schema) => {
-               setDbValue(`${get().selectedTravelId}/schema`, schema)
+                const currentlySelectedTravelId =
+                    useAccountStore.getState()?.content?.myTravelPlans?.selectedTravel?.id
+               setDbValue(`${currentlySelectedTravelId}/schema`, schema)
 
                 /* // Firebase trigger RT update - even if offline -> so set state this way is not needed
                 set((state: TravelStore) => {
@@ -55,7 +57,10 @@ export const useTravelStore = create(
 )
 
 useAccountStore.subscribe((accountStore: AccountStore) => {
-    listenOnRtdbForTravels(useTravelStore, accountStore.content.myTravelPlans.selectedTravel.id)
+    if (accountStore.state.value === 'hasValue' &&
+        accountStore?.content?.myTravelPlans?.selectedTravel?.id) {
+        listenOnRtdbForTravels(useTravelStore, accountStore.content.myTravelPlans.selectedTravel.id)
+    }
 })
 
 export const useTravelState = () => useTravelStore((state) => state.state)

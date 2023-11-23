@@ -9,7 +9,7 @@ import {
     useAccountSelectedTravel,
 } from '@root/src/stores/user/accountStore'
 import { View } from 'react-native'
-import { TravelPO } from '@root/src/stores/travels/types.travel'
+import { TravelPO } from '@root/src/stores/user/accountStore'
 
 export default function Modal() {
     const router = useRouter()

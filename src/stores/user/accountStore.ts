@@ -5,8 +5,11 @@ import { ref, onValue, set } from 'firebase/database'
 import { auth, db } from '@root/src/rne-firebase/firebaseConfig'
 import * as _ from 'lodash'
 import { useAuthStoreBase } from '@root/src/rne-firebase/src/stores/authStore'
-import { TravelPO } from '../travels/types.travel'
 
+export type TravelPO = {
+    id: string
+    name: string
+}
 export type Account = {
     uid: string
     email: string
@@ -34,7 +37,7 @@ export type AccountStore = {
         saveProfile: (profile: Partial<Account['profile']>) => void
         setSelectedTravel: (travel: TravelPO) => void
         /* - this function will be used in future, in admin interface 
-        setAllPlannedTravels: (travelId: string) => void 
+        setAllPlannedTravels: (allPlannedTravels: TravelPO[]) => void 
         */
     }
 }
@@ -54,22 +57,22 @@ export const useAccountStore = create(
                 setDbValue('profile', profile)
             },
 
-            setSelectedTravel: (travel: TravelPO) => {
+            setSelectedTravel: (travel) => {
                 set((state: AccountStore) => {
-                    state.content.myTravelPlans.selectedTravel = { ...travel }
+                    state.content.myTravelPlans.selectedTravel = travel
                 })
-                setDbValue('myTravelPlans/selectedTravel', { ...travel })
+                setDbValue('myTravelPlans/selectedTravel', travel)
             },
 
             /* this function will be used in future, in admin interface 
-            setAllPlannedTravels: (travelId) => {
-                let allPlannedTravelsIds = useAccountContent().myTravelPlans.allPlannedTravels
-                allPlannedTravelsIds.add(travelId)
-
+            setAllPlannedTravels: (allPlannedTravels) => {
                 set((state: AccountStore) => {
-                    state.content.myTravelPlans.allPlannedTravels.add(travelId)
+                    // set allPlannedTravels in local 
+                    state.content.myTravelPlans.allPlannedTravels = allPlannedTravels
+                    return merge(state.content.myTravelPlans.allPlannedTravels || [], allPlannedTravels || [])
                 })
-                setDbValue('myTravelPlans/allPlannedTravels', allPlannedTravelsIds)
+                // set allPlannedTravels in RTDB
+                setDbValue('myTravelPlans/allPlannedTravels', allPlannedTravels)
             }
             */
             
@@ -86,7 +89,6 @@ export const useAccountAllTravels = () => useAccountStore((state) => state.conte
 /************************ Subscribe on Auth Store **************************/
 const unsubAuthStoreSubscription = useAuthStoreBase.subscribe((authData: any) => {
     //console.log('AccountStore - got auth-data:', JSON.stringify(authData, null, 3))
-    // now we can connect to db to retreive account data
     if (authData.isSignedIn) {
         listenOnRtdbForAccounts(useAccountStore)
     }
@@ -100,8 +102,6 @@ export const setDbValue = (relativePath: string, value: any) => {
         //throw new Error('Trying to get account data when auth is not set')
         return
     }
-
-    // travel-app/accounts/5WnKPAlpYWa79BfnrIgzoXJ5otg1/travels
     const _ref = ref(db, `${ACCOUNT_BASE}/${auth.currentUser.uid}/${relativePath}`)
     set(_ref, value)
 }
@@ -112,26 +112,17 @@ export const listenOnRtdbForAccounts = (useAccountStore: any) => {
         //throw new Error('Trying to get account data when auth is not set')
         return
     }
-    //ref guides you to the point(db) through path
     const accountRef = ref(db, `${ACCOUNT_BASE}/${auth.currentUser.uid}`)
-    //console.log('accountRef------------', accountRef)
-
     setTimeout(() => {
-        //onValue - Listens for data changes at a particular location.
-        // snapshot is the value(account) of the entity at this point of time
         onValue(accountRef, (snapshot) => {
             const data: Account = snapshot.val()
-            console.log('data---- from accounStore', data)
             try {
                 //console.log(JSON.stringify(data, null, 4))
-                // Attributes that needs to be updated
                 const overwrite = { uid: auth.currentUser?.uid, email: auth.currentUser?.email }
                 const fallback = {}
-                // Updated value(entity, account) after applying the over write
                 const update = merge(fallback, data || {}, overwrite)
 
                 useAccountStore.setState({
-                    //here setting value in the local store
                     content: update,
                     state: { value: 'hasValue', info: 'ok' },
                 })
