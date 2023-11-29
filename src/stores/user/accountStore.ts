@@ -6,6 +6,10 @@ import { auth, db } from '@root/src/rne-firebase/firebaseConfig'
 import * as _ from 'lodash'
 import { useAuthStoreBase } from '@root/src/rne-firebase/src/stores/authStore'
 
+export type TravelPO = {
+    id: string
+    name: string
+}
 export type Account = {
     uid: string
     email: string
@@ -17,6 +21,10 @@ export type Account = {
     settings: {
         admin: boolean
     }
+    myTravelPlans: {
+        selectedTravel: TravelPO
+        allPlannedTravels: TravelPO[]
+    }
 }
 
 export type AccountStore = {
@@ -27,6 +35,10 @@ export type AccountStore = {
     }
     actions: {
         saveProfile: (profile: Partial<Account['profile']>) => void
+        setSelectedTravel: (travel: TravelPO) => void
+        /* - this function will be used in future, in admin interface 
+        setAllPlannedTravels: (allPlannedTravels: TravelPO[]) => void 
+        */
     }
 }
 
@@ -44,6 +56,26 @@ export const useAccountStore = create(
                 })
                 setDbValue('profile', profile)
             },
+
+            setSelectedTravel: (travel) => {
+                set((state: AccountStore) => {
+                    state.content.myTravelPlans.selectedTravel = travel
+                })
+                setDbValue('myTravelPlans/selectedTravel', travel)
+            },
+
+            /* this function will be used in future, in admin interface 
+            setAllPlannedTravels: (allPlannedTravels) => {
+                set((state: AccountStore) => {
+                    // set allPlannedTravels in local 
+                    state.content.myTravelPlans.allPlannedTravels = allPlannedTravels
+                    return merge(state.content.myTravelPlans.allPlannedTravels || [], allPlannedTravels || [])
+                })
+                // set allPlannedTravels in RTDB
+                setDbValue('myTravelPlans/allPlannedTravels', allPlannedTravels)
+            }
+            */
+            
         },
     }))
 )
@@ -51,11 +83,12 @@ export const useAccountStore = create(
 export const useAccountState = () => useAccountStore((state) => state.state)
 export const useAccountContent = () => useAccountStore((state) => state.content)
 export const useAccountActions = () => useAccountStore((state) => state.actions)
+export const useAccountSelectedTravel = () => useAccountStore((state) => state.content.myTravelPlans.selectedTravel)
+export const useAccountAllTravels = () => useAccountStore((state) => state.content.myTravelPlans.allPlannedTravels)
 
 /************************ Subscribe on Auth Store **************************/
 const unsubAuthStoreSubscription = useAuthStoreBase.subscribe((authData: any) => {
     //console.log('AccountStore - got auth-data:', JSON.stringify(authData, null, 3))
-    // now we can connect to db to retreive account data
     if (authData.isSignedIn) {
         listenOnRtdbForAccounts(useAccountStore)
     }
@@ -69,7 +102,6 @@ export const setDbValue = (relativePath: string, value: any) => {
         //throw new Error('Trying to get account data when auth is not set')
         return
     }
-
     const _ref = ref(db, `${ACCOUNT_BASE}/${auth.currentUser.uid}/${relativePath}`)
     set(_ref, value)
 }
@@ -80,9 +112,9 @@ export const listenOnRtdbForAccounts = (useAccountStore: any) => {
         //throw new Error('Trying to get account data when auth is not set')
         return
     }
-    const travelRef = ref(db, `${ACCOUNT_BASE}/${auth.currentUser.uid}`)
+    const accountRef = ref(db, `${ACCOUNT_BASE}/${auth.currentUser.uid}`)
     setTimeout(() => {
-        onValue(travelRef, (snapshot) => {
+        onValue(accountRef, (snapshot) => {
             const data: Account = snapshot.val()
             try {
                 //console.log(JSON.stringify(data, null, 4))

@@ -10,6 +10,7 @@ import { ref, onValue, set } from 'firebase/database'
 import { auth, db } from '@root/src/rne-firebase/firebaseConfig'
 import { setDbValue, listenOnRtdbForTravels } from './db/fb-rtdb'
 import { useAuthStoreBase } from '@root/src/rne-firebase/src/stores/authStore'
+import { AccountStore, useAccountStore } from '../user/accountStore'
 
 export type TravelStore = {
     content: Travel
@@ -21,7 +22,7 @@ export type TravelStore = {
         addNote: (note: Note) => any
         setSchema: (schema: Schema) => any
     }
-}
+} 
 
 export const useTravelStore = create(
     immer<TravelStore>((set, get) => ({
@@ -32,15 +33,19 @@ export const useTravelStore = create(
         },
         actions: {
             addNote: (note: Note) => {
-                setDbValue(`notes/${note.uuid}`, note)
-
+                const currentlySelectedTravelId =
+                    useAccountStore.getState()?.content?.myTravelPlans?.selectedTravel?.id
+                setDbValue(`${currentlySelectedTravelId}/notes/${note.uuid}`, note)
+                
                 /* // Firebase trigger RT update - even if offline -> so set state this way is not needed
                 set((state: TravelStore) => {
                     state.content.notes[note.uuid] = note
                 })// */
             },
             setSchema: (schema: Schema) => {
-                setDbValue(`schema`, schema)
+                const currentlySelectedTravelId =
+                    useAccountStore.getState()?.content?.myTravelPlans?.selectedTravel?.id
+               setDbValue(`${currentlySelectedTravelId}/schema`, schema)
 
                 /* // Firebase trigger RT update - even if offline -> so set state this way is not needed
                 set((state: TravelStore) => {
@@ -51,12 +56,10 @@ export const useTravelStore = create(
     }))
 )
 
-const unsubAuthStoreSubscription = useAuthStoreBase.subscribe((authData: any) => {
-    //console.log('AccountStore - got auth-data:', JSON.stringify(authData, null, 3))
-    // now we can connect to db to retreive account data
-
-    if (authData.isSignedIn) {
-        listenOnRtdbForTravels(useTravelStore)
+useAccountStore.subscribe((accountStore: AccountStore) => {
+    if (accountStore.state.value === 'hasValue' &&
+        accountStore?.content?.myTravelPlans?.selectedTravel?.id) {
+        listenOnRtdbForTravels(useTravelStore, accountStore.content.myTravelPlans.selectedTravel.id)
     }
 })
 
