@@ -106,7 +106,7 @@ export default function RetreafyIndex() {
                             color={theme.colors.primary}
                         />
                     </SurfaceCmn>
-                    <SurfaceCmn text="Chat">
+                    <SurfaceCmn text="Chat" onPress={() => router.push('/chat/chat')}>
                         <MaterialCommunityIcons
                             name="message-text-outline"
                             size={32}
