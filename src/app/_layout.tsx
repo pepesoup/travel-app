@@ -43,7 +43,7 @@ const Test = (props: any) => {
             <View
                 style={{
                     ...StyleSheet.absoluteFillObject,
-                    top: 50,
+                    top: 75,
                     backgroundColor: theme.colors.background,
                     zIndex: 0,
                 }}
