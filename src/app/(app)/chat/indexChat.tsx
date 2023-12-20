@@ -1,11 +1,19 @@
 import { Text, View } from 'react-native'
 import { useChatClient } from '@src/getStream/useChatClient'
 import { Link } from 'expo-router'
+import { useChatStore } from '@src/getStream/getStreamStore'
+
+/** TODO:
+ * Store the active chat-route
+ * So, when exiting & returning to chat, if it was active before -> load the last saved chat-route
+ *
+ */
 
 export default function Page() {
-    const { clientIsReady } = useChatClient()
+    const { clientIsReady } = useChatClient() // this is the init of chat client
+    const chatStore = useChatStore()
 
-    if (!clientIsReady) {
+    if (!chatStore.clientIsReady) {
         return <Text>Loading chat ...</Text>
     }
 

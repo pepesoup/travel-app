@@ -1,17 +1,17 @@
 import { Channel, MessageList, MessageInput } from 'stream-chat-expo' // Or stream-chat-expo
 import { View, Text } from 'react-native'
 import React from 'react'
-import { useChatContext } from '@src/getStream/chatContext'
 import { router } from 'expo-router'
+import { useChatStore } from '@src/getStream/getStreamStore'
 
 export default function channelChat() {
-    const { channel, setThread }: any = useChatContext()
+    const chatStore = useChatStore()
     return (
-        <Channel channel={channel}>
+        <Channel channel={chatStore.channel}>
             <MessageList
                 onThreadSelect={(message) => {
-                    if (channel?.id) {
-                        setThread(message)
+                    if (chatStore.channel?.id) {
+                        chatStore.actions.setThread(message)
                         router.push('chat/chatThread')
                     }
                 }}

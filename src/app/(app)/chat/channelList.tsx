@@ -2,8 +2,8 @@ import { View, Text } from 'react-native'
 import React from 'react'
 import { ChannelList } from 'stream-chat-expo' // Or stream-chat-expo
 import { chatApiKey, chatUsers, chatUserIndex } from '@src/getStream/getStreamConfig'
-import { useChatContext } from '@root/src/getStream/chatContext'
 import { router } from 'expo-router'
+import { useChatStore } from '@src/getStream/getStreamStore'
 
 const filters = {
     members: {
@@ -16,14 +16,14 @@ const sort: any = {
 }
 
 export default function channelList() {
-    const { setChannel } = useChatContext()
+    const chatStore = useChatStore()
 
     return (
         <ChannelList
             filters={filters}
             sort={sort}
             onSelect={(channel) => {
-                setChannel(channel)
+                chatStore.actions.setChannel(channel)
                 router.push('chat/channelChat')
             }}
         />
