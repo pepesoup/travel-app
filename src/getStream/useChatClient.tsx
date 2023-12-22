@@ -1,18 +1,40 @@
 import { useEffect, useState } from 'react'
 import { StreamChat } from 'stream-chat'
-import { chatApiKey, chatUsers, chatUserIndex } from './getStreamConfig'
+import { chatApiKey, chatSecretKey } from './getStreamConfig'
 import { useChatStore } from '@src/getStream/getStreamStore'
+import { Account, useAccountStore } from '../stores/user/accountStore'
 
-const user = {
-    id: chatUsers[chatUserIndex].chatUserId,
-    name: chatUsers[chatUserIndex].chatUserName,
+const chatClient = StreamChat.getInstance(chatApiKey, chatSecretKey)
+
+const setupNewChatUser = (): Partial<Account['chat']> => {
+    // create token
+    console.log("creating token")
+    const userToken = chatClient.createToken(useAccountStore.getState().content.uid)
+    console.log("created token")
+
+    // new user
+    return {
+        user: {
+            id: useAccountStore.getState().content.uid,
+            name: useAccountStore.getState().content.profile.name
+        },
+        userToken 
+    }
 }
 
-const chatClient = StreamChat.getInstance(chatApiKey)
+const getChatUser = (): Partial<Account['chat']> => {
+    // exising user
+    if (useAccountStore.getState()?.content?.chat) {
+        return useAccountStore.getState().content.chat
+    }
+
+    return setupNewChatUser()
+}
 
 export const setupClient = async (setClientIsReady: any | ((ready: boolean) => void)) => {
     try {
-        chatClient.connectUser(user, chatUsers[chatUserIndex].chatUserToken)
+        const chatUserInfo = getChatUser()
+        chatClient.connectUser(chatUserInfo.user, chatUserInfo.userToken)
         setClientIsReady && setClientIsReady(true)
         useChatStore.getState().actions.setClientIsReady(true)
 

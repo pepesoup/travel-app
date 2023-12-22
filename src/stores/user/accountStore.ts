@@ -25,6 +25,13 @@ export type Account = {
         selectedTravel: TravelPO
         allPlannedTravels: TravelPO[]
     }
+    chat: {
+        user: {
+            id: string
+            name: string
+        }
+        userToken: string
+    }
 }
 
 export type AccountStore = {
@@ -39,6 +46,7 @@ export type AccountStore = {
         /* - this function will be used in future, in admin interface 
         setAllPlannedTravels: (allPlannedTravels: TravelPO[]) => void 
         */
+       setChat: (chat: Partial<Account['chat']>) => void
     }
 }
 
@@ -75,6 +83,13 @@ export const useAccountStore = create(
                 setDbValue('myTravelPlans/allPlannedTravels', allPlannedTravels)
             }
             */
+
+            setChat: (chat) => {
+                set((state: AccountStore) => {
+                    return merge(state.content.chat || {}, chat || {})
+                })
+                setDbValue('chat', chat)
+            },
             
         },
     }))

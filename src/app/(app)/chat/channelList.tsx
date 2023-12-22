@@ -1,13 +1,14 @@
 import { View, Text } from 'react-native'
 import React from 'react'
 import { ChannelList } from 'stream-chat-expo' // Or stream-chat-expo
-import { chatApiKey, chatUsers, chatUserIndex } from '@src/getStream/getStreamConfig'
 import { router } from 'expo-router'
 import { useChatStore } from '@src/getStream/getStreamStore'
+import { useAccountStore } from '@root/src/stores/user/accountStore'
+
 
 const filters = {
     members: {
-        $in: [chatUsers[chatUserIndex].chatUserId],
+        $in: useAccountStore.getState().content.uid,
     },
 }
 
