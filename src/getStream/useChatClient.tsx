@@ -3,23 +3,30 @@ import { StreamChat } from 'stream-chat'
 import { chatApiKey, chatSecretKey } from './getStreamConfig'
 import { useChatStore } from '@src/getStream/getStreamStore'
 import { Account, useAccountStore } from '../stores/user/accountStore'
+import JWT from 'expo-jwt'
 
-const chatClient = StreamChat.getInstance(chatApiKey, chatSecretKey)
+const chatClient = StreamChat.getInstance(chatApiKey)
+const _chatUser = 'testUserA'
+
+const createToken = (userId: string) => {
+    const token = JWT.encode({ user_id: userId }, chatSecretKey, { algorithm: 'HS256' })
+    console.log('token:', token)
+    return token
+}
 
 const setupNewChatUser = (): Partial<Account['chat']> => {
-    // create token
-    console.log("creating token")
-    const userToken = chatClient.createToken(useAccountStore.getState().content.uid)
-    console.log("created token")
-
-    // new user
-    return {
+    const chatUser = {
         user: {
-            id: useAccountStore.getState().content.uid,
-            name: useAccountStore.getState().content.profile.name
+            //id: useAccountStore.getState().content.uid,
+            //name: useAccountStore.getState().content.profile.name,
+            id: _chatUser,
+            name: _chatUser,
         },
-        userToken 
+        userToken: '',
     }
+    //const userToken = chatClient.createToken(useAccountStore.getState().content.uid)
+    chatUser.userToken = createToken(chatUser.user.id)
+    return chatUser
 }
 
 const getChatUser = (): Partial<Account['chat']> => {
