@@ -46,7 +46,7 @@ export type AccountStore = {
         /* - this function will be used in future, in admin interface 
         setAllPlannedTravels: (allPlannedTravels: TravelPO[]) => void 
         */
-       setChat: (chat: Partial<Account['chat']>) => void
+       setChat: (chat: Account['chat']) => void
     }
 }
 
