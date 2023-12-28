@@ -1,12 +1,14 @@
 import { create } from 'zustand'
 import { immer } from 'zustand/middleware/immer'
+import { Channel } from 'stream-chat/dist/types'
+import { DefaultGenerics } from 'stream-chat/dist/types'
 
 export type ChatStore = {
-    clientIsReady: boolean
-    channel: any
+    chatIsReady: boolean
+    channel: Channel<DefaultGenerics> | null
     thread: any
     actions: {
-        setClientIsReady: (isReady: boolean) => void
+        setChatIsReady: (isReady: boolean) => void
         setChannel: (channel: any) => void
         setThread: (thread: any) => void
     }
@@ -14,13 +16,13 @@ export type ChatStore = {
 
 export const useChatStore = create(
     immer<ChatStore>((set, get) => ({
-        clientIsReady: false,
+        chatIsReady: false,
         channel: null,
         thread: null,
         actions: {
-            setClientIsReady: (isReady) =>
+            setChatIsReady: (isReady) =>
                 set((state) => {
-                    state.clientIsReady = isReady
+                    state.chatIsReady = isReady
                 }),
             setChannel: (channel) =>
                 set((state) => {

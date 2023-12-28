@@ -21,8 +21,10 @@ export type TravelStore = {
     actions: {
         addNote: (note: Note) => any
         setSchema: (schema: Schema) => any
+        setChatChannelId: (channelId: string) => void
+        addChatChannelMember: (userId: string) => void
     }
-} 
+}
 
 export const useTravelStore = create(
     immer<TravelStore>((set, get) => ({
@@ -36,7 +38,7 @@ export const useTravelStore = create(
                 const currentlySelectedTravelId =
                     useAccountStore.getState()?.content?.myTravelPlans?.selectedTravel?.id
                 setDbValue(`${currentlySelectedTravelId}/notes/${note.uuid}`, note)
-                
+
                 /* // Firebase trigger RT update - even if offline -> so set state this way is not needed
                 set((state: TravelStore) => {
                     state.content.notes[note.uuid] = note
@@ -45,20 +47,42 @@ export const useTravelStore = create(
             setSchema: (schema: Schema) => {
                 const currentlySelectedTravelId =
                     useAccountStore.getState()?.content?.myTravelPlans?.selectedTravel?.id
-               setDbValue(`${currentlySelectedTravelId}/schema`, schema)
+                setDbValue(`${currentlySelectedTravelId}/schema`, schema)
 
                 /* // Firebase trigger RT update - even if offline -> so set state this way is not needed
                 set((state: TravelStore) => {
                     state.content.notes[note.uuid] = note
                 })// */
             },
+            setChatChannelId: (channelId: string) => {
+                set((state: TravelStore) => {
+                    state.content.chat = state.content.chat || {}
+                    state.content.chat.channelId = channelId
+                })
+
+                const currentlySelectedTravelId =
+                    useAccountStore.getState()?.content?.myTravelPlans?.selectedTravel?.id
+                setDbValue(`${currentlySelectedTravelId}/chat/channelId`, channelId)
+            },
+            addChatChannelMember: (userId: string) => {
+                set((state: TravelStore) => {
+                    state.content.chat = state.content.chat || {}
+                    state.content.chat.userIds = [...(state.content.chat.userIds || []), userId]
+                })
+
+                const currentlySelectedTravelId =
+                    useAccountStore.getState()?.content?.myTravelPlans?.selectedTravel?.id
+                setDbValue(`${currentlySelectedTravelId}/chat/userIds`, get().content.chat.userIds)
+            },
         },
     }))
 )
 
 useAccountStore.subscribe((accountStore: AccountStore) => {
-    if (accountStore.state.value === 'hasValue' &&
-        accountStore?.content?.myTravelPlans?.selectedTravel?.id) {
+    if (
+        accountStore.state.value === 'hasValue' &&
+        accountStore?.content?.myTravelPlans?.selectedTravel?.id
+    ) {
         listenOnRtdbForTravels(useTravelStore, accountStore.content.myTravelPlans.selectedTravel.id)
     }
 })

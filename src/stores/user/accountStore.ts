@@ -46,7 +46,7 @@ export type AccountStore = {
         /* - this function will be used in future, in admin interface 
         setAllPlannedTravels: (allPlannedTravels: TravelPO[]) => void 
         */
-       setChat: (chat: Account['chat']) => void
+        setChatUserInfo: (chat: Account['chat']) => void
     }
 }
 
@@ -84,13 +84,12 @@ export const useAccountStore = create(
             }
             */
 
-            setChat: (chat) => {
+            setChatUserInfo: (chat) => {
                 set((state: AccountStore) => {
                     return merge(state.content.chat || {}, chat || {})
                 })
                 setDbValue('chat', chat)
             },
-            
         },
     }))
 )
@@ -98,8 +97,10 @@ export const useAccountStore = create(
 export const useAccountState = () => useAccountStore((state) => state.state)
 export const useAccountContent = () => useAccountStore((state) => state.content)
 export const useAccountActions = () => useAccountStore((state) => state.actions)
-export const useAccountSelectedTravel = () => useAccountStore((state) => state.content.myTravelPlans.selectedTravel)
-export const useAccountAllTravels = () => useAccountStore((state) => state.content.myTravelPlans.allPlannedTravels)
+export const useAccountSelectedTravel = () =>
+    useAccountStore((state) => state.content.myTravelPlans.selectedTravel)
+export const useAccountAllTravels = () =>
+    useAccountStore((state) => state.content.myTravelPlans.allPlannedTravels)
 
 /************************ Subscribe on Auth Store **************************/
 const unsubAuthStoreSubscription = useAuthStoreBase.subscribe((authData: any) => {

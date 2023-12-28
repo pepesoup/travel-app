@@ -1,5 +1,5 @@
 import { Text, View } from 'react-native'
-import { useChatClient } from '@src/getStream/useChatClient'
+import { initChat } from '@root/src/getStream/initChat'
 import { Link } from 'expo-router'
 import { useChatStore } from '@src/getStream/getStreamStore'
 
@@ -10,10 +10,10 @@ import { useChatStore } from '@src/getStream/getStreamStore'
  */
 
 export default function Page() {
-    const { clientIsReady } = useChatClient() // this is the init of chat client
+    initChat() // this is the init of chat client
     const chatStore = useChatStore()
 
-    if (!chatStore.clientIsReady) {
+    if (!chatStore.chatIsReady) {
         return <Text>Loading chat ...</Text>
     }
 

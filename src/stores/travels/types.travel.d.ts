@@ -1,5 +1,6 @@
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 import { IconCmn } from '../../rn-components/src/components/commonUi'
+
 export type EventType = {
     name: 'walk' | 'meal' | 'yoga' | 'exercise' | 'lecture' | 'pool' | 'travel' | 'party'
     icon: {
@@ -71,4 +72,8 @@ export type Travel = {
     }
     schema: Schema
     notes: Notes
+    chat: {
+        channelId: string
+        userIds: string[]
+    }
 }

@@ -10,6 +10,7 @@ import {
 } from '@root/src/stores/user/accountStore'
 import { View } from 'react-native'
 import { TravelPO } from '@root/src/stores/user/accountStore'
+import { useChatStore } from '@root/src/getStream/getStreamStore'
 
 export default function Modal() {
     const router = useRouter()
@@ -18,6 +19,7 @@ export default function Modal() {
     const accountActions = useAccountActions()
     const allTravels = useAccountAllTravels()
     const selectedTravel = useAccountSelectedTravel()
+    const chatStore = useChatStore()
 
     const onLogoutPress = async () => {
         await authStoreActions.signOut()
@@ -26,6 +28,8 @@ export default function Modal() {
 
     const selectTravelAndRedirect = (currentTravel: TravelPO) => {
         accountActions.setSelectedTravel(currentTravel)
+        chatStore.actions.setChannel(null)
+        chatStore.actions.setChatIsReady(false)
         setTimeout(() => {
             router.push('/retreafy/retreafy')
         }, 1)
