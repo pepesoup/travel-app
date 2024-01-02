@@ -43,15 +43,18 @@ const getChatUser = (): Account['chat'] => {
         return useAccountStore.getState().content.chat
     }
 
-    return setupNewChatUser()
+        return setupNewChatUser()
 }
 
 const createChatChannel = async (): Promise<Channel<DefaultGenerics>> => {
     // Create a chat channel for the current travel.
     // Set channel in the chat store.
     const channel = chatClient.channel(
+        //provide channel type
         'messaging',
+        //provide id for channel
         useAccountStore.getState().content.myTravelPlans.selectedTravel.id,
+        // channel name set
         {
             name: `${
                 useAccountStore.getState().content.myTravelPlans.selectedTravel.name
@@ -84,7 +87,7 @@ const getChatChannel = async (): Promise<Channel<DefaultGenerics>> => {
     return await createChatChannel()
 }
 
-export const setupChat = async () => {
+export const useChat = async () => {
     try {
         useChatStore.getState().actions.setChatIsReady(false)
         // Get chat user and connect.
@@ -97,7 +100,7 @@ export const setupChat = async () => {
         }
         console.log('User connected')
 
-        // Get the chat channel for this travel
+        // Get the chat channel for selected travel
         const channel = await getChatChannel()
         useChatStore.getState().actions.setChannel(channel)
 
@@ -122,9 +125,3 @@ export const setupChat = async () => {
     }
 }
 
-export const initChat = () => {
-    useEffect(() => {
-        useChatStore.getState().actions.setChatIsReady(false)
-        setupChat()
-    }, [useAccountStore.getState().content.myTravelPlans.selectedTravel.id])
-}

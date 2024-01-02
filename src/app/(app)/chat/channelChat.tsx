@@ -2,12 +2,18 @@ import { Channel, MessageList, MessageInput } from 'stream-chat-expo' // Or stre
 import { View, Text } from 'react-native'
 import { Stack, router } from 'expo-router'
 import { useChatStore } from '@src/getStream/getStreamStore'
-import { initChat } from '@root/src/getStream/initChat'
+import { useChat } from '@root/src/getStream/useChat'
+import { useEffect } from 'react'
+import { useAccountStore } from '@root/src/stores/user/accountStore'
 
 export default function channelChat() {
     // Init of chat client
-    initChat()
+    // initChat()
     const chatStore = useChatStore()
+    const accountStore = useAccountStore()
+    useEffect(() => {
+        useChat()
+    }, [accountStore.content.myTravelPlans.selectedTravel.id])
 
     return (
         <>
