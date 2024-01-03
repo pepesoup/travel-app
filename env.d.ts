@@ -18,4 +18,5 @@ declare module '@env' {
 
     export const GETSTREAM_APIKEY: string
     export const GETSTREAM_API_SECRET: string
+    export const GETSTREAM_API_AUTH_TOKEN: string
 }

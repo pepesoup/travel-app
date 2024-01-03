@@ -67,7 +67,7 @@ export const useTravelStore = create(
             addChatChannelMember: (userId: string) => {
                 set((state: TravelStore) => {
                     state.content.chat = state.content.chat || {}
-                    state.content.chat.userIds = [...(state.content.chat.userIds || []), userId]
+                    state.content.chat.userIds = Array.from(new Set([...(state.content.chat.userIds || []), userId]))
                 })
 
                 const currentlySelectedTravelId =

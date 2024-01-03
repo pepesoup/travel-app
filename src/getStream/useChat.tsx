@@ -8,6 +8,7 @@ import { SupportedAlgorithms } from 'expo-jwt/dist/types/algorithms'
 import { useTravelStore } from '../stores/travels/travelStore'
 import { Channel } from 'stream-chat/dist/types'
 import { DefaultGenerics } from 'stream-chat/dist/types'
+import { addMemberToChannel } from './getStreamApi'
 
 const chatClient = StreamChat.getInstance(chatApiKey)
 function getChatUserNameSufix() {
@@ -25,7 +26,7 @@ const setupNewChatUser = (): Account['chat'] => {
     const chatUser = {
         user: {
             id: useAccountStore.getState().content.uid,
-            name: `Resekompis-${getChatUserNameSufix()}`,
+            name: `Resekompis-${getChatUserNameSufix()}`, 
         },
         userToken: '',
     }
@@ -46,14 +47,14 @@ const getChatUser = (): Account['chat'] => {
         return setupNewChatUser()
 }
 
-const createChatChannel = async (): Promise<Channel<DefaultGenerics>> => {
-    // Create a chat channel for the current travel.
-    // Set channel in the chat store.
+const createChatChannel = async () => {
+    const newChannelId = useAccountStore.getState().content.myTravelPlans.selectedTravel.id
+    // Create a chat channel for the selected travel.
     const channel = chatClient.channel(
         //provide channel type
         'messaging',
         //provide id for channel
-        useAccountStore.getState().content.myTravelPlans.selectedTravel.id,
+        newChannelId,
         // channel name set
         {
             name: `${
@@ -63,28 +64,39 @@ const createChatChannel = async (): Promise<Channel<DefaultGenerics>> => {
     )
 
     await channel.create()
-    console.log('Created channel with id ', useAccountStore.getState().content.myTravelPlans.selectedTravel.id)
-
-    useTravelStore
-        .getState()
-        .actions.setChatChannelId(
-            useAccountStore.getState().content.myTravelPlans.selectedTravel.id
-        )
-
-    return channel
+    console.log('Created channel with id ', newChannelId)
+    
+    // Set channelid in the travel store.
+    useTravelStore.getState().actions.setChatChannelId(newChannelId)
 }
 
-const getChatChannel = async (): Promise<Channel<DefaultGenerics>> => {
-    // If chat channel for current travel is found in db
-    // use that.
-    if (useTravelStore.getState()?.content?.chat?.channelId) {
-        console.log('chat channel for current travel is found in db')
-        const filter = { id: { $eq: useTravelStore.getState()?.content?.chat?.channelId } }
-        const channels = await chatClient.queryChannels(filter)
-        return channels[0]
+const checkIfUserIsAddedToChannel = (userId: string): boolean => {
+    return (useTravelStore.getState()?.content?.chat?.userIds || []).includes(userId)
+}
+
+const checkIfChannelExists = (): boolean => {
+    return (useTravelStore.getState()?.content?.chat?.channelId || '').length > 0 
+}
+
+const setupChannel = async (userId: string): Promise<Channel<DefaultGenerics>> => {
+    // If chat channel for current travel is not found in db, create one
+    if(!checkIfChannelExists()) {
+        console.log('No channel id found in the db, creating channel')
+        await createChatChannel()
     }
 
-    return await createChatChannel()
+    const channelId = useTravelStore.getState().content.chat.channelId
+
+    // If user is not added to the channel, add user here
+    if (!checkIfUserIsAddedToChannel(userId)) {
+        await addMemberToChannel('messaging', channelId, userId)
+        useTravelStore.getState()?.actions.addChatChannelMember(userId)
+    }
+
+    // Get channel here
+    const filter = { id: { $eq: channelId } }
+    const channels = await chatClient.queryChannels(filter)
+    return channels[0]     
 }
 
 export const useChat = async () => {
@@ -99,21 +111,10 @@ export const useChat = async () => {
             await chatClient.connectUser(chatUserInfo.user, chatUserInfo.userToken)
         }
         console.log('User connected')
-
+        
         // Get the chat channel for selected travel
-        const channel = await getChatChannel()
+        const channel = await setupChannel(chatUserInfo.user.id)
         useChatStore.getState().actions.setChannel(channel)
-
-        // Add the user as a member to the channel.
-        if (
-            !(useTravelStore.getState()?.content?.chat?.userIds || []).includes(
-                chatUserInfo.user.id
-            )
-        ) {
-            await channel.addMembers([{ user_id: chatUserInfo.user.id }])
-            console.log('Added member to channel')
-            useTravelStore.getState()?.actions.addChatChannelMember(chatUserInfo.user.id)
-        }
 
         // Set chat client is ready in chat store.
         useChatStore.getState().actions.setChatIsReady(true)
