@@ -131,6 +131,7 @@ export default function Layout_AppApp() {
                     presentation: 'modal',
                     headerRight: () => null,
                     headerLeft: ModalHeaderLeft,
+                    headerTitleAlign: 'center'
                 }}
             />
             <Stack.Screen

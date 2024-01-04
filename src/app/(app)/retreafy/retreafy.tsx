@@ -23,6 +23,7 @@ export default function RetreafyIndex() {
             <Stack.Screen
                 options={{
                     title: 'RETREAFY',
+                    headerTitleAlign: 'center'
                 }}
             />
             <View
