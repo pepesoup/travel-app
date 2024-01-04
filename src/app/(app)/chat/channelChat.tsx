@@ -27,7 +27,10 @@ export default function channelChat() {
                     <Text>Loading chat ...</Text>
                 </View>
             ) : (
-                <Channel channel={chatStore.channel}>
+                <Channel
+                    channel={chatStore.channel}
+                    keyboardVerticalOffset={140}
+                >
                     <MessageList
                         onThreadSelect={(message) => {
                             if (chatStore.channel?.id) {
