@@ -2,18 +2,14 @@ import { Channel, MessageList, MessageInput } from 'stream-chat-expo' // Or stre
 import { View, Text } from 'react-native'
 import { Stack, router } from 'expo-router'
 import { useChatStore } from '@src/getStream/getStreamStore'
-import { useChat } from '@root/src/getStream/useChat'
+import { chatClient, useChat } from '@root/src/getStream/useChat'
 import { useEffect } from 'react'
 import { useAccountStore } from '@root/src/stores/user/accountStore'
+import MessageHeader from './messageHeader'
+
 
 export default function channelChat() {
-    // Init of chat client
-    // initChat()
     const chatStore = useChatStore()
-    const accountStore = useAccountStore()
-    useEffect(() => {
-        useChat()
-    }, [accountStore.content.myTravelPlans.selectedTravel.id])
 
     return (
         <>
@@ -30,6 +26,15 @@ export default function channelChat() {
                 <Channel
                     channel={chatStore.channel}
                     keyboardVerticalOffset={140}
+                    MessageHeader={(props) =>
+                        props.message?.user?.id !== chatClient.userID ? (
+                            <MessageHeader 
+                                senderName={ props?.message?.user?.name || '' }
+                                messageTime={ props.formattedDate}
+                            />
+                        ) : null
+                    }
+                    MessageFooter={() => null}
                 >
                     <MessageList
                         onThreadSelect={(message) => {

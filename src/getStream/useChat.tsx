@@ -10,7 +10,7 @@ import { Channel } from 'stream-chat/dist/types'
 import { DefaultGenerics } from 'stream-chat/dist/types'
 import { addMemberToChannel } from './getStreamApi'
 
-const chatClient = StreamChat.getInstance(chatApiKey)
+export const chatClient = StreamChat.getInstance(chatApiKey)
 function getChatUserNameSufix() {
     return Math.floor(Math.random() * 100)
 }
@@ -22,11 +22,16 @@ const createToken = (userId: string) => {
     return token
 }
 
+const getUserName = () => {
+    return useAccountStore.getState()?.content?.profile?.nickName 
+        || useAccountStore.getState()?.content?.profile?.name 
+        || `Resekompis-${getChatUserNameSufix()}`
+}
 const setupNewChatUser = (): Account['chat'] => {
     const chatUser = {
         user: {
             id: useAccountStore.getState().content.uid,
-            name: `Resekompis-${getChatUserNameSufix()}`, 
+            name: getUserName(), 
         },
         userToken: '',
     }
@@ -97,6 +102,23 @@ const setupChannel = async (userId: string): Promise<Channel<DefaultGenerics>> =
     const filter = { id: { $eq: channelId } }
     const channels = await chatClient.queryChannels(filter)
     return channels[0]     
+}
+
+export const updateChatUser = async() => {
+    const chatUser = {
+        user: {
+            id: useAccountStore.getState().content.uid,
+            name: getUserName(), 
+        },
+        userToken: useAccountStore.getState()?.content?.chat?.userToken || '',
+    }
+
+    if(chatUser.userToken === '') {
+        chatUser.userToken = createToken(chatUser.user.id)
+    }
+
+    await chatClient.upsertUser(chatUser.user);
+    useAccountStore.getState().actions.setChatUserInfo(chatUser)
 }
 
 export const useChat = async () => {

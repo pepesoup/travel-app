@@ -4,11 +4,16 @@ import { Image } from 'expo-image'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 import { View } from 'react-native'
 import { useTheme } from 'react-native-paper'
-import { useTravelInfo } from '@root/src/stores/travels/travelStore'
+import { useTravelInfo, useTravelStore } from '@root/src/stores/travels/travelStore'
 import { differenceInCalendarDays } from 'date-fns'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
+import { useChatStore } from '@root/src/getStream/getStreamStore'
+import { useAccountStore } from '@root/src/stores/user/accountStore'
+import { useChat } from '@root/src/getStream/useChat'
 
 export default function RetreafyIndex() {
+    const [hasUnreadMessage, setHasUnreadMessage] = useState(false)
+
     const theme = useTheme()
     const travelInfo = useTravelInfo()
 
@@ -17,6 +22,38 @@ export default function RetreafyIndex() {
         const place = travelInfo.residence.place
         return `${daysLeft} dagar kvar till ${place}!`
     }
+
+    const chatStore = useChatStore()
+
+    useEffect(() => {
+        if (chatStore.channel !== null) {
+            chatStore.channel.on('message.new', event => {
+                console.log('event-----', event.total_unread_count);
+                if(event?.total_unread_count || 0 > 0) {
+                    setHasUnreadMessage(true)
+                }
+            });
+        }
+    }, [chatStore.channel])
+
+    const handleUnreadMessage = () => {
+        setHasUnreadMessage(false)
+        router.push('/chat/channelChat')
+    }
+
+    /*
+    const accountStore = useAccountStore()
+    useEffect(() => {
+        useChat()
+        console.log('account store here-------')
+    }, [accountStore.content.myTravelPlans.selectedTravel.id])
+    */
+    const travelStore = useTravelStore()
+    useEffect(() => {
+        useChat()
+        console.log('account store here-------')
+    }, [travelStore?.content?.chat?.channelId])
+
 
     return (
         <ScreenCmn>
@@ -107,11 +144,11 @@ export default function RetreafyIndex() {
                             color={theme.colors.primary}
                         />
                     </SurfaceCmn>
-                    <SurfaceCmn text="Chat" onPress={() => router.push('/chat/channelChat')}>
+                    <SurfaceCmn text="Chat" onPress={() => handleUnreadMessage()}>
                         <MaterialCommunityIcons
-                            name="message-text-outline"
+                            name={hasUnreadMessage ? "message-text-clock-outline" : "message-text-outline"}
                             size={32}
-                            color={theme.colors.primary}
+                            color={hasUnreadMessage ? 'red' : theme.colors.primary}
                         />
                     </SurfaceCmn>
                     <SurfaceCmn text="Info" onPress={() => router.push('/info/info')}>

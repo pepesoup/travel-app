@@ -17,6 +17,7 @@ export type Account = {
         name: string
         phone: string
         profileImgUrl: string
+        nickName: string
     }
     settings: {
         admin: boolean

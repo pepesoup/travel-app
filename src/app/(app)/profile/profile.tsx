@@ -77,6 +77,14 @@ export default function Profile() {
                         />
                         <TextCmn>{account.content?.profile?.phone || '-'}</TextCmn>
                     </RowCmn.ChildrenRow>
+                    <RowCmn.ChildrenRow>
+                        <MaterialCommunityIcons
+                            name="account-outline"
+                            size={24}
+                            color={theme.colors.onSurface}
+                        />
+                        <TextCmn>{account.content?.profile?.nickName || '-'}</TextCmn>
+                    </RowCmn.ChildrenRow>
                     <Pressable onPress={() => router.push('profile/editProfile')}>
                         <RowCmn.ChildrenRow>
                             <MaterialCommunityIcons

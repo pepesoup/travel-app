@@ -14,6 +14,8 @@ import { useRouter } from 'expo-router'
 import { useAccountActions, useAccountStore } from '@root/src/stores/user/accountStore'
 import { useEffect, useState } from 'react'
 import { MaskedTextInput } from 'react-native-mask-text'
+import { useChatStore } from '@root/src/getStream/getStreamStore'
+import { updateChatUser } from '@root/src/getStream/useChat'
 
 export default function EditProfile() {
     const theme = useTheme()
@@ -22,6 +24,7 @@ export default function EditProfile() {
     const accountActions = useAccountActions()
     const [name, setName] = useState('')
     const [phone, setPhone] = useState('')
+    const [nickName, setNickName] = useState('')
 
     const [maskedValue, setMaskedValue] = useState('')
     const [unMaskedValue, setUnmaskedValue] = useState('')
@@ -29,6 +32,7 @@ export default function EditProfile() {
     useEffect(() => {
         setName(account.content?.profile?.name)
         setPhone(account.content?.profile?.phone)
+        setNickName(account?.content?.profile?.nickName)
     }, [account])
 
     return (
@@ -81,12 +85,24 @@ export default function EditProfile() {
                             keyboardType="numeric"
                         />
                         */}
+                </RowCmn.ChildrenRow>                
+                <RowCmn.ChildrenRow>
+                    <TextInput
+                        value={nickName}
+                        style={{ width: '100%' }}
+                        dense
+                        mode="outlined"
+                        placeholder="NickName"
+                        onChange={() => {}}
+                        onChangeText={(t) => setNickName(t)}
+                    />
                 </RowCmn.ChildrenRow>
                 <View style={{ flex: 1, alignItems: 'center', justifyContent: 'flex-end' }}>
                     <ButtonCmn
                         title="Spara"
                         onPress={() => {
-                            accountActions.saveProfile({ name, phone })
+                            accountActions.saveProfile({ name, phone, nickName })
+                            updateChatUser()
                             router.back()
                         }}
                     />
